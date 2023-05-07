@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let template of templates;">
+      <tr>
+        <td>{{template.id}}</td>
+        <td>{{template.title | uppercase}}</td>
+        <td>{{template.description}}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
