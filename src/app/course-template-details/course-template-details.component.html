@@ -1,0 +1,21 @@
+<table>
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{courseTemplate.id}}</td>
+      <td>{{courseTemplate.title | uppercase}}</td>
+      <td>{{courseTemplate.description}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div>
+  <a routerLink="/course-templates">Go back</a>
+  <a routerLink="/chapter-templates/create">Create chapter</a>
+</div>

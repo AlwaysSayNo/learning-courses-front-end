@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CourseTemplate} from "../../shared/model/CourseTemplate";
 
 @Injectable({
@@ -6,10 +6,15 @@ import {CourseTemplate} from "../../shared/model/CourseTemplate";
 })
 export class CourseTemplateService {
 
-  constructor() { }
+  templates!: CourseTemplate[];
 
-  getAll(): CourseTemplate[] {
-    return [
+  constructor() {
+    this.init()
+  }
+
+  init(): void {
+    console.log("CourseTemplateService#ngOnInit")
+    this.templates = [
       {
         id: 1,
         title: 'C++ super course',
@@ -28,4 +33,16 @@ export class CourseTemplateService {
     ]
   }
 
+  getAll(): CourseTemplate[] {
+    return this.templates
+  }
+
+  getById(id: number): CourseTemplate {
+    let filtered = this.templates.filter(t => t.id == id)
+    if (filtered.length == 0) {
+      throw new Error(`No template with id: ${id}`)
+    }
+
+    return filtered[0]
+  }
 }
