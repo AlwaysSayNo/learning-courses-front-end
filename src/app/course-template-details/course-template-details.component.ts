@@ -18,13 +18,8 @@ export class CourseTemplateDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      if (params['courseTemplateId']) {
-        console.log(params['courseTemplateId'])
-        console.log(this.courseTemplateService.getById(params['courseTemplateId']))
-        this.courseTemplate = this.courseTemplateService.getById(params['courseTemplateId'])
-      }
+      this.courseTemplate = this.courseTemplateService.getById(params['courseTemplateId'])
     })
-    console.log(this.courseTemplate);
   }
 
 }

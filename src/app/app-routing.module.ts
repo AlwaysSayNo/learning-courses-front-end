@@ -5,7 +5,8 @@ import {CourseTemplateDetailsComponent} from "./course-template-details/course-t
 
 const routes: Routes = [
   {path: 'course-templates', component: CourseTemplateListComponent},
-  {path: 'course-templates/:courseTemplateId', component: CourseTemplateDetailsComponent}
+  {path: 'course-templates/:courseTemplateId', component: CourseTemplateDetailsComponent},
+  {path: '', redirectTo: 'course-templates', pathMatch: 'full'}
 ];
 
 @NgModule({

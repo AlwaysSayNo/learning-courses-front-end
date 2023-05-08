@@ -1,3 +1,13 @@
+<!--TODO save data while disabling-->
+<ng-container *ngIf="showForm">
+  <app-course-template-add></app-course-template-add>
+</ng-container>
+
+<input type="button"
+       (click)="showForm = !showForm"
+       [value]="showForm ? 'Hide form': 'Show form'"
+>
+
 <table>
   <thead>
     <tr>
@@ -10,7 +20,7 @@
     <ng-container *ngFor="let template of templates;">
       <tr>
         <td>
-          <a routerLink="/course-templates/{{template.id}}">
+          <a [routerLink]="['/course-templates', template.id]">
             {{template.id}}
           </a>
         </td>

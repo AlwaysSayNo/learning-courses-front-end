@@ -13,7 +13,6 @@ export class CourseTemplateService {
   }
 
   init(): void {
-    console.log("CourseTemplateService#ngOnInit")
     this.templates = [
       {
         id: 1,
@@ -38,11 +37,16 @@ export class CourseTemplateService {
   }
 
   getById(id: number): CourseTemplate {
-    let filtered = this.templates.filter(t => t.id == id)
+    const filtered = this.templates.filter(t => t.id == id)
     if (filtered.length == 0) {
       throw new Error(`No template with id: ${id}`)
     }
 
     return filtered[0]
   }
+
+  add(template: CourseTemplate): void {
+    this.templates.push(template)
+  }
+
 }
