@@ -11,6 +11,7 @@ import {CourseTemplate} from "../shared/model/CourseTemplate";
 export class CourseTemplateAddComponent implements OnInit {
 
   template: CourseTemplate = {
+    id: 0,
     title: '',
     description: ''
   }

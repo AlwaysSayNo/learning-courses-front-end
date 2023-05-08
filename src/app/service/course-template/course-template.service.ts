@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CourseTemplate} from "../../shared/model/CourseTemplate";
+import {removeIf} from "../../utility/array-utility";
 
 @Injectable({
   providedIn: 'root'
@@ -49,4 +50,7 @@ export class CourseTemplateService {
     this.templates.push(template)
   }
 
+  delete(id: number): void {
+    this.templates = removeIf(this.templates, (t) => t.id == id);
+  }
 }
