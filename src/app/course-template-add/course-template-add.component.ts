@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {CourseTemplateService} from "../service/course-template/course-template.service";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CourseTemplate} from "../shared/model/CourseTemplate";
 
 @Component({
@@ -14,23 +12,18 @@ export class CourseTemplateAddComponent implements OnInit {
     id: 0,
     title: '',
     description: ''
-  }
+  };
+  @Output() addCourseTemplate = new EventEmitter<CourseTemplate>();
 
-  constructor(private courseTemplateService: CourseTemplateService) { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
-  saveCourseTemplate(form: NgForm) {
-    let n = this.courseTemplateService.getAll().length + 1;
-
-    // With real backend we have to subscribe here to the action and update the form
-    this.courseTemplateService.add({
-      id: n,
-      title: this.template.title,
-      description: this.template.description
-    });
-    form.resetForm()
+  saveCourseTemplate() {
+    //TODO With real backend we have to subscribe here to the action and update the form
+    this.addCourseTemplate.emit(this.template);
   }
 
 }

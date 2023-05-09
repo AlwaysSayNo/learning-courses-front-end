@@ -15,7 +15,19 @@
   </tbody>
 </table>
 
+<ng-container *ngIf="showUpdateForm">
+  <app-course-template-update
+    [template]="courseTemplate"
+    (updateCourseTemplate)="onUpdateCourseTemplate($event)"
+  ></app-course-template-update>
+</ng-container>
+
 <button class="btn btn-danger" (click)="delete()">Delete</button>
+<input type="button"
+       class="btn btn-primary"
+       (click)="showUpdateForm = !showUpdateForm"
+       [value]="showUpdateForm ? 'Hide form' : 'Update form'"
+>
 
 <div>
   <a [routerLink]="'/course-templates'">Go back</a>

@@ -1,6 +1,6 @@
 <!--TODO save data while disabling-->
 <ng-container *ngIf="showForm">
-  <app-course-template-add></app-course-template-add>
+  <app-course-template-add (addCourseTemplate)="onAddCourseTemplate($event)"></app-course-template-add>
 </ng-container>
 
 <input type="button"

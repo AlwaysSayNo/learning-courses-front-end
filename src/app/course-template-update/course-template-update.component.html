@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 mx-auto">
-      <form #courseTemplateForm="ngForm" (ngSubmit)="saveCourseTemplate()">
+      <form #courseTemplateForm="ngForm" (ngSubmit)="update()">
         <div class="card">
           <div class="card-header bg-primary text-white">
-            <h3 class="card-title">New course template</h3>
+            <h3 class="card-title">Update course template</h3>
           </div>
           <div class="card-body">
             <div class="form-group">
@@ -14,17 +14,17 @@
                      placeholder="Title"
                      required
                      appCourseTitleLength
-                     name="title"
+                     name = "title"
                      [(ngModel)]="template.title"
-                     #templateTitle="ngModel"
+                     #templateTitle = "ngModel"
               >
             </div>
             <div class="alert alert-danger"
-                 *ngIf="templateTitle.dirty && templateTitle.errors?.['required']">
+                 *ngIf = "templateTitle.dirty && templateTitle.errors?.['required']">
               Please provide the title
             </div>
             <div class="alert alert-danger"
-                 *ngIf="templateTitle.dirty && templateTitle.errors?.['appCourseTitleLength']">
+                 *ngIf = "templateTitle.dirty && templateTitle.errors?.['appCourseTitleLength']">
               {{templateTitle.errors?.['appCourseTitleLength']}}
             </div>
 
@@ -36,16 +36,16 @@
                           rows="3"
                           required
                           appCourseDescriptionLength
-                          name="description"
+                          name = "description"
                           [(ngModel)]="template.description"
-                          #templateDescription="ngModel"
+                          #templateDescription = "ngModel"
                 ></textarea>
               <div class="alert alert-danger"
-                   *ngIf="templateDescription.dirty && templateDescription.errors?.['required']">
+                   *ngIf = "templateDescription.dirty && templateDescription.errors?.['required']">
                 Please provide description
               </div>
               <div class="alert alert-danger"
-                   *ngIf="templateDescription.dirty && templateDescription.errors?.['appCourseDescriptionLength']">
+                   *ngIf = "templateDescription.dirty && templateDescription.errors?.['appCourseDescriptionLength']">
                 {{templateDescription.errors?.['appCourseDescriptionLength']}}
               </div>
             </div>
@@ -53,8 +53,7 @@
           <div class="card-footer">
             <button class="btn btn-primary" type="submit"
                     [disabled]="courseTemplateForm.invalid"
-            >Save
-            </button>
+            >Update</button>
           </div>
         </div>
       </form>

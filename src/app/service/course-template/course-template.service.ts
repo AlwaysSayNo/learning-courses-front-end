@@ -46,11 +46,19 @@ export class CourseTemplateService {
     return filtered[0]
   }
 
-  add(template: CourseTemplate): void {
-    this.templates.push(template)
+  add(template: CourseTemplate): CourseTemplate {
+    template.id = this.templates.push(template);
+    return template;
   }
 
   delete(id: number): void {
     this.templates = removeIf(this.templates, (t) => t.id == id);
   }
+
+  update(courseTemplate: CourseTemplate): CourseTemplate {
+    this.templates[courseTemplate.id - 1] = courseTemplate;
+    return courseTemplate;
+  }
+
+
 }

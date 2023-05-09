@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CourseTemplateService} from "../service/course-template/course-template.service";
 import {CourseTemplate} from "../shared/model/CourseTemplate";
@@ -11,6 +11,7 @@ import {CourseTemplate} from "../shared/model/CourseTemplate";
 export class CourseTemplateDetailsComponent implements OnInit {
 
   courseTemplate!: CourseTemplate;
+  showUpdateForm = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -24,8 +25,15 @@ export class CourseTemplateDetailsComponent implements OnInit {
     })
   }
 
+  //TODO exception handling if return to deleted page
   delete(): void {
     this.courseTemplateService.delete(this.courseTemplate.id);
     void this.router.navigateByUrl('/course-templates');
+  }
+
+  onUpdateCourseTemplate(courseTemplate: CourseTemplate): void {
+    this.courseTemplate = {...courseTemplate};
+    this.courseTemplateService.update(this.courseTemplate);
+    this.showUpdateForm = false;
   }
 }

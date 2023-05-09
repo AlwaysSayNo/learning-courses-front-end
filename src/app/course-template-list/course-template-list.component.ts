@@ -12,9 +12,15 @@ export class CourseTemplateListComponent implements OnInit {
   templates!: CourseTemplate[];
   showForm = false;
 
-  constructor(private courseTemplateService: CourseTemplateService) { }
+  constructor(private courseTemplateService: CourseTemplateService) {
+  }
 
   ngOnInit(): void {
     this.templates = this.courseTemplateService.getAll();
+  }
+
+  onAddCourseTemplate(courseTemplate: CourseTemplate) {
+    this.courseTemplateService.add(courseTemplate);
+    this.showForm = false;
   }
 }
