@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "http://localhost:8080/learning-courses/api/v1",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

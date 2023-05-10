@@ -76,7 +76,8 @@
               "browserTarget": "learning-courses-frontend:build:production"
             },
             "development": {
-              "browserTarget": "learning-courses-frontend:build:development"
+              "browserTarget": "learning-courses-frontend:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
