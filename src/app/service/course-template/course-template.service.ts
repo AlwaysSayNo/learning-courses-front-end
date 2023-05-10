@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {CourseTemplate} from "../../shared/model/CourseTemplate";
 import {removeIf} from "../../utility/array-utility";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,42 +10,17 @@ import {removeIf} from "../../utility/array-utility";
 export class CourseTemplateService {
 
   templates!: CourseTemplate[];
+  rootUrl = '/api/courses-templates'
 
-  constructor() {
-    this.init()
+  constructor(private http: HttpClient) {
   }
 
-  init(): void {
-    this.templates = [
-      {
-        id: 1,
-        title: 'C++ super course',
-        description: 'This course will help you to learn basics of such language as C++.'
-      },
-      {
-        id: 2,
-        title: 'JavaRush course',
-        description: 'The Java course is divided into 40 levels. You can move to the next level only if you have solved most of the problems of the current level.'
-      },
-      {
-        id: 3,
-        title: 'Docker from zero to hero',
-        description: 'Work out at your own pace, with the regularity that suits you. You do not have to wait for a group to get together and adjust to a rigid schedule.'
-      }
-    ]
+  getAll(): Observable<CourseTemplate[]> {
+    return this.http.get<CourseTemplate[]>(this.rootUrl);
   }
 
-  getAll(): CourseTemplate[] {
-    return this.templates
-  }
-
-  getById(id: number): CourseTemplate {
-    const filtered = this.templates.filter(t => t.id == id)
-    if (filtered.length == 0) {
-      throw new Error(`No template with id: ${id}`)
-    }
-
-    return filtered[0]
+  getById(id: number): Observable<CourseTemplate> {
+    return this.http.get<CourseTemplate>(this.rootUrl + `/${id}`);
   }
 
   add(template: CourseTemplate): CourseTemplate {

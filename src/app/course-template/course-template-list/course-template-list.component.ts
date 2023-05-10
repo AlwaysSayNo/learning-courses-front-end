@@ -16,7 +16,9 @@ export class CourseTemplateListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.templates = this.courseTemplateService.getAll();
+    this.courseTemplateService.getAll().subscribe((data) => {
+      this.templates = data;
+    });
   }
 
   onAddCourseTemplate(courseTemplate: CourseTemplate) {

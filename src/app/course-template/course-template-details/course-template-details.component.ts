@@ -20,9 +20,14 @@ export class CourseTemplateDetailsComponent implements OnInit {
 
   //TODO exception handling
   ngOnInit(): void {
+    let id: number = -1;
     this.route.params.subscribe((params) => {
-      this.courseTemplate = this.courseTemplateService.getById(params['courseTemplateId'])
-    })
+      id = params['courseTemplateId'];
+    });
+
+    this.courseTemplateService.getById(id).subscribe((data) =>{
+      this.courseTemplate = data;
+    });
   }
 
   //TODO exception handling if return to deleted page
