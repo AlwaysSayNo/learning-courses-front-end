@@ -11,6 +11,7 @@ import {
   CourseDescriptionLengthDirective
 } from "../shared/directive/course-description-length/course-description-length.directive";
 import {FormsModule} from "@angular/forms";
+import {ChapterTemplateModule} from "../chapter-template/chapter-template.module";
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {FormsModule} from "@angular/forms";
   imports: [
     CommonModule,
     FormsModule,
-    CourseTemplateRoutingModule
+    CourseTemplateRoutingModule,
+    ChapterTemplateModule
   ]
 })
 export class CourseTemplateModule { }

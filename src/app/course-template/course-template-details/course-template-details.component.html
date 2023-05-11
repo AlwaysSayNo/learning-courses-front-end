@@ -29,7 +29,7 @@
        [value]="showUpdateForm ? 'Hide form' : 'Update form'"
 >
 
-<div>
-  <a [routerLink]="'/course-templates'">Go back</a>
-  <a [routerLink]="'/chapter-templates/create'">Create chapter</a>
-</div>
+<a
+  class="btn btn-success"
+  [routerLink]="['/course-templates/', courseTemplate.id, 'chapter-templates']"
+>Chapters</a>
