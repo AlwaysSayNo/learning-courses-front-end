@@ -9,7 +9,7 @@ import {ChapterTemplate} from "../../shared/model/ChapterTemplate";
 export class ChapterTemplateService {
 
   rootUrl = '/api/courses-templates/:courseTemplateId/chapters-templates/';
-  idUrl = '/api/courses-templates/:courseTemplateId/chapters-templates/:id';
+  idUrl = '/api/courses-templates/:courseTemplateId/chapters-templates/:chapterTemplateId';
 
 
   constructor(private http: HttpClient) {
@@ -23,7 +23,7 @@ export class ChapterTemplateService {
   getById(courseTemplateId: number, id: number): Observable<ChapterTemplate> {
     let url = this.idUrl
       .replace(':courseTemplateId', courseTemplateId.toString())
-      .replace(':id', id.toString());
+      .replace(':chapterTemplateId', id.toString());
     return this.http.get<ChapterTemplate>(url);
   }
 
@@ -32,17 +32,18 @@ export class ChapterTemplateService {
     return this.http.post<ChapterTemplate>(url, template);
   }
 
+  //TODO make the binding between service and paths smaller. the expected result is to allocate pathArgs to some constant equal to path and service
   delete(courseTemplateId: number, id: number): Observable<any> {
     let url = this.idUrl
       .replace(':courseTemplateId', courseTemplateId.toString())
-      .replace(':id', id.toString());
+      .replace(':chapterTemplateId', id.toString());
     return this.http.delete(url);
   }
 
   update(courseTemplateId: number, id: number, chapterTemplate: ChapterTemplate): Observable<ChapterTemplate> {
     let url = this.idUrl
       .replace(':courseTemplateId', courseTemplateId.toString())
-      .replace(':id', id.toString());
+      .replace(':chapterTemplateId', id.toString());
     return this.http.put<ChapterTemplate>(url, chapterTemplate);
   }
 

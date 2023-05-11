@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <form #chapterTemplateForm="ngForm" (ngSubmit)="update()">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h3 class="card-title">Update chapter template</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <input id="title"
+                     type="text"
+                     class="form-control"
+                     placeholder="Title"
+                     required
+                     appDefaultTitleLength
+                     name = "title"
+                     [(ngModel)]="template.title"
+                     #templateTitle = "ngModel"
+              >
+            </div>
+            <div class="alert alert-danger"
+                 *ngIf = "templateTitle.dirty && templateTitle.errors?.['required']">
+              Please provide the title
+            </div>
+            <div class="alert alert-danger"
+                 *ngIf = "templateTitle.dirty && templateTitle.errors?.['appCourseTitleLength']">
+              {{templateTitle.errors?.['appCourseTitleLength']}}
+            </div>
+
+            <div class="form-group">
+                <textarea id="description"
+                          type="textarea"
+                          class="form-control"
+                          placeholder="Description"
+                          rows="3"
+                          required
+                          appDefaultDescriptionLength
+                          name = "description"
+                          [(ngModel)]="template.description"
+                          #templateDescription = "ngModel"
+                ></textarea>
+              <div class="alert alert-danger"
+                   *ngIf = "templateDescription.dirty && templateDescription.errors?.['required']">
+                Please provide description
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf = "templateDescription.dirty && templateDescription.errors?.['appCourseDescriptionLength']">
+                {{templateDescription.errors?.['appCourseDescriptionLength']}}
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" type="submit"
+                    [disabled]="chapterTemplateForm.invalid"
+            >Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
