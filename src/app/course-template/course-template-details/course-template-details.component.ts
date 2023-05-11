@@ -32,13 +32,13 @@ export class CourseTemplateDetailsComponent implements OnInit {
 
   //TODO exception handling if return to deleted page
   delete(): void {
-    this.courseTemplateService.delete(this.courseTemplate.id);
+    this.courseTemplateService.delete(this.courseTemplate.id).subscribe();
     void this.router.navigateByUrl('/course-templates');
   }
 
   onUpdateCourseTemplate(courseTemplate: CourseTemplate): void {
     this.courseTemplate = {...courseTemplate};
-    this.courseTemplateService.update(this.courseTemplate);
+    this.courseTemplateService.update(this.courseTemplate.id, this.courseTemplate).subscribe();
     this.showUpdateForm = false;
   }
 }

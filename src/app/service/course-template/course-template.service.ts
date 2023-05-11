@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {CourseTemplate} from "../../shared/model/CourseTemplate";
-import {removeIf} from "../../utility/array-utility";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
@@ -9,8 +8,8 @@ import {Observable} from "rxjs";
 })
 export class CourseTemplateService {
 
-  templates!: CourseTemplate[];
-  rootUrl = '/api/courses-templates'
+  rootUrl = '/api/courses-templates';
+  idUrl = '/api/courses-templates/:id';
 
   constructor(private http: HttpClient) {
   }
@@ -20,21 +19,22 @@ export class CourseTemplateService {
   }
 
   getById(id: number): Observable<CourseTemplate> {
-    return this.http.get<CourseTemplate>(this.rootUrl + `/${id}`);
+    let url = this.idUrl.replace(':id', id.toString());
+    return this.http.get<CourseTemplate>(url);
   }
 
-  add(template: CourseTemplate): CourseTemplate {
-    template.id = this.templates.push(template);
-    return template;
+  add(template: CourseTemplate): Observable<CourseTemplate> {
+    return this.http.post<CourseTemplate>(this.rootUrl, template);
   }
 
-  delete(id: number): void {
-    this.templates = removeIf(this.templates, (t) => t.id == id);
+  delete(id: number): Observable<any> {
+    let url = this.idUrl.replace(':id', id.toString());
+    return this.http.delete(url);
   }
 
-  update(courseTemplate: CourseTemplate): CourseTemplate {
-    this.templates[courseTemplate.id - 1] = courseTemplate;
-    return courseTemplate;
+  update(courseTemplateId: number, courseTemplate: CourseTemplate): Observable<CourseTemplate> {
+    let url = this.idUrl.replace(':id', courseTemplateId.toString());
+    return this.http.put<CourseTemplate>(url, courseTemplate);
   }
 
 
