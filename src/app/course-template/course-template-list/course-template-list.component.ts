@@ -10,7 +10,7 @@ import {CourseTemplate} from "../../shared/model/CourseTemplate";
 export class CourseTemplateListComponent implements OnInit {
 
   templates!: CourseTemplate[];
-  showForm = false;
+  showCreateForm = false;
 
   constructor(private courseTemplateService: CourseTemplateService) {
   }
@@ -26,6 +26,6 @@ export class CourseTemplateListComponent implements OnInit {
     this.courseTemplateService.add(courseTemplate).subscribe((data) => {
       this.templates.push(data);
     });
-    this.showForm = false;
+    this.showCreateForm = false;
   }
 }

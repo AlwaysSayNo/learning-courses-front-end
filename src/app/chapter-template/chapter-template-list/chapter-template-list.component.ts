@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChapterTemplate} from "../../shared/model/ChapterTemplate";
 import {ChapterTemplateService} from "../../service/chapter-template/chapter-template.service";
 import {ActivatedRoute} from "@angular/router";
@@ -12,10 +12,11 @@ export class ChapterTemplateListComponent implements OnInit {
 
   templates!: ChapterTemplate[];
   courseTemplateId!: number;
-  showForm = false;
+  showCreateForm = false;
 
   constructor(private chapterTemplateService: ChapterTemplateService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -27,4 +28,10 @@ export class ChapterTemplateListComponent implements OnInit {
     });
   }
 
+  onAddChapterTemplate(chapterTemplate: ChapterTemplate) {
+    this.chapterTemplateService.add(this.courseTemplateId, chapterTemplate).subscribe((data) => {
+      this.templates.push(data);
+    });
+    this.showCreateForm = false;
+  }
 }

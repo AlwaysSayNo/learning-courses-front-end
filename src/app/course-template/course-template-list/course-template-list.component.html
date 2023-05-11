@@ -1,11 +1,11 @@
-<!--TODO save data while disabling-->
-<ng-container *ngIf="showForm">
+<!--TODO do i need to save data while disabling-->
+<ng-container *ngIf="showCreateForm">
   <app-course-template-add (addCourseTemplate)="onAddCourseTemplate($event)"></app-course-template-add>
 </ng-container>
 
 <input type="button"
-       (click)="showForm = !showForm"
-       [value]="showForm ? 'Hide form': 'Show form'"
+       (click)="showCreateForm = !showCreateForm"
+       [value]="showCreateForm ? 'Hide form': 'Show form'"
 >
 
 <table>

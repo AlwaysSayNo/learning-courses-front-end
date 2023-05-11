@@ -15,6 +15,17 @@
   </tbody>
 </table>
 
+<div>
+  <a
+    class="btn btn-primary"
+    [routerLink]="['/course-templates/']"
+  >Go Back</a>
+  <a
+    class="btn btn-success"
+    [routerLink]="['/course-templates/', courseTemplate.id, 'chapter-templates']"
+  >Chapters</a>
+</div>
+
 <ng-container *ngIf="showUpdateForm">
   <app-course-template-update
     [template]="courseTemplate"
@@ -22,14 +33,12 @@
   ></app-course-template-update>
 </ng-container>
 
-<button class="btn btn-danger" (click)="delete()">Delete</button>
-<input type="button"
-       class="btn btn-primary"
-       (click)="showUpdateForm = !showUpdateForm"
-       [value]="showUpdateForm ? 'Hide form' : 'Update form'"
->
+<div>
+  <button class="btn btn-danger" (click)="delete()">Delete</button>
+  <input type="button"
+         class="btn btn-primary"
+         (click)="showUpdateForm = !showUpdateForm"
+         [value]="showUpdateForm ? 'Hide form' : 'Update form'"
+  >
+</div>
 
-<a
-  class="btn btn-success"
-  [routerLink]="['/course-templates/', courseTemplate.id, 'chapter-templates']"
->Chapters</a>

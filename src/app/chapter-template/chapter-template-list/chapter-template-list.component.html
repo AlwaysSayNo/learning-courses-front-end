@@ -1,10 +1,10 @@
-<ng-container *ngIf="showForm">
-<!--  <app-course-template-add (addCourseTemplate)="onAddCourseTemplate($event)"></app-course-template-add>-->
+<ng-container *ngIf="showCreateForm">
+  <app-chapter-template-add (addChapterTemplate)="onAddChapterTemplate($event)"></app-chapter-template-add>
 </ng-container>
 
 <input type="button"
-       (click)="showForm = !showForm"
-       [value]="showForm ? 'Hide form': 'Show form'"
+       (click)="showCreateForm = !showCreateForm"
+       [value]="showCreateForm ? 'Hide form': 'Show form'"
 >
 
 <table>
@@ -19,7 +19,7 @@
   <ng-container *ngFor="let template of templates;">
     <tr>
       <td>
-        <a [routerLink]="['/course-templates', template.id]">
+        <a [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', template.id]">
           {{template.id}}
         </a>
       </td>
@@ -35,8 +35,4 @@
     class="btn btn-success"
     [routerLink]="['/course-templates', courseTemplateId]"
   >Go back</a>
-  <a
-    class="btn btn-primary"
-    [routerLink]="['/chapter-templates/', courseTemplateId, '/chapter-templates/', 'create']"
-  >Create chapter</a>
 </div>
