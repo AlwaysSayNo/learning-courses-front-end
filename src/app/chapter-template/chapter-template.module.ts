@@ -8,6 +8,7 @@ import {ChapterTemplateAddComponent} from './chapter-template-add/chapter-templa
 import {ValidationDirectiveModule} from "../shared/directive/validation-directive.module";
 import {ChapterTemplateDetailsComponent} from './chapter-template-details/chapter-template-details.component';
 import {ChapterTemplateUpdateComponent} from './chapter-template-update/chapter-template-update.component';
+import {LessonTemplateModule} from "../lesson-template/lesson-template.module";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {ChapterTemplateUpdateComponent} from './chapter-template-update/chapter-
     CommonModule,
     FormsModule,
     ChapterTemplateRoutingModule,
-    ValidationDirectiveModule
+    ValidationDirectiveModule,
+    LessonTemplateModule
   ]
 })
 export class ChapterTemplateModule {

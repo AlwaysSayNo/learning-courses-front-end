@@ -4,7 +4,7 @@
       <form #chapterTemplateForm="ngForm" (ngSubmit)="update()">
         <div class="card">
           <div class="card-header bg-primary text-white">
-            <h3 class="card-title">Update chapter template</h3>
+            <h3 class="card-title">Update lesson template</h3>
           </div>
           <div class="card-body">
             <div class="form-group">
@@ -40,14 +40,14 @@
                           [(ngModel)]="template.description"
                           #templateDescription = "ngModel"
                 ></textarea>
-            </div>
-            <div class="alert alert-danger"
-                 *ngIf = "templateDescription.dirty && templateDescription.errors?.['required']">
-              Please provide description
-            </div>
-            <div class="alert alert-danger"
-                 *ngIf = "templateDescription.dirty && templateDescription.errors?.['appCourseDescriptionLength']">
-              {{templateDescription.errors?.['appCourseDescriptionLength']}}
+              <div class="alert alert-danger"
+                   *ngIf = "templateDescription.dirty && templateDescription.errors?.['required']">
+                Please provide description
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf = "templateDescription.dirty && templateDescription.errors?.['appCourseDescriptionLength']">
+                {{templateDescription.errors?.['appCourseDescriptionLength']}}
+              </div>
             </div>
 
             <div class="form-group">
@@ -70,8 +70,50 @@
                  *ngIf="templateNumber.dirty && templateNumber.errors?.['appNumberSegment']">
               {{templateNumber.errors?.['appNumberSegment']}}
             </div>
-          </div>
 
+            <!--TODO Add validation for case where successMark > maxMark-->
+            <div class="form-group">
+              <input id="maxMark"
+                     type="number"
+                     class="form-control"
+                     placeholder="Max mark"
+                     required
+                     appNumberSegment="1, inf"
+                     name="maxMark"
+                     [(ngModel)]="template.maxMark"
+                     #templateMaxMark="ngModel"
+              >
+            </div>
+            <div class="alert alert-danger"
+                 *ngIf="templateMaxMark.dirty && templateMaxMark.errors?.['required']">
+              Please provide number
+            </div>
+            <div class="alert alert-danger"
+                 *ngIf="templateMaxMark.dirty && templateMaxMark.errors?.['appNumberSegment']">
+              {{templateMaxMark.errors?.['appNumberSegment']}}
+            </div>
+
+            <div class="form-group">
+              <input id="successMark"
+                     type="number"
+                     class="form-control"
+                     placeholder="Success mark"
+                     required
+                     appNumberSegment="1, inf"
+                     name="successMark"
+                     [(ngModel)]="template.successMark"
+                     #templateSuccessMark="ngModel"
+              >
+            </div>
+            <div class="alert alert-danger"
+                 *ngIf="templateSuccessMark.dirty && templateSuccessMark.errors?.['required']">
+              Please provide number
+            </div>
+            <div class="alert alert-danger"
+                 *ngIf="templateSuccessMark.dirty && templateSuccessMark.errors?.['appNumberSegment']">
+              {{templateSuccessMark.errors?.['appNumberSegment']}}
+            </div>
+          </div>
           <div class="card-footer">
             <button class="btn btn-primary" type="submit"
                     [disabled]="chapterTemplateForm.invalid"

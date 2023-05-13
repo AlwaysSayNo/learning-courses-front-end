@@ -8,7 +8,7 @@ import {AbstractControl, NG_VALIDATORS, ValidationErrors, Validator} from "@angu
 export class DefaultTitleLengthDirective implements Validator {
 
   MIN_LENGTH = 5;
-  MAX_LENGTH = 40;
+  MAX_LENGTH = 100;
 
   constructor() {
   }
