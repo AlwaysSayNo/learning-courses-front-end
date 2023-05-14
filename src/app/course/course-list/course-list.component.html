@@ -1,0 +1,24 @@
+<table>
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Is finished</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let template of templates;">
+    <tr>
+      <td>
+        <a [routerLink]="['/course', template.id]">
+          {{template.id}}
+        </a>
+      </td>
+      <td>{{template.title | uppercase}}</td>
+      <td>{{template.description}}</td>
+      <td>{{template.isFinished}}</td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>

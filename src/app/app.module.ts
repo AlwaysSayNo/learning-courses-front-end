@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {FormsModule} from "@angular/forms";
 import {CourseTemplateModule} from "./course-template/course-template.module";
 import {HttpClientModule} from "@angular/common/http";
+import {CourseModule} from "./course/course.module";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {HttpClientModule} from "@angular/common/http";
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    CourseTemplateModule
+    CourseTemplateModule,
+    CourseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
