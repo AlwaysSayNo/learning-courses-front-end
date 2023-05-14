@@ -1,0 +1,60 @@
+<div class="container">
+  <h2 class="h2">Course</h2>
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Is finished</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{course.id}}</td>
+        <td>{{course.title | uppercase}}</td>
+        <td>{{course.description}}</td>
+        <td>{{course.isFinished}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="h2">Instructors</h2>
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Number</th>
+        <th>Id</th>
+        <th>Login</th>
+        <th>First name</th>
+        <th>Last name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let instructor of instructors; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{instructor.id}}</td>
+        <td>{{instructor.login | uppercase}}</td>
+        <td>{{instructor.firstName}}</td>
+        <td>{{instructor.lastName}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <a
+      class="btn btn-primary"
+      [routerLink]="['/course/']"
+    >Go Back</a>
+    <a
+      class="btn btn-success"
+      [routerLink]="['/course/', course.id, 'lesson']"
+    >Lessons</a>
+  </div>
+</div>
+
+
