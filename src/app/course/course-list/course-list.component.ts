@@ -9,13 +9,13 @@ import {CourseService} from "../../service/course/course.service";
 })
 export class CourseListComponent implements OnInit {
 
-  templates!: Course[];
+  courses!: Course[];
 
   constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
     this.courseService.getAll().subscribe((data) => {
-      this.templates = data;
+      this.courses = data;
     });
   }
 

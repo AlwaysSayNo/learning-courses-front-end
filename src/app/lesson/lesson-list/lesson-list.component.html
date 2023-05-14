@@ -1,0 +1,39 @@
+<div class="container">
+  <h2 class="h2">Lessons</h2>
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Number</th>
+        <th>Is finished</th>
+        <th>Max mark</th>
+        <th>Success mark</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let lesson of lessons;">
+        <tr>
+          <td>{{lesson.id}}</td>
+          <td>{{lesson.title | uppercase}}</td>
+          <td>{{lesson.description}}</td>
+          <td>{{lesson.number}}</td>
+          <td>{{lesson.isFinished}}</td>
+          <td>{{lesson.maxMark}}</td>
+          <td>{{lesson.successMark}}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <a
+      class="btn btn-primary"
+      [routerLink]="['/course/', courseId]"
+    >Go Back</a>
+  </div>
+</div>
+
