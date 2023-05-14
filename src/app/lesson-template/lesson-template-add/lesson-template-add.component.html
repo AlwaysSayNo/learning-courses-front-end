@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 mx-auto">
-      <form #lessonTemplateForm="ngForm" (ngSubmit)="saveLessonTemplate()">
+      <form #lessonTemplateForm="ngForm" (ngSubmit)="saveLessonTemplate()"
+            appIsUpTo [left]="'successMark'" [right]="'maxMark'">
         <div class="card">
           <div class="card-header bg-primary text-white">
             <h3 class="card-title">New lesson template</h3>
@@ -71,7 +72,6 @@
               {{templateNumber.errors?.['appNumberSegment']}}
             </div>
 
-            <!--TODO Add validation for case where successMark > maxMark-->
             <div class="form-group">
               <input id="maxMark"
                      type="number"
@@ -113,6 +113,12 @@
                  *ngIf="templateSuccessMark.dirty && templateSuccessMark.errors?.['appNumberSegment']">
               {{templateSuccessMark.errors?.['appNumberSegment']}}
             </div>
+
+            <div class="alert alert-danger"
+                 *ngIf="lessonTemplateForm.dirty && lessonTemplateForm.errors?.['appIsUpTo']">
+              {{lessonTemplateForm.errors?.['appIsUpTo']}}
+            </div>
+
           </div>
 
           <div class="card-footer">
