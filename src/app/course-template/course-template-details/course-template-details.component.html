@@ -34,7 +34,11 @@
 </ng-container>
 
 <div>
-  <button class="btn btn-danger" (click)="delete()">Delete</button>
+  <input type="button"
+         class="btn btn-danger"
+         (click)="delete()"
+         value="Delete"
+  >
   <input type="button"
          class="btn btn-primary"
          (click)="showUpdateForm = !showUpdateForm"
@@ -42,3 +46,10 @@
   >
 </div>
 
+<div>
+  <input type="button"
+         class="btn btn-success"
+         (click)="create()"
+         value="Create"
+  >
+</div>

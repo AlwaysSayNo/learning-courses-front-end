@@ -41,4 +41,11 @@ export class CourseTemplateDetailsComponent implements OnInit {
     this.courseTemplateService.update(this.courseTemplate.id, this.courseTemplate).subscribe();
     this.showUpdateForm = false;
   }
+
+  create(): void {
+    this.courseTemplateService.create(this.courseTemplate.id).subscribe((data) => {
+      void this.router.navigate(['/course/', data.id]);
+    });
+  }
+
 }
