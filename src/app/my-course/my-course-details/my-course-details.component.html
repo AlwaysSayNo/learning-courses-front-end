@@ -1,0 +1,61 @@
+<div class="container">
+  <h2 class="h2">Course</h2>
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Is finished</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{course.id}}</td>
+        <td>{{course.title | uppercase}}</td>
+        <td>{{course.description}}</td>
+        <td>{{course.isFinished}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Mark</th>
+        <th>Is passed</th>
+        <th>Final feedback</th>
+        <th>User id</th>
+        <th>Course id</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{userToCourse?.id}}</td>
+        <td>{{userToCourse?.mark}}</td>
+        <td>{{userToCourse?.isPassed}}</td>
+        <td>{{userToCourse?.finalFeedback}}</td>
+        <td>{{userToCourse?.userId}}</td>
+        <td>{{userToCourse?.courseId}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-courses-users-list [userRole]="ROLE_TYPE.INSTRUCTOR" [courseId]="courseId"></app-courses-users-list>
+
+  <div>
+    <a
+      class="btn btn-primary"
+      [routerLink]="['/user/my-courses/']"
+    >Go Back</a>
+    <a
+      class="btn btn-success"
+      [routerLink]="['/user/my-courses/', courseId, 'lessons']"
+    >Lessons</a>
+  </div>
+</div>

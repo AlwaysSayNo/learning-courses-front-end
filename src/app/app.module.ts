@@ -10,6 +10,7 @@ import {CourseModule} from "./course/course.module";
 import {LoginComponent} from './login/login.component';
 import {ErrorInterceptor} from "./interceptor/error/error.interceptor";
 import {JwtInterceptor} from "./interceptor/jwt/jwt.interceptor";
+import {MyCourseModule} from "./my-course/my-course.module";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {JwtInterceptor} from "./interceptor/jwt/jwt.interceptor";
     HttpClientModule,
     FormsModule,
     CourseTemplateModule,
-    CourseModule
+    CourseModule,
+    MyCourseModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

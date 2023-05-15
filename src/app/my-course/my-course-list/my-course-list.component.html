@@ -1,0 +1,30 @@
+<div class="container">
+  <h2 class="h2">My courses</h2>
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Is finished</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let course of courses;">
+        <tr>
+          <td>
+            <a [routerLink]="['/user/my-courses', course.id, 'info']">
+              {{course.id}}
+            </a>
+          </td>
+          <td>{{course.title | uppercase}}</td>
+          <td>{{course.description}}</td>
+          <td>{{course.isFinished}}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+

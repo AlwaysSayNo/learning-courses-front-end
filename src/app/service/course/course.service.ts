@@ -57,7 +57,7 @@ export class CourseService {
     return this.http.post<UserToCourse>(url, {});
   }
 
-  getAllUsersForCourse(courseId: number, roleType: RoleType): Observable<User[]> {
+  getAllUsersForCourse(courseId: number, roleType: RoleType | undefined): Observable<User[]> {
     let url = this.usersUrl.replace(PathVariable.courseId.toString(), courseId.toString());
     const options = roleType ?
       {params: new HttpParams().set('roleType', roleType.toString())} : {};
