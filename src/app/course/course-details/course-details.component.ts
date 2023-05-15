@@ -16,6 +16,7 @@ import {AuthenticationService} from "../../service/authentication/authentication
 })
 export class CourseDetailsComponent implements OnInit {
 
+  public ROLE_TYPE = RoleType;
   courseId!: number;
   course!: Course;
   userToCourse?: UserToCourse;

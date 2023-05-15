@@ -1,45 +1,51 @@
-<table>
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Number</th>
-    <th>Max mark</th>
-    <th>Success mark</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>{{lessonTemplate.id}}</td>
-    <td>{{lessonTemplate.title | uppercase}}</td>
-    <td>{{lessonTemplate.description}}</td>
-    <td>{{lessonTemplate.number}}</td>
-    <td>{{lessonTemplate.maxMark}}</td>
-    <td>{{lessonTemplate.successMark}}</td>
-  </tr>
-  </tbody>
-</table>
+<div class="container">
+  <h2 class="h2">Chapter template: "{{lessonTemplate.title}}"</h2>
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Number</th>
+        <th>Max mark</th>
+        <th>Success mark</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{lessonTemplate.id}}</td>
+        <td>{{lessonTemplate.title | uppercase}}</td>
+        <td>{{lessonTemplate.description}}</td>
+        <td>{{lessonTemplate.number}}</td>
+        <td>{{lessonTemplate.maxMark}}</td>
+        <td>{{lessonTemplate.successMark}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 
-<div>
-  <a
-    class="btn btn-primary"
-    [routerLink]="['/course-templates/', courseTemplateId, 'chapter-templates', chapterTemplateId, 'lesson-templates']"
-  >Go Back</a>
+  <div>
+    <a
+      class="btn btn-primary"
+      [routerLink]="['/course-templates/', courseTemplateId, 'chapter-templates', chapterTemplateId, 'lesson-templates']"
+    >Go Back</a>
+  </div>
+
+  <ng-container *ngIf="showUpdateForm">
+    <app-lesson-template-update
+      [template]="lessonTemplate"
+      (updateLessonTemplate)="onUpdateLessonTemplate($event)"
+    ></app-lesson-template-update>
+  </ng-container>
+
+  <div>
+    <button class="btn btn-danger" (click)="delete()">Delete</button>
+    <input type="button"
+           class="btn btn-primary"
+           (click)="showUpdateForm = !showUpdateForm"
+           [value]="showUpdateForm ? 'Hide form' : 'Update form'"
+    >
+  </div>
 </div>
 
-<ng-container *ngIf="showUpdateForm">
-  <app-lesson-template-update
-    [template]="lessonTemplate"
-    (updateLessonTemplate)="onUpdateLessonTemplate($event)"
-  ></app-lesson-template-update>
-</ng-container>
-
-<div>
-  <button class="btn btn-danger" (click)="delete()">Delete</button>
-  <input type="button"
-         class="btn btn-primary"
-         (click)="showUpdateForm = !showUpdateForm"
-         [value]="showUpdateForm ? 'Hide form' : 'Update form'"
-  >
-</div>

@@ -21,29 +21,7 @@
     </table>
   </div>
 
-  <h2 class="h2">Instructors</h2>
-  <div class="table-responsive">
-    <table class="table table-striped custom-table">
-      <thead>
-      <tr>
-        <th>Number</th>
-        <th>Id</th>
-        <th>Login</th>
-        <th>First name</th>
-        <th>Last name</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let instructor of instructors; let i = index">
-        <td>{{i+1}}</td>
-        <td>{{instructor.id}}</td>
-        <td>{{instructor.login | uppercase}}</td>
-        <td>{{instructor.firstName}}</td>
-        <td>{{instructor.lastName}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <app-courses-users-list [userRole]="ROLE_TYPE.INSTRUCTOR" [courseId]="courseId"></app-courses-users-list>
 
   <div>
     <a

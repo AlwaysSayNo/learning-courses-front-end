@@ -21,7 +21,7 @@ export class CourseTemplateService {
   }
 
   getById(courseTemplateId: number): Observable<CourseTemplate> {
-    let url = this.idUrl.replace(PathVariable.courseTemplateId.toString(), courseTemplateId.toString());
+    let url = this.idUrl.replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString());
     return this.http.get<CourseTemplate>(url);
   }
 
@@ -30,25 +30,25 @@ export class CourseTemplateService {
   }
 
   delete(courseTemplateId: number): Observable<any> {
-    let url = this.idUrl.replace(PathVariable.courseTemplateId.toString(), courseTemplateId.toString());
+    let url = this.idUrl.replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString());
     return this.http.delete(url);
   }
 
   update(courseTemplateId: number, courseTemplate: CourseTemplate): Observable<CourseTemplate> {
-    let url = this.idUrl.replace(PathVariable.courseTemplateId.toString(), courseTemplateId.toString());
+    let url = this.idUrl.replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString());
     return this.http.put<CourseTemplate>(url, courseTemplate);
   }
 
 
   create(courseTemplateId: number): Observable<Course> {
-    let url = this.createUrl.replace(PathVariable.courseTemplateId.toString(), courseTemplateId.toString());
+    let url = this.createUrl.replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString());
     return this.http.post<Course>(url, {});
   }
 
 }
 
-enum PathVariable {
+enum TemplatePathVariable {
 
-  courseTemplateId = ":courseTemplateId",
+  COURSE_TEMPLATE_ID = ":courseTemplateId",
 
 }

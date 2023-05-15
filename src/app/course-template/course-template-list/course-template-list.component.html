@@ -1,22 +1,29 @@
-<!--TODO do i need to save data while disabling-->
-<ng-container *ngIf="showCreateForm">
-  <app-course-template-add (addCourseTemplate)="onAddCourseTemplate($event)"></app-course-template-add>
-</ng-container>
+<div class="container">
+  <h2 class="h2">Course templates</h2>
+  <div>
+    <h3 class="h3">Add form</h3>
+      <!--TODO do i need to save data while disabling-->
+    <ng-container *ngIf="showCreateForm">
+      <app-course-template-add (addCourseTemplate)="onAddCourseTemplate($event)"></app-course-template-add>
+    </ng-container>
 
-<input type="button"
-       (click)="showCreateForm = !showCreateForm"
-       [value]="showCreateForm ? 'Hide form': 'Show form'"
->
+    <input type="button"
+           (click)="showCreateForm = !showCreateForm"
+           [value]="showCreateForm ? 'Hide form': 'Show form'"
+    >
+  </div>
+</div>
 
-<table>
-  <thead>
+<div class="table-responsive">
+  <table class="table table-striped custom-table">
+    <thead>
     <tr>
       <th>Id</th>
       <th>Title</th>
       <th>Description</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <ng-container *ngFor="let template of templates;">
       <tr>
         <td>
@@ -28,5 +35,6 @@
         <td>{{template.description}}</td>
       </tr>
     </ng-container>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

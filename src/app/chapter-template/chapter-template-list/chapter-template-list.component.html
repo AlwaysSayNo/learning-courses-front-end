@@ -1,36 +1,45 @@
-<ng-container *ngIf="showCreateForm">
-  <app-chapter-template-add (addChapterTemplate)="onAddChapterTemplate($event)"></app-chapter-template-add>
-</ng-container>
+<div class="container">
+  <h2 class="h2">Chapter templates</h2>
 
-<input type="button"
-       (click)="showCreateForm = !showCreateForm"
-       [value]="showCreateForm ? 'Hide form': 'Show form'"
->
+  <div>
+    <h3 class="h3">Add form</h3>
+    <ng-container *ngIf="showCreateForm">
+      <app-chapter-template-add (addChapterTemplate)="onAddChapterTemplate($event)"></app-chapter-template-add>
+    </ng-container>
 
-<table>
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Number</th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let template of templates;">
+    <input type="button"
+           (click)="showCreateForm = !showCreateForm"
+           [value]="showCreateForm ? 'Hide form': 'Show form'"
+    >
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped custom-table">
+    <thead>
     <tr>
-      <td>
-        <a [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', template.id]">
-          {{template.id}}
-        </a>
-      </td>
-      <td>{{template.title | uppercase}}</td>
-      <td>{{template.description}}</td>
-      <td>{{template.number}}</td>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Number</th>
     </tr>
-  </ng-container>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let template of templates;">
+      <tr>
+        <td>
+          <a [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', template.id]">
+            {{template.id}}
+          </a>
+        </td>
+        <td>{{template.title | uppercase}}</td>
+        <td>{{template.description}}</td>
+        <td>{{template.number}}</td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
 
 <div>
   <a

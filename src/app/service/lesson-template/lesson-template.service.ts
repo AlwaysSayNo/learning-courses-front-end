@@ -16,40 +16,48 @@ export class LessonTemplateService {
 
   getAllInChapter(courseTemplateId: number, chapterTemplateId: number): Observable<LessonTemplate[]> {
     let url = this.rootUrl
-      .replace(':courseTemplateId', courseTemplateId.toString())
-      .replace(':chapterTemplateId', chapterTemplateId.toString());
+      .replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString())
+      .replace(TemplatePathVariable.CHAPTER_TEMPLATE_ID.toString(), chapterTemplateId.toString());
     return this.http.get<LessonTemplate[]>(url);
   }
 
-  getById(courseTemplateId: number, chapterTemplateId: number, id: number): Observable<LessonTemplate> {
+  getById(courseTemplateId: number, chapterTemplateId: number, lessonTemplateId: number): Observable<LessonTemplate> {
     let url = this.idUrl
-      .replace(':courseTemplateId', courseTemplateId.toString())
-      .replace(':chapterTemplateId', chapterTemplateId.toString())
-      .replace(':lessonTemplateId', id.toString());
+      .replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString())
+      .replace(TemplatePathVariable.CHAPTER_TEMPLATE_ID.toString(), chapterTemplateId.toString())
+      .replace(TemplatePathVariable.LESSON_TEMPLATE_ID.toString(), lessonTemplateId.toString());
     return this.http.get<LessonTemplate>(url);
   }
 
   add(courseTemplateId: number, chapterTemplateId: number, template: LessonTemplate): Observable<LessonTemplate> {
     let url = this.rootUrl
-      .replace(':courseTemplateId', courseTemplateId.toString())
-      .replace(':chapterTemplateId', chapterTemplateId.toString());
+      .replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString())
+      .replace(TemplatePathVariable.CHAPTER_TEMPLATE_ID.toString(), chapterTemplateId.toString());
     return this.http.post<LessonTemplate>(url, template);
   }
 
-  delete(courseTemplateId: number, chapterTemplateId: number, id: number): Observable<any> {
+  delete(courseTemplateId: number, chapterTemplateId: number, lessonTemplateId: number): Observable<any> {
     let url = this.idUrl
-      .replace(':courseTemplateId', courseTemplateId.toString())
-      .replace(':chapterTemplateId', chapterTemplateId.toString())
-      .replace(':lessonTemplateId', id.toString());
+      .replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString())
+      .replace(TemplatePathVariable.CHAPTER_TEMPLATE_ID.toString(), chapterTemplateId.toString())
+      .replace(TemplatePathVariable.LESSON_TEMPLATE_ID.toString(), lessonTemplateId.toString());
     return this.http.delete(url);
   }
 
-  update(courseTemplateId: number, chapterTemplateId: number, id: number, template: LessonTemplate): Observable<LessonTemplate> {
+  update(courseTemplateId: number, chapterTemplateId: number, lessonTemplateId: number, template: LessonTemplate): Observable<LessonTemplate> {
     let url = this.idUrl
-      .replace(':courseTemplateId', courseTemplateId.toString())
-      .replace(':chapterTemplateId', chapterTemplateId.toString())
-      .replace(':lessonTemplateId', id.toString());
+      .replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString())
+      .replace(TemplatePathVariable.CHAPTER_TEMPLATE_ID.toString(), chapterTemplateId.toString())
+      .replace(TemplatePathVariable.LESSON_TEMPLATE_ID.toString(), lessonTemplateId.toString());
     return this.http.put<LessonTemplate>(url, template);
   }
+
+}
+
+enum TemplatePathVariable {
+
+  COURSE_TEMPLATE_ID = ":courseTemplateId",
+  CHAPTER_TEMPLATE_ID = ":chapterTemplateId",
+  LESSON_TEMPLATE_ID = ":lessonTemplateId",
 
 }

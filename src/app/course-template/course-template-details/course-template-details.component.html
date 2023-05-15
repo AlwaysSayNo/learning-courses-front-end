@@ -1,55 +1,60 @@
-<table>
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Title</th>
-    <th>Description</th>
-  </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{courseTemplate.id}}</td>
-      <td>{{courseTemplate.title | uppercase}}</td>
-      <td>{{courseTemplate.description}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+  <h2 class="h2">Course template: "{{courseTemplate.title}}"</h2>
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{courseTemplate.id}}</td>
+        <td>{{courseTemplate.title | uppercase}}</td>
+        <td>{{courseTemplate.description}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 
-<div>
-  <a
-    class="btn btn-primary"
-    [routerLink]="['/course-templates/']"
-  >Go Back</a>
-  <a
-    class="btn btn-success"
-    [routerLink]="['/course-templates/', courseTemplate.id, 'chapter-templates']"
-  >Chapters</a>
-</div>
+  <div>
+    <a
+      class="btn btn-primary"
+      [routerLink]="['/course-templates/']"
+    >Go Back</a>
+    <a
+      class="btn btn-success"
+      [routerLink]="['/course-templates/', courseTemplate.id, 'chapter-templates']"
+    >Chapters</a>
+  </div>
 
-<ng-container *ngIf="showUpdateForm">
-  <app-course-template-update
-    [template]="courseTemplate"
-    (updateCourseTemplate)="onUpdateCourseTemplate($event)"
-  ></app-course-template-update>
-</ng-container>
+  <ng-container *ngIf="showUpdateForm">
+    <app-course-template-update
+      [template]="courseTemplate"
+      (updateCourseTemplate)="onUpdateCourseTemplate($event)"
+    ></app-course-template-update>
+  </ng-container>
 
-<div>
-  <input type="button"
-         class="btn btn-danger"
-         (click)="delete()"
-         value="Delete"
-  >
-  <input type="button"
-         class="btn btn-primary"
-         (click)="showUpdateForm = !showUpdateForm"
-         [value]="showUpdateForm ? 'Hide form' : 'Update form'"
-  >
-</div>
+  <div>
+    <input type="button"
+           class="btn btn-danger"
+           (click)="delete()"
+           value="Delete"
+    >
+    <input type="button"
+           class="btn btn-primary"
+           (click)="showUpdateForm = !showUpdateForm"
+           [value]="showUpdateForm ? 'Hide form' : 'Update form'"
+    >
+  </div>
 
-<div>
-  <input type="button"
-         class="btn btn-success"
-         (click)="create()"
-         value="Create"
-  >
+  <div>
+    <input type="button"
+           class="btn btn-success"
+           (click)="create()"
+           value="Create"
+    >
+  </div>
 </div>

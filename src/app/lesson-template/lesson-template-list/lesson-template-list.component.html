@@ -1,44 +1,53 @@
-<ng-container *ngIf="showCreateForm">
-  <app-lesson-template-add (addLessonTemplate)="onAddLessonTemplate($event)"></app-lesson-template-add>
-</ng-container>
+<div class="container">
+  <h2 class="h2">Lesson templates</h2>
 
-<input type="button"
-       (click)="showCreateForm = !showCreateForm"
-       [value]="showCreateForm ? 'Hide form': 'Show form'"
->
+  <div>
+    <h3 class="h3">Add form</h3>
+    <ng-container *ngIf="showCreateForm">
+      <app-lesson-template-add (addLessonTemplate)="onAddLessonTemplate($event)"></app-lesson-template-add>
+    </ng-container>
 
-<table>
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Number
-    <th>Max mark</th>
-    <th>Success mark</th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let template of templates;">
-    <tr>
-      <td>
-        <a [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', chapterTemplateId, 'lesson-templates', template.id]">
-          {{template.id}}
-        </a>
-      </td>
-      <td>{{template.title | uppercase}}</td>
-      <td>{{template.description}}</td>
-      <td>{{template.number}}</td>
-      <td>{{template.maxMark}}</td>
-      <td>{{template.successMark}}</td>
-    </tr>
-  </ng-container>
-  </tbody>
-</table>
+    <input type="button"
+           (click)="showCreateForm = !showCreateForm"
+           [value]="showCreateForm ? 'Hide form': 'Show form'"
+    >
+  </div>
 
-<div>
-  <a
-    class="btn btn-success"
-    [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', chapterTemplateId]"
-  >Go back</a>
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Number
+        <th>Max mark</th>
+        <th>Success mark</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let template of templates;">
+        <tr>
+          <td>
+            <a [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', chapterTemplateId, 'lesson-templates', template.id]">
+              {{template.id}}
+            </a>
+          </td>
+          <td>{{template.title | uppercase}}</td>
+          <td>{{template.description}}</td>
+          <td>{{template.number}}</td>
+          <td>{{template.maxMark}}</td>
+          <td>{{template.successMark}}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <a
+      class="btn btn-success"
+      [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', chapterTemplateId]"
+    >Go back</a>
+  </div>
 </div>

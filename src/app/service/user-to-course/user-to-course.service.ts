@@ -19,15 +19,14 @@ export class UserToCourseService {
   }
 
   getById(courseId: number): Observable<UserToCourse> {
-    let url = this.idUrl.replace(PathVariable.courseId.toString(), courseId.toString());
+    let url = this.idUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.get<UserToCourse>(url);
   }
 
 }
 
-enum PathVariable {
+enum TemplatePathVariable {
 
-  courseId = ":courseId",
-  lessonId = ":lessonId",
+  COURSE_ID = ":courseId",
 
 }

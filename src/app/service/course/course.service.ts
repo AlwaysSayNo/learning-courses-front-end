@@ -28,37 +28,37 @@ export class CourseService {
   }
 
   getById(courseId: number): Observable<Course> {
-    let url = this.idUrl.replace(PathVariable.courseId.toString(), courseId.toString());
+    let url = this.idUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.get<Course>(url);
   }
 
   getAllLessonsInCourse(courseId: number): Observable<Lesson[]> {
-    let url = this.allLessonsUrl.replace(PathVariable.courseId.toString(), courseId.toString());
+    let url = this.allLessonsUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.get<Lesson[]>(url);
   }
 
   delete(courseId: number): Observable<any> {
-    let url = this.idUrl.replace(PathVariable.courseId.toString(), courseId.toString());
+    let url = this.idUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.delete(url);
   }
 
   update(courseId: number, courseUpdate: Course): Observable<Course> {
-    let url = this.idUrl.replace(PathVariable.courseId.toString(), courseId.toString());
+    let url = this.idUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.put<Course>(url, courseUpdate);
   }
 
   finish(courseId: number): Observable<string> {
-    let url = this.finishUrl.replace(PathVariable.courseId.toString(), courseId.toString());
+    let url = this.finishUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.put<string>(url, {});
   }
 
   enroll(courseId: number): Observable<UserToCourse> {
-    let url = this.enrollUrl.replace(PathVariable.courseId.toString(), courseId.toString());
+    let url = this.enrollUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.post<UserToCourse>(url, {});
   }
 
   getAllUsersForCourse(courseId: number, roleType: RoleType | undefined): Observable<User[]> {
-    let url = this.usersUrl.replace(PathVariable.courseId.toString(), courseId.toString());
+    let url = this.usersUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     const options = roleType ?
       {params: new HttpParams().set('roleType', roleType.toString())} : {};
 
@@ -67,33 +67,33 @@ export class CourseService {
 
   getUsersCourseInfo(courseId: number, userId: number): Observable<UserToCourse> {
     let url = this.userCourseInfoUrl
-      .replace(PathVariable.courseId.toString(), courseId.toString())
-      .replace(PathVariable.userId.toString(), userId.toString());
+      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
+      .replace(TemplatePathVariable.USER_ID.toString(), userId.toString());
     return this.http.get<UserToCourse>(url);
   }
 
   updateUsersCourseInfo(courseId: number, userId: number, userToCourseUpdate: UserToCourse): Observable<UserToCourse> {
     let url = this.userCourseInfoUrl
-      .replace(PathVariable.courseId.toString(), courseId.toString())
-      .replace(PathVariable.userId.toString(), userId.toString());
+      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
+      .replace(TemplatePathVariable.USER_ID.toString(), userId.toString());
     return this.http.put<UserToCourse>(url, userToCourseUpdate);
   }
 
   updateUsersLessonInfo(courseId: number, lessonId: number, userId: number,
                         userToCourseUpdate: UserToCourse): Observable<UserToCourse> {
     let url = this.usersLessonsInfoUrl
-      .replace(PathVariable.courseId.toString(), courseId.toString())
-      .replace(PathVariable.lessonId.toString(), lessonId.toString())
-      .replace(PathVariable.userId.toString(), userId.toString());
+      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
+      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString())
+      .replace(TemplatePathVariable.USER_ID.toString(), userId.toString());
     return this.http.put<UserToCourse>(url, userToCourseUpdate);
   }
 
 }
 
-enum PathVariable {
+enum TemplatePathVariable {
 
-  courseId = ":courseId",
-  lessonId = ":lessonId",
-  userId = ":userId",
+  COURSE_ID = ":courseId",
+  LESSON_ID = ":lessonId",
+  USER_ID = ":userId",
 
 }
