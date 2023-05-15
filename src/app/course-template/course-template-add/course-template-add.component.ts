@@ -22,7 +22,6 @@ export class CourseTemplateAddComponent implements OnInit {
   }
 
   saveCourseTemplate() {
-    //TODO With real backend we have to subscribe here to the action and update the form
     this.addCourseTemplate.emit(this.template);
   }
 

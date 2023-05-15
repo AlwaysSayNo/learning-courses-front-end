@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<div class="container">
+  <router-outlet></router-outlet>
+
+  <div *ngIf="user()">
+    <input type="button"
+           class="btn btn-danger"
+           (click)="logout()"
+           value="Logout"
+    >
+  </div>
+</div>

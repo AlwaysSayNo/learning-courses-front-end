@@ -5,12 +5,16 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {FormsModule} from "@angular/forms";
 import {CourseTemplateModule} from "./course-template/course-template.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {CourseModule} from "./course/course.module";
+import {LoginComponent} from './login/login.component';
+import {ErrorInterceptor} from "./interceptor/error/error.interceptor";
+import {JwtInterceptor} from "./interceptor/jwt/jwt.interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,7 +24,10 @@ import {CourseModule} from "./course/course.module";
     CourseTemplateModule,
     CourseModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
