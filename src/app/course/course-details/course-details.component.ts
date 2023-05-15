@@ -4,6 +4,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CourseService} from "../../service/course/course.service";
 import {User} from "../../shared/model/User";
 import {RoleType} from "../../shared/enum/RoleType";
+import {UserToCourseService} from "../../service/user-to-course/user-to-course.service";
+import {UserToCourse} from "../../shared/model/UserToCourse";
+import {UserInfo} from "../../shared/model/UserInfo";
+import {AuthenticationService} from "../../service/authentication/authentication.service";
 
 @Component({
   selector: 'app-course-details',
@@ -12,29 +16,47 @@ import {RoleType} from "../../shared/enum/RoleType";
 })
 export class CourseDetailsComponent implements OnInit {
 
+  courseId!: number;
   course!: Course;
+  userToCourse?: UserToCourse;
   instructors!: User[];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private courseService: CourseService) {
+              private courseService: CourseService,
+              private userToCourseService: UserToCourseService,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
-    let id: number = -1;
     this.route.params.subscribe((params) => {
-      id = params['courseId'];
+      this.courseId = params['courseId'];
     });
 
-    this.courseService.getById(id).subscribe((data) =>{
+    this.courseService.getById(this.courseId).subscribe((data) =>{
       this.course = data;
     });
 
-    this.courseService.getAllUsersForCourse(id, RoleType.INSTRUCTOR).subscribe((data) => {
+    this.courseService.getAllUsersForCourse(this.courseId, RoleType.INSTRUCTOR).subscribe((data) => {
       this.instructors = data;
     });
 
-    console.log(this.instructors)
+    this.userToCourseService.getById(this.courseId).subscribe({
+      next: (data) => {
+        this.userToCourse = data;
+      },
+      error: () => {}
+    });
+  }
+
+  enroll(): void {
+    this.courseService.enroll(this.courseId).subscribe((data) => {
+      this.userToCourse = data;
+    });
+  }
+
+  user (): UserInfo {
+    return this.authenticationService.userValue;
   }
 
 }

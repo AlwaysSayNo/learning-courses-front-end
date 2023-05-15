@@ -55,6 +55,18 @@
       [routerLink]="['/course/', course.id, 'lesson']"
     >Lessons</a>
   </div>
+  <div>
+    <a class="btn btn-primary"
+       *ngIf="userToCourse"
+       [routerLink]="['/user/my-courses/', courseId, 'info']"
+    >Go to course</a>
+    <!--TODO allow another instructors be a part of the course-->
+    <input class="btn btn-success"
+           value="Enroll"
+           *ngIf="!userToCourse && user().role === 'STUDENT'"
+           (click)="enroll()"
+    />
+  </div>
 </div>
 
 
