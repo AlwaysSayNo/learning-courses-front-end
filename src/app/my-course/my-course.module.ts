@@ -5,6 +5,7 @@ import {MyCourseRoutingModule} from './my-course-routing.module';
 import {MyCourseListComponent} from './my-course-list/my-course-list.component';
 import {MyCourseDetailsComponent} from './my-course-details/my-course-details.component';
 import {UserModule} from "../user/user.module";
+import {MyLessonModule} from "../my-lesson/my-lesson.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {UserModule} from "../user/user.module";
   imports: [
     CommonModule,
     MyCourseRoutingModule,
-    UserModule
+    UserModule,
+    MyLessonModule
   ]
 })
 export class MyCourseModule {

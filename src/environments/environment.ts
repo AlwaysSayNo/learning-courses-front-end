@@ -5,7 +5,7 @@
 // all tokens will expire after 365 from 15.05.2023
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:8080/learning-courses/api/v1",
+  apiUrl: "/api/",
   user1: {
     login: 'user1@gmail.com',
     password: 'password',

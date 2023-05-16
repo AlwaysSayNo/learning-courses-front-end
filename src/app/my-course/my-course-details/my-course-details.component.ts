@@ -16,7 +16,7 @@ export class MyCourseDetailsComponent implements OnInit {
   public ROLE_TYPE = RoleType;
   courseId!: number;
   course!: Course;
-  userToCourse?: UserToCourse;
+  userToCourse!: UserToCourse;
 
   constructor(private route: ActivatedRoute,
               private router: Router,

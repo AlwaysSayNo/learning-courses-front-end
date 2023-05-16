@@ -1,3 +1,4 @@
+<!--TODO view for instructor-->
 <div class="container">
   <h2 class="h2">Course</h2>
   <div class="table-responsive">
@@ -7,15 +8,19 @@
         <th>Id</th>
         <th>Title</th>
         <th>Description</th>
-        <th>Is finished</th>
+        <th>Number</th>
+        <th>Max mark</th>
+        <th>Success mark</th>
       </tr>
       </thead>
       <tbody>
       <tr>
-        <td>{{course.id}}</td>
-        <td>{{course.title | uppercase}}</td>
-        <td>{{course.description}}</td>
-        <td>{{course.isFinished}}</td>
+        <td>{{lesson.id}}</td>
+        <td>{{lesson.title | uppercase}}</td>
+        <td>{{lesson.description}}</td>
+        <td>{{lesson.number}}</td>
+        <td>{{lesson.maxMark}}</td>
+        <td>{{lesson.successMark}}</td>
       </tr>
       </tbody>
     </table>
@@ -28,34 +33,24 @@
         <th>Id</th>
         <th>Mark</th>
         <th>Is passed</th>
-        <th>Final feedback</th>
         <th>User id</th>
-        <th>Course id</th>
       </tr>
       </thead>
       <tbody>
       <tr>
-        <td>{{userToCourse.id}}</td>
-        <td>{{userToCourse.mark}}</td>
-        <td>{{userToCourse.isPassed}}</td>
-        <td>{{userToCourse.finalFeedback}}</td>
-        <td>{{userToCourse.userId}}</td>
-        <td>{{userToCourse.courseId}}</td>
+        <td>{{userToLesson.id}}</td>
+        <td>{{userToLesson.mark}}</td>
+        <td>{{userToLesson.isPassed}}</td>
+        <td>{{userToLesson.userId}}</td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <app-courses-users-list [userRole]="ROLE_TYPE.INSTRUCTOR" [courseId]="courseId"></app-courses-users-list>
-
   <div>
     <a
       class="btn btn-primary"
-      [routerLink]="['/user/my-courses/']"
-    >Go Back</a>
-    <a
-      class="btn btn-success"
       [routerLink]="['/user/my-courses/', courseId, 'lessons']"
-    >Lessons</a>
+    >Go Back</a>
   </div>
 </div>

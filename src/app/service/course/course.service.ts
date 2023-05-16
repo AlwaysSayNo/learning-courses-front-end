@@ -15,13 +15,15 @@ export class CourseService {
   rootUrl = '/api/courses';
   idUrl = '/api/courses/:courseId';
   allLessonsUrl = '/api/courses/:courseId/lessons';
+  lessonsUrl = '/api/courses/:courseId/lessons/:lessonId';
   finishUrl = '/api/courses/:courseId/finish';
   enrollUrl = '/api/courses/:courseId/enroll';
   usersUrl = '/api/courses/:courseId/users';
   userCourseInfoUrl = '/api/courses/:courseId/users/:userId';
   usersLessonsInfoUrl = '/api/courses/:courseId/lessons/:lessonId/users/:userId';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(): Observable<Course[]> {
     return this.http.get<Course[]>(this.rootUrl);
@@ -32,9 +34,18 @@ export class CourseService {
     return this.http.get<Course>(url);
   }
 
+  //TODO the same as UserToCourseService#getAllLessonsInCourse
   getAllLessonsInCourse(courseId: number): Observable<Lesson[]> {
     let url = this.allLessonsUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.get<Lesson[]>(url);
+  }
+
+  //TODO use id or refactor LessonController
+  getLessonsInCourse(courseId: number, lessonId: number): Observable<Lesson> {
+    let url = this.lessonsUrl
+      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
+      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString());
+    return this.http.get<Lesson>(url);
   }
 
   delete(courseId: number): Observable<any> {
