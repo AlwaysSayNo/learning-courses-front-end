@@ -4,13 +4,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {FormsModule} from "@angular/forms";
-import {CourseTemplateModule} from "./course-template/course-template.module";
+import {CourseTemplateModule} from "./component/course-template/course-template.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {CourseModule} from "./course/course.module";
-import {LoginComponent} from './login/login.component';
+import {CourseModule} from "./component/course/course.module";
 import {ErrorInterceptor} from "./interceptor/error/error.interceptor";
 import {JwtInterceptor} from "./interceptor/jwt/jwt.interceptor";
-import {MyCourseModule} from "./my-course/my-course.module";
+import {MyCourseModule} from "./component/my-course/my-course.module";
+import {LoginComponent} from "./component/login/login.component";
 
 @NgModule({
   declarations: [
