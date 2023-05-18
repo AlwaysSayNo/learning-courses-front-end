@@ -13,11 +13,11 @@
 
 <div class="progress">
   <mat-progress-bar class="progress-bar" mode="determinate"
-                    [value]="uploadProgress" *ngIf="uploadProgress">
+                    [value]="uploadProgress" *ngIf="uploadProgress && uploadProgress > 0">
   </mat-progress-bar>
 
   <mat-icon class="cancel-upload"
             (click)="cancelUpload()"
-            *ngIf="uploadProgress"
-  >delete_forever</mat-icon>
+            *ngIf="uploadProgress && uploadProgress < 99"
+  >cancel</mat-icon>
 </div>
