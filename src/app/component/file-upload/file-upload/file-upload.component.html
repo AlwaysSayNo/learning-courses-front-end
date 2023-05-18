@@ -2,7 +2,7 @@
        (change)="onFileSelected($event)" #fileUpload>
 
 <div class="file-upload">
-  {{fileName || "No file uploaded yet."}}
+  {{fileInfo?.title || "No file uploaded yet."}}
 
   <button mat-mini-fab color="primary" class="upload-btn"
           (click)="fileUpload.click()">
@@ -16,8 +16,14 @@
                     [value]="uploadProgress" *ngIf="uploadProgress && uploadProgress > 0">
   </mat-progress-bar>
 
-  <mat-icon class="cancel-upload"
-            (click)="cancelUpload()"
-            *ngIf="uploadProgress && uploadProgress < 99"
-  >cancel</mat-icon>
+  <div class="container p-0 d-flex justify-content-end">
+    <mat-icon class="cancel-upload border border-dark"
+              (click)="cancelUpload()"
+              *ngIf="uploadProgress && uploadProgress < 99"
+    >cancel</mat-icon>
+    <mat-icon class="delete-file border border-dark"
+              (click)="onDeleteFile()"
+              *ngIf="fileInfo"
+    >delete</mat-icon>
+  </div>
 </div>
