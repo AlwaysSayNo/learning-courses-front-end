@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { LessonRoutingModule } from './lesson-routing.module';
-import { LessonListComponent } from './lesson-list/lesson-list.component';
+import {LessonRoutingModule} from './lesson-routing.module';
+import {LessonListComponent} from './lesson-list/lesson-list.component';
 
 
 @NgModule({
@@ -11,7 +11,8 @@ import { LessonListComponent } from './lesson-list/lesson-list.component';
   ],
   imports: [
     CommonModule,
-    LessonRoutingModule
+    LessonRoutingModule,
   ]
 })
-export class LessonModule { }
+export class LessonModule {
+}

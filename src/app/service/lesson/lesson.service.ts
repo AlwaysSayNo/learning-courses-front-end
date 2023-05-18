@@ -8,8 +8,8 @@ import {Lesson} from "../../shared/model/Lesson";
 })
 export class LessonService {
 
-  rootUrl = 'api/courses/:courseId/chapters/:chapterId/lessons';
-  idUrl = 'api/courses/:courseId/chapters/:chapterId/lessons/:lessonId';
+  rootUrl = '/api/courses/:courseId/chapters/:chapterId/lessons';
+  idUrl = '/api/courses/:courseId/chapters/:chapterId/lessons/:lessonId';
 
   constructor(private http: HttpClient) {
   }
@@ -18,7 +18,7 @@ export class LessonService {
   getAll(courseId: number, chapterId: number): Observable<Lesson[]> {
     let url = this.rootUrl
       .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
-      .replace(TemplatePathVariable.CHAPTER_ID.toString(), chapterId.toString())
+      .replace(TemplatePathVariable.CHAPTER_ID.toString(), chapterId.toString());
 
     return this.http.get<Lesson[]>(url);
   }
@@ -27,12 +27,11 @@ export class LessonService {
     let url = this.idUrl
       .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
       .replace(TemplatePathVariable.CHAPTER_ID.toString(), chapterId.toString())
-      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString())
+      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString());
     return this.http.get<Lesson>(url);
   }
 
 }
-
 
 enum TemplatePathVariable {
 
