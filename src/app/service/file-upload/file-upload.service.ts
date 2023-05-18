@@ -11,6 +11,7 @@ export class FileUploadService {
   fileInfoUrl = '/api/courses/:courseId/chapters/:chapterId/lessons/:lessonId/files/info';
   fileUploadUrl = '/api/courses/:courseId/chapters/:chapterId/lessons/:lessonId/files/upload';
   fileDeleteUrl = '/api/courses/:courseId/chapters/:chapterId/lessons/:lessonId/files/delete';
+  fileDownloadUrl = '/api/courses/:courseId/chapters/:chapterId/lessons/:lessonId/files/download';
 
   constructor(private http: HttpClient) {
   }
@@ -46,6 +47,18 @@ export class FileUploadService {
     return this.http.delete<any>(url);
   }
 
+  downloadFile(courseId: number, chapterId: number, lessonId: number): Observable<HttpEvent<Blob>> {
+    let url = this.fileDownloadUrl
+      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
+      .replace(TemplatePathVariable.CHAPTER_ID.toString(), chapterId.toString())
+      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString());
+
+    return this.http.get(url, {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'blob'
+    })
+  }
 }
 
 enum TemplatePathVariable {
