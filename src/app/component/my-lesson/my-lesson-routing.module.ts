@@ -15,6 +15,11 @@ const routes: Routes = [
     component: MyLessonDetailsComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'user/my-courses/:courseId/lessons/:lessonId/students/:studentId',
+    component: MyLessonDetailsComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

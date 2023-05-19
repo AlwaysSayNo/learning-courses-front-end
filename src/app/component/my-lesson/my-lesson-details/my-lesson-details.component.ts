@@ -23,7 +23,6 @@ export class MyLessonDetailsComponent implements OnInit {
   lesson!: Lesson;
   userToLesson!: UserToLesson;
 
-  @Input() studentId!: number;
   student!: User;
 
   constructor(private route: ActivatedRoute,
@@ -40,33 +39,47 @@ export class MyLessonDetailsComponent implements OnInit {
       this.lessonId = params[PathVariable.LESSON_ID];
     });
 
+    //TODO it's bad practise, but we use the same array for one student and array of students for instructor
+    // please split the logic later
+    let role = this.user.role;
+    if (role == RoleType.STUDENT) {
+      this.userToCourseService.geUserToLessonInfo(this.courseId, this.lessonId)
+        .subscribe((userToLesson) => {
+            this.userToLesson = userToLesson;
+          },
+          () => {
+          },
+          () => {
+            this.userService.getById(this.userToLesson.userId)
+              .subscribe((student) => {
+                this.student = student;
+              })
+          });
+
+    } else if (role == RoleType.INSTRUCTOR) {
+      //TODO bad decision to split the logic based in url. Split th logic based on component logic.
+      let studentId = -1;
+      this.route.params.subscribe((params) => {
+        studentId = params[PathVariable.STUDENT_ID];
+      });
+      this.courseService.getUserLessonInfo(this.courseId, this.lessonId, studentId)
+        .subscribe((userToLesson) => {
+          this.userToLesson = userToLesson;
+        })
+
+      this.userService.getById(studentId)
+        .subscribe((student) => {
+          this.student = student;
+        })
+    }
+
     this.courseService.getLessonsInCourse(this.courseId, this.lessonId)
       .subscribe((lesson) => {
         this.lesson = lesson;
       });
-
-    this.userService.getById(this.studentId)
-      .subscribe((student) => {
-        this.student = student;
-      })
-
-    //TODO it's bad practise, but we use the same array for one student and array of students for instructor
-    // please split the logic later
-    let role = this.user().role;
-    if (role == RoleType.STUDENT) {
-      this.userToCourseService.geUserToLessonInfo(this.courseId, this.lessonId)
-        .subscribe((userToLesson) => {
-          this.userToLesson = userToLesson;
-        });
-    } else if (role == RoleType.INSTRUCTOR) {
-      this.courseService.getUserLessonInfo(this.courseId, this.lessonId, this.student.id)
-        .subscribe((userToLesson) => {
-          this.userToLesson = userToLesson;
-        })
-    }
   }
 
-  user(): UserInfo {
+  get user(): UserInfo {
     return this.authenticationService.userValue
   }
 
@@ -75,6 +88,7 @@ export class MyLessonDetailsComponent implements OnInit {
 enum PathVariable {
 
   COURSE_ID = "courseId",
-  LESSON_ID = "lessonId"
+  LESSON_ID = "lessonId",
+  STUDENT_ID = "studentId",
 
 }

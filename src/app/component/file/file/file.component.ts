@@ -1,9 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {finalize, Subscription} from "rxjs";
-import {HttpEventType} from "@angular/common/http";
+import {finalize, Observable, Subscription} from "rxjs";
+import {HttpEvent, HttpEventType} from "@angular/common/http";
 import {Lesson} from "../../../shared/model/Lesson";
 import {FileUploadService} from "../../../service/file-upload/file-upload.service";
 import {FileInfo} from "../../../shared/model/FileInfo";
+import {User} from "../../../shared/model/User";
+import {UserInfo} from "../../../shared/model/UserInfo";
+import {AuthenticationService} from "../../../service/authentication/authentication.service";
+import {RoleType} from "../../../shared/enum/RoleType";
 
 @Component({
   selector: 'app-file',
@@ -12,8 +16,12 @@ import {FileInfo} from "../../../shared/model/FileInfo";
 })
 export class FileComponent implements OnInit {
 
-  @Input()
-  lesson!: Lesson;
+  @Input() lesson!: Lesson;
+  @Input() student!: User;
+
+  @Input() canUpload = true;
+  @Input() canDownload = true;
+  @Input() canDelete = true;
 
   fileInfo!: FileInfo | null;
   uploadProgress!: number | null;
@@ -21,14 +29,22 @@ export class FileComponent implements OnInit {
   uploadSub!: Subscription | null;
   downloadSub!: Subscription | null;
 
-  constructor(private fileUploadService: FileUploadService) {
+  constructor(private fileUploadService: FileUploadService,
+              private authenticationService: AuthenticationService,) {
   }
 
   ngOnInit(): void {
-    this.fileUploadService.getFileInfo(this.lesson.courseId, this.lesson.chapterId, this.lesson.id)
-      .subscribe((info) => {
-        this.fileInfo = info;
-      });
+    if (this.user.role == RoleType.STUDENT) {
+      this.fileUploadService.getFileInfo(this.lesson.courseId, this.lesson.chapterId, this.lesson.id)
+        .subscribe((info) => {
+          this.fileInfo = info;
+        });
+    } else if (this.user.role == RoleType.INSTRUCTOR) {
+      this.fileUploadService.getStudentFileInfo(this.lesson.courseId, this.lesson.chapterId, this.lesson.id, this.student.id)
+        .subscribe((info) => {
+          this.fileInfo = info;
+        });
+    }
   }
 
   //TODO when file's size is bigger then we can allow
@@ -63,12 +79,12 @@ export class FileComponent implements OnInit {
       || (this.downloadProgress && this.downloadProgress > 0);
   }
 
-  cancelUpload() {
+  onCancelUpload() {
     this.uploadSub?.unsubscribe();
     this.resetUpload();
   }
 
-  cancelDownload() {
+  onCancelDownload() {
     this.downloadSub?.unsubscribe();
     this.resetDownload();
   }
@@ -91,10 +107,19 @@ export class FileComponent implements OnInit {
   }
 
   onDownloadFile() {
-    const download$ =  this.fileUploadService.downloadFile(this.lesson.courseId, this.lesson.chapterId, this.lesson.id)
-      .pipe(
-      finalize(() => this.resetDownload())
-    );
+    let download$!: Observable<HttpEvent<Blob>>;
+
+    if (this.user.role == RoleType.STUDENT) {
+      download$ = this.fileUploadService.downloadFile(this.lesson.courseId, this.lesson.chapterId, this.lesson.id)
+        .pipe(
+          finalize(() => this.resetDownload())
+        );
+    } else if (this.user.role == RoleType.INSTRUCTOR) {
+      download$ = this.fileUploadService.downloadFileById(this.fileInfo!.id)
+        .pipe(
+          finalize(() => this.resetDownload())
+        );
+    }
 
     this.downloadSub = download$.subscribe((event) => {
         if (event) {
@@ -118,6 +143,10 @@ export class FileComponent implements OnInit {
     a.download = this.fileInfo?.title || '';
     a.click();
     URL.revokeObjectURL(objectUrl);
+  }
+
+  get user(): UserInfo {
+    return this.authenticationService.userValue
   }
 
 }
