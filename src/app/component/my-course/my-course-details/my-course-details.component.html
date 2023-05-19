@@ -48,6 +48,10 @@
 
   <app-courses-users-list [userRole]="ROLE_TYPE.INSTRUCTOR" [courseId]="courseId"></app-courses-users-list>
 
+  <ng-container *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+    <app-courses-users-list [userRole]="ROLE_TYPE.STUDENT" [courseId]="courseId"></app-courses-users-list>
+  </ng-container>
+
   <div>
     <a
       class="btn btn-primary"

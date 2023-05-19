@@ -4,5 +4,6 @@ export interface UserToLesson {
   mark: number;
   isPassed: boolean;
   userId: number;
+  lessonId: number;
 
 }

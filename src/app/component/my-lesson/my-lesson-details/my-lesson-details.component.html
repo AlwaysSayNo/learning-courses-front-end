@@ -26,26 +26,25 @@
     </table>
   </div>
 
-  <div class="table-responsive">
-    <table class="table table-striped custom-table">
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Mark</th>
-        <th>Is passed</th>
-        <th>User id</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>{{userToLesson.id}}</td>
-        <td>{{userToLesson.mark}}</td>
-        <td>{{userToLesson.isPassed}}</td>
-        <td>{{userToLesson.userId}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="table-responsive">
+      <table class="table table-striped custom-table">
+        <thead>
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Mark</th>
+          <th>Is passed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{student.firstName}}</td>
+          <td>{{student.lastName}}</td>
+          <td>{{userToLesson.mark}}</td>
+          <td>{{userToLesson.isPassed}}</td>
+        </tbody>
+      </table>
+    </div>
 
   <div class="container p-0">
     <div class="bg-info py-2 px-1 w-25">

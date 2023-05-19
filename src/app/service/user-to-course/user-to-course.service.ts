@@ -32,6 +32,7 @@ export class UserToCourseService {
     return this.http.get<UserToLesson[]>(url);
   }
 
+  //TODO check course.service#getUserLessonInfo
   geUserToLessonInfo(courseId: number, lessonId: number): Observable<UserToLesson> {
     let url = this.userToLessonInfoUrl
       .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())

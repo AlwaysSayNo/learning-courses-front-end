@@ -1,34 +1,97 @@
 <!--TODO view for instructor-->
+<!--TODO split by chapters-->
 <div class="container">
   <h2 class="h2">Lessons</h2>
-  <div class="table-responsive">
-    <table class="table table-striped custom-table">
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>Number</th>
-        <th>Is finished</th>
-        <th>Is passed</th>
-      </tr>
-      </thead>
-      <tbody>
-      <ng-container *ngFor="let lesson of lessons; let i = index">
-        <tr>
-          <td>
-            <a [routerLink]="['/user/my-courses/', courseId, 'lessons', lesson.id]">
-              {{lesson.id}}
-            </a>
-          </td>
-          <td>{{lesson.title | uppercase}}</td>
-          <td>{{lesson.number}}</td>
-          <td>{{lesson.isFinished}}</td>
-          <td>{{userToLessons[i].isPassed}}</td>
-        </tr>
-      </ng-container>
-      </tbody>
-    </table>
+  <div class="container">
+    <div class="row">
+      <div [class]="user().role == ROLE_TYPE.STUDENT ? 'col-md-8' : 'col'">
+        <div class="table-responsive">
+          <table class="table table-striped custom-table">
+            <thead>
+            <tr>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Number</th>
+              <th>Is finished</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let lesson of lessons; let i = index">
+              <tr>
+                <td>
+                  <a *ngIf="user().role == ROLE_TYPE.STUDENT"
+                     [routerLink]="['/user/my-courses/', courseId, 'lessons', lesson.id]">
+                    {{lesson.id}}
+                  </a>
+                  <ng-container *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+                    {{lesson.id}}
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="user().role == ROLE_TYPE.STUDENT">
+                    {{lesson.title | uppercase}}
+                  </ng-container>
+
+                  <ng-container *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+                    <cdk-accordion-item
+                      role="button"
+                      #accordionItem="cdkAccordionItem">
+
+                      <div (click)="accordionItem.toggle()">
+                        {{lesson.title | uppercase}}
+                        <span class="example-accordion-item-description">
+                          Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+                        </span>
+                      </div>
+
+                      <div class="example-accordion-item-body"
+                           role="region"
+                           [style.display]="accordionItem.expanded ? '' : 'none'"
+                      >
+                        <ul class="list-group">
+                          <li class="list-group-item"
+                            *ngFor="let student of students; let i = index">
+                            {{i + 1}}.
+                            <a [routerLink]="['/user/my-courses/', courseId, 'lessons', lesson.id, 'students', student.id]">
+                              {{student.firstName}} {{student.lastName}}
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </cdk-accordion-item>
+                  </ng-container>
+                </td>
+                <td>{{lesson.number}}</td>
+                <td>{{lesson.isFinished}}</td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-md-4"
+           *ngIf="user().role == ROLE_TYPE.STUDENT">
+        <div class="table-responsive">
+          <table class="table table-striped custom-table">
+            <thead>
+            <tr>
+              <th>Is passed</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let lesson of lessons; let i = index">
+              <tr>
+                <td>{{lessonIdToUserToLesson.get(lesson.id)?.isPassed}}</td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
+
 
   <div>
     <a

@@ -4,6 +4,10 @@ import {UserToLesson} from "../../../shared/model/UserToLesson";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserToCourseService} from "../../../service/user-to-course/user-to-course.service";
 import {CourseService} from "../../../service/course/course.service";
+import {AuthenticationService} from "../../../service/authentication/authentication.service";
+import {UserInfo} from "../../../shared/model/UserInfo";
+import {RoleType} from "../../../shared/enum/RoleType";
+import {User} from "../../../shared/model/User";
 
 @Component({
   selector: 'app-my-lesson-list',
@@ -12,14 +16,17 @@ import {CourseService} from "../../../service/course/course.service";
 })
 export class MyLessonListComponent implements OnInit {
 
+  public ROLE_TYPE = RoleType;
   courseId!: number;
   lessons!: Lesson[];
-  userToLessons!: UserToLesson[];
+  lessonIdToUserToLesson = new Map<number, UserToLesson>();
+  students!: User[];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
-              private userToCourseService: UserToCourseService) {
+              private userToCourseService: UserToCourseService,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -34,8 +41,19 @@ export class MyLessonListComponent implements OnInit {
 
     this.userToCourseService.getAllUserToLessonsInCourse(this.courseId)
       .subscribe((userToLessons) => {
-        this.userToLessons = userToLessons;
+        for (let i = 0; i < userToLessons.length; ++i) {
+          this.lessonIdToUserToLesson.set(userToLessons[i].lessonId, userToLessons[i]);
+        }
       });
+
+    this.courseService.getAllUsersForCourse(this.courseId, RoleType.STUDENT)
+      .subscribe((users) => {
+        this.students = users;
+      })
+  }
+
+  user(): UserInfo {
+    return this.authenticationService.userValue;
   }
 
 }

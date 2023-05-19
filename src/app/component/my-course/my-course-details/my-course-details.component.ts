@@ -5,6 +5,8 @@ import {RoleType} from "../../../shared/enum/RoleType";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CourseService} from "../../../service/course/course.service";
 import {UserToCourseService} from "../../../service/user-to-course/user-to-course.service";
+import {AuthenticationService} from "../../../service/authentication/authentication.service";
+import {UserInfo} from "../../../shared/model/UserInfo";
 
 @Component({
   selector: 'app-my-course-details',
@@ -21,7 +23,8 @@ export class MyCourseDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
-              private userToCourseService: UserToCourseService) {
+              private userToCourseService: UserToCourseService,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -36,6 +39,10 @@ export class MyCourseDetailsComponent implements OnInit {
     this.userToCourseService.getById(this.courseId).subscribe((data) => {
       this.userToCourse = data;
     });
+  }
+
+  user(): UserInfo {
+    return this.authenticationService.userValue;
   }
 
 }

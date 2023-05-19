@@ -6,6 +6,7 @@ import {Lesson} from "../../shared/model/Lesson";
 import {RoleType} from "../../shared/enum/RoleType";
 import {UserToCourse} from "../../shared/model/UserToCourse";
 import {User} from "../../shared/model/User";
+import {UserToLesson} from "../../shared/model/UserToLesson";
 
 @Injectable({
   providedIn: 'root'
@@ -90,13 +91,21 @@ export class CourseService {
     return this.http.put<UserToCourse>(url, userToCourseUpdate);
   }
 
-  updateUsersLessonInfo(courseId: number, lessonId: number, userId: number,
-                        userToCourseUpdate: UserToCourse): Observable<UserToCourse> {
+  getUserLessonInfo(courseId: number, lessonId: number, userId: number): Observable<UserToLesson> {
     let url = this.usersLessonsInfoUrl
       .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
       .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString())
       .replace(TemplatePathVariable.USER_ID.toString(), userId.toString());
-    return this.http.put<UserToCourse>(url, userToCourseUpdate);
+    return this.http.get<UserToLesson>(url);
+  }
+
+  updateUsersLessonInfo(courseId: number, lessonId: number, userId: number,
+                        userToLessonUpdate: UserToLesson): Observable<UserToLesson> {
+    let url = this.usersLessonsInfoUrl
+      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
+      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString())
+      .replace(TemplatePathVariable.USER_ID.toString(), userId.toString());
+    return this.http.put<UserToLesson>(url, userToLessonUpdate);
   }
 
 }

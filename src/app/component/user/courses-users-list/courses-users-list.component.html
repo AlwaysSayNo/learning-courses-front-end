@@ -5,6 +5,7 @@
   <span *ngSwitchCase="'STUDENT'">Students</span>
   <span *ngSwitchCase="'INSTRUCTOR'">Instructors</span>
   <span *ngSwitchCase="'Admin'">Admins</span>
+  : {{users.length}}
 </h2>
 <h2 class="h2"
     *ngIf="!userRole"
