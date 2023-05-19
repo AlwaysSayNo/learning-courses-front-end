@@ -6,6 +6,8 @@ import {MyLessonListComponent} from './my-lesson-list/my-lesson-list.component';
 import {MyLessonDetailsComponent} from './my-lesson-details/my-lesson-details.component';
 import {FileModule} from "../file/file.module";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
+import {ValidationDirectiveModule} from "../../shared/directive/validation-directive.module";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import {CdkAccordionModule} from "@angular/cdk/accordion";
     CommonModule,
     MyLessonRoutingModule,
     FileModule,
-    CdkAccordionModule
+    CdkAccordionModule,
+    ValidationDirectiveModule,
+    FormsModule
   ]
 })
 export class MyLessonModule {

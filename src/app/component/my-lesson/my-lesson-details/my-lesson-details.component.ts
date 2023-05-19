@@ -9,6 +9,7 @@ import {AuthenticationService} from "../../../service/authentication/authenticat
 import {RoleType} from "../../../shared/enum/RoleType";
 import {User} from "../../../shared/model/User";
 import {UserService} from "../../../service/user/user.service";
+import {NgModel} from "@angular/forms";
 
 @Component({
   selector: 'app-my-lesson-details',
@@ -83,6 +84,16 @@ export class MyLessonDetailsComponent implements OnInit {
     return this.authenticationService.userValue
   }
 
+  onAssignMark(newMark: NgModel) {
+    let mark: number = newMark.value;
+    if (mark) {
+      this.userToLesson.mark = mark;
+      this.courseService.updateUsersLessonInfo(this.courseId, this.lessonId, this.student.id, this.userToLesson)
+        .subscribe((userToLesson) => {
+        this.userToLesson = userToLesson;
+      })
+    }
+  }
 }
 
 enum PathVariable {

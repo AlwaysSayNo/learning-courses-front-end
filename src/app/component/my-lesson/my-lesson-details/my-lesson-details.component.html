@@ -55,6 +55,30 @@
     </div>
   </div>
 
+  <div class="container" *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
+    <form>
+      <div class="col-auto">
+        <input type="number"
+               name="mark"
+               min="0"
+               required
+               placeholder="Student mark"
+               [(ngModel)]="userToLesson.mark"
+               #newMark="ngModel"
+               [appNumberSegment]="'0,inf'"
+               [ngClass]="{ 'is-invalid': newMark.errors }">
+      </div>
+      <div class="col-auto">
+        <input type="button"
+               class="btn btn-primary"
+               value="Assign mark"
+               [disabled]="newMark.errors"
+               (click)="onAssignMark(newMark)"
+        >
+      </div>
+    </form>
+  </div>
+
   <div>
     <a
       class="btn btn-primary"
