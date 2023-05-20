@@ -72,7 +72,7 @@
                          class="btn btn-primary"
                          value="Close"
                          (click)="onLessonClose(lesson)"
-                         [class]="lesson.isFinished ? 'disabled' : ''"/>
+                         [disabled]="lesson.isFinished"/>
                 </td>
               </tr>
             </ng-container>

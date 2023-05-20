@@ -45,6 +45,12 @@ export class MyCourseDetailsComponent implements OnInit {
     return this.authenticationService.userValue;
   }
 
+  onCourseClose(): void {
+    this.courseService.finish(this.courseId)
+      .subscribe(() => {
+        this.course.isFinished = true;
+      })
+  }
 }
 
 enum PathVariable {

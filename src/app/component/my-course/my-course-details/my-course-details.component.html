@@ -21,30 +21,32 @@
     </table>
   </div>
 
-  <div class="table-responsive">
-    <table class="table table-striped custom-table">
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Mark</th>
-        <th>Is passed</th>
-        <th>Final feedback</th>
-        <th>User id</th>
-        <th>Course id</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>{{userToCourse.id}}</td>
-        <td>{{userToCourse.mark}}</td>
-        <td>{{userToCourse.isPassed}}</td>
-        <td>{{userToCourse.finalFeedback}}</td>
-        <td>{{userToCourse.userId}}</td>
-        <td>{{userToCourse.courseId}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <ng-container *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+    <div class="table-responsive">
+      <table class="table table-striped custom-table">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Mark</th>
+          <th>Is passed</th>
+          <th>Final feedback</th>
+          <th>User id</th>
+          <th>Course id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{userToCourse.id}}</td>
+          <td>{{userToCourse.mark}}</td>
+          <td>{{userToCourse.isPassed}}</td>
+          <td>{{userToCourse.finalFeedback}}</td>
+          <td>{{userToCourse.userId}}</td>
+          <td>{{userToCourse.courseId}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
 
   <app-courses-users-list [userRole]="ROLE_TYPE.INSTRUCTOR" [courseId]="courseId"></app-courses-users-list>
 
@@ -61,5 +63,11 @@
       class="btn btn-success"
       [routerLink]="['/user/my-courses/', courseId, 'lessons']"
     >Lessons</a>
+    <input type="button"
+           class="btn btn-primary"
+           value="End course"
+           *ngIf="user().role == ROLE_TYPE.INSTRUCTOR"
+           (click)="onCourseClose()"
+           [disabled]="course.isFinished"/>
   </div>
 </div>
