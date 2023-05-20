@@ -63,6 +63,7 @@
                min="0"
                required
                placeholder="Student mark"
+               [disabled]="lesson.isFinished"
                [(ngModel)]="userToLesson.mark"
                #newMark="ngModel"
                [appNumberSegment]="'0,inf'"
@@ -72,7 +73,7 @@
         <input type="button"
                class="btn btn-primary"
                value="Assign mark"
-               [disabled]="newMark.errors"
+               [disabled]="lesson.isFinished || newMark.errors"
                (click)="onAssignMark(newMark)"
         >
       </div>

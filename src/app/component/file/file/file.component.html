@@ -6,7 +6,7 @@
 
   <button mat-mini-fab color="primary" class="upload-btn"
           (click)="fileUpload.click()"
-          *ngIf="canUpload">
+          *ngIf="!lesson.isFinished && canUpload">
     <mat-icon>attach_file</mat-icon>
   </button>
 
@@ -24,7 +24,7 @@
     <div class="container p-0 d-flex justify-content-end">
       <mat-icon class="delete-file border border-dark"
                 (click)="onDeleteFile()"
-                *ngIf="canDelete && fileInfo"
+                *ngIf="!lesson.isFinished && canDelete && fileInfo"
       >delete</mat-icon>
 
       <mat-icon class="download-file border border-dark"
@@ -35,7 +35,7 @@
     <div class="container p-0 d-flex justify-content-end">
       <mat-icon class="cancel-upload border border-dark"
                 (click)="onCancelUpload()"
-                *ngIf="uploadProgress && uploadProgress < 99"
+                *ngIf="!lesson.isFinished && uploadProgress && uploadProgress < 99"
       >cancel</mat-icon>
 
       <mat-icon class="cancel-upload border border-dark"

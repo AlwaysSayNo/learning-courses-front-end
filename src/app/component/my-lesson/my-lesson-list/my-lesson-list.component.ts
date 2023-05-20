@@ -8,6 +8,7 @@ import {AuthenticationService} from "../../../service/authentication/authenticat
 import {UserInfo} from "../../../shared/model/UserInfo";
 import {RoleType} from "../../../shared/enum/RoleType";
 import {User} from "../../../shared/model/User";
+import {LessonService} from "../../../service/lesson/lesson.service";
 
 @Component({
   selector: 'app-my-lesson-list',
@@ -25,6 +26,7 @@ export class MyLessonListComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
+              private lessonService: LessonService,
               private userToCourseService: UserToCourseService,
               private authenticationService: AuthenticationService) {
   }
@@ -54,6 +56,14 @@ export class MyLessonListComponent implements OnInit {
 
   user(): UserInfo {
     return this.authenticationService.userValue;
+  }
+
+  onLessonClose(lesson: Lesson): void {
+    this.lessonService.finishLesson(lesson.courseId, lesson.chapterId, lesson.id)
+      .subscribe(() => {
+        lesson.isFinished = true;
+      });
+
   }
 
 }
