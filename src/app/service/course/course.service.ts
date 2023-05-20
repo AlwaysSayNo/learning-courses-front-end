@@ -5,8 +5,8 @@ import {Course} from "../../shared/model/Course";
 import {Lesson} from "../../shared/model/Lesson";
 import {RoleType} from "../../shared/enum/RoleType";
 import {UserToCourse} from "../../shared/model/UserToCourse";
-import {User} from "../../shared/model/User";
 import {UserToLesson} from "../../shared/model/UserToLesson";
+import {UserToCourseInfo} from "../../shared/model/UserToCourseInfo";
 
 @Injectable({
   providedIn: 'root'
@@ -69,12 +69,12 @@ export class CourseService {
     return this.http.post<UserToCourse>(url, {});
   }
 
-  getAllUsersForCourse(courseId: number, roleType: RoleType | undefined): Observable<User[]> {
+  getAllUserToCourseInfo(courseId: number, roleType: RoleType | undefined): Observable<UserToCourseInfo[]> {
     let url = this.usersUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     const options = roleType ?
       {params: new HttpParams().set('roleType', roleType.toString())} : {};
 
-    return this.http.get<User[]>(url, options);
+    return this.http.get<UserToCourseInfo[]>(url, options);
   }
 
   getUsersCourseInfo(courseId: number, userId: number): Observable<UserToCourse> {

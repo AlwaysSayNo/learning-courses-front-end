@@ -34,19 +34,21 @@ export class CourseDetailsComponent implements OnInit {
       this.courseId = params['courseId'];
     });
 
-    this.courseService.getById(this.courseId).subscribe((data) =>{
+    this.courseService.getById(this.courseId).subscribe((data) => {
       this.course = data;
     });
 
-    this.courseService.getAllUsersForCourse(this.courseId, RoleType.INSTRUCTOR).subscribe((data) => {
-      this.instructors = data;
+    //TODO very bad
+    this.courseService.getAllUserToCourseInfo(this.courseId, RoleType.INSTRUCTOR).subscribe((data) => {
+      this.instructors = data.map<User>(info => info.user);
     });
 
     this.userToCourseService.getById(this.courseId).subscribe({
       next: (data) => {
         this.userToCourse = data;
       },
-      error: () => {}
+      error: () => {
+      }
     });
   }
 
@@ -56,7 +58,7 @@ export class CourseDetailsComponent implements OnInit {
     });
   }
 
-  user (): UserInfo {
+  user(): UserInfo {
     return this.authenticationService.userValue;
   }
 

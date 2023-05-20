@@ -1,5 +1,16 @@
 <div class="container">
-  <h2 class="h2">My courses</h2>
+  <div class="row justify-content-between">
+    <h2 class="h2">My courses</h2>
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select [value]="selectedStatus">
+        <mat-option [value]="status"
+                    *ngFor="let status of statuses"
+                    (click)="onStatusSelect(status)"
+        >{{ status }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="table-responsive">
     <table class="table table-striped custom-table">
       <thead>
@@ -27,4 +38,3 @@
     </table>
   </div>
 </div>
-

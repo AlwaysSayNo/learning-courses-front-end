@@ -21,7 +21,7 @@
     </table>
   </div>
 
-  <ng-container *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+  <ng-container *ngIf="user().role == ROLE_TYPE.STUDENT">
     <div class="table-responsive">
       <table class="table table-striped custom-table">
         <thead>
@@ -66,8 +66,7 @@
     <input type="button"
            class="btn btn-primary"
            value="End course"
-           *ngIf="user().role == ROLE_TYPE.INSTRUCTOR"
-           (click)="onCourseClose()"
-           [disabled]="course.isFinished"/>
+           *ngIf="user().role == ROLE_TYPE.INSTRUCTOR && !course.isFinished"
+           (click)="onCourseClose()"/>
   </div>
 </div>

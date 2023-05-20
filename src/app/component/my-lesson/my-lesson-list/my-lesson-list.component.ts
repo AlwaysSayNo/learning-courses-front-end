@@ -48,9 +48,9 @@ export class MyLessonListComponent implements OnInit {
         }
       });
 
-    this.courseService.getAllUsersForCourse(this.courseId, RoleType.STUDENT)
+    this.courseService.getAllUserToCourseInfo(this.courseId, RoleType.STUDENT)
       .subscribe((users) => {
-        this.students = users;
+        this.students = users.map(info => info.user);
       })
   }
 

@@ -5,7 +5,7 @@
   <span *ngSwitchCase="'STUDENT'">Students</span>
   <span *ngSwitchCase="'INSTRUCTOR'">Instructors</span>
   <span *ngSwitchCase="'Admin'">Admins</span>
-  : {{users.length}}
+  : {{infos.length}}
 </h2>
 <h2 class="h2"
     *ngIf="!userRole"
@@ -22,15 +22,17 @@
       <th>Login</th>
       <th>First name</th>
       <th>Last name</th>
+      <th *ngIf="userRole == 'STUDENT'">Mark</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let user of users; let i = index">
+    <tr *ngFor="let info of infos; let i = index">
       <td>{{i+1}}</td>
-      <td>{{user.id}}</td>
-      <td>{{user.login}}</td>
-      <td>{{user.firstName}}</td>
-      <td>{{user.lastName}}</td>
+      <td>{{info.user.id}}</td>
+      <td>{{info.user.login}}</td>
+      <td>{{info.user.firstName}}</td>
+      <td>{{info.user.lastName}}</td>
+      <td  *ngIf="userRole == 'STUDENT'">{{info.mark}}</td>
     </tr>
     </tbody>
   </table>
