@@ -3,6 +3,8 @@ import {BehaviorSubject, map, Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {UserInfo} from "../../shared/model/UserInfo";
+import {User} from "../../shared/model/User";
+import {SignUp} from "../../shared/model/SignUp";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ import {UserInfo} from "../../shared/model/UserInfo";
 export class AuthenticationService {
 
   private USER = 'user';
+  private signInUrl = '/api/sign-in';
+  private signUpUrl = '/api/sign-up';
 
   userSubject!: BehaviorSubject<UserInfo>;
 
@@ -31,12 +35,16 @@ export class AuthenticationService {
   }
 
   login(login: string, password: string): Observable<UserInfo> {
-    return this.http.post<UserInfo>(`/api/sign-in`, { login, password })
+    return this.http.post<UserInfo>(this.signInUrl, { login, password })
       .pipe(map(user => {
         localStorage.setItem(this.USER, JSON.stringify(user));
         this.userSubject.next(user);
         return user;
       }));
+  }
+
+  registration(signUp: SignUp): Observable<User> {
+    return this.http.post<User>(this.signUpUrl, signUp);
   }
 
   logout() {
@@ -45,5 +53,4 @@ export class AuthenticationService {
     this.userSubject.next(null);
     void this.router.navigate(['/login']);
   }
-
 }

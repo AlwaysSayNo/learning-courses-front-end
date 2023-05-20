@@ -11,11 +11,13 @@ import {ErrorInterceptor} from "./interceptor/error/error.interceptor";
 import {JwtInterceptor} from "./interceptor/jwt/jwt.interceptor";
 import {MyCourseModule} from "./component/my-course/my-course.module";
 import {LoginComponent} from "./component/login/login.component";
+import { RegistrationComponent } from './component/registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
