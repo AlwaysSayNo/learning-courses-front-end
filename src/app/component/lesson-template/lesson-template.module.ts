@@ -8,6 +8,8 @@ import { LessonTemplateListComponent } from './lesson-template-list/lesson-templ
 import { LessonTemplateAddComponent } from './lesson-template-add/lesson-template-add.component';
 import { LessonTemplateDetailsComponent } from './lesson-template-details/lesson-template-details.component';
 import { LessonTemplateUpdateComponent } from './lesson-template-update/lesson-template-update.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { LessonTemplateUpdateComponent } from './lesson-template-update/lesson-t
     CommonModule,
     LessonTemplateRoutingModule,
     FormsModule,
-    ValidationDirectiveModule
+    ValidationDirectiveModule,
+    MatIconModule,
+    MatButtonModule
   ]
 })
 export class LessonTemplateModule {

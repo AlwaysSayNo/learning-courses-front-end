@@ -9,6 +9,8 @@ import {ValidationDirectiveModule} from "../../shared/directive/validation-direc
 import {ChapterTemplateDetailsComponent} from './chapter-template-details/chapter-template-details.component';
 import {ChapterTemplateUpdateComponent} from './chapter-template-update/chapter-template-update.component';
 import {LessonTemplateModule} from "../lesson-template/lesson-template.module";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import {LessonTemplateModule} from "../lesson-template/lesson-template.module";
     FormsModule,
     ChapterTemplateRoutingModule,
     ValidationDirectiveModule,
-    LessonTemplateModule
+    LessonTemplateModule,
+    MatIconModule,
+    MatButtonModule
   ]
 })
 export class ChapterTemplateModule {

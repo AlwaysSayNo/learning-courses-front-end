@@ -58,10 +58,18 @@
           <div *ngIf="lastName.errors?.['required']">Last name is required</div>
         </div>
       </div>
-        <button class="btn btn-primary"
-                [disabled]="form.invalid" >
-          Sign up
-        </button>
+        <div class="container">
+          <div class="row justify-content-between">
+            <button class="btn btn-primary"
+                    [disabled]="form.invalid" >
+              Sign up
+            </button>
+            <a class="btn btn-success"
+               [routerLink]="['/login/']">
+              Login
+            </a>
+          </div>
+        </div>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
       </form>
     </div>

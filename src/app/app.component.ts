@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from "./service/authentication/authentication.service";
-import {UserInfo} from "./shared/model/UserInfo";
+import {AuthenticationService} from "@app/service/authentication/authentication.service";
+import {UserInfo} from "@app/shared/model/UserInfo";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,6 @@ import {UserInfo} from "./shared/model/UserInfo";
 })
 export class AppComponent {
 
-
   constructor(private authenticationService: AuthenticationService) {
   }
 
@@ -17,7 +16,7 @@ export class AppComponent {
     this.authenticationService.logout();
   }
 
-  user(): UserInfo {
+  get user(): UserInfo {
     return this.authenticationService.userValue;
   }
 }

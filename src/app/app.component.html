@@ -1,11 +1,4 @@
-<div class="container">
+<app-app-nav *ngIf="user"></app-app-nav>
+<ng-container *ngIf="!user">
   <router-outlet></router-outlet>
-
-  <div *ngIf="user()">
-    <input type="button"
-           class="btn btn-danger"
-           (click)="logout()"
-           value="Logout"
-    >
-  </div>
-</div>
+</ng-container>

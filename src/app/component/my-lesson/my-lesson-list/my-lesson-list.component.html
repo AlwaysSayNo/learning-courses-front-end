@@ -6,7 +6,7 @@
     <div class="row">
       <div [class]="user().role == ROLE_TYPE.STUDENT ? 'col-md-8' : 'col'">
         <div class="table-responsive">
-          <table class="table table-striped custom-table">
+          <table class="table table-striped pretty-table">
             <thead>
             <tr>
               <th>Id</th>
@@ -84,7 +84,7 @@
       <div class="col-md-4"
            *ngIf="user().role == ROLE_TYPE.STUDENT">
         <div class="table-responsive">
-          <table class="table table-striped custom-table">
+          <table class="table table-striped pretty-table">
             <thead>
             <tr>
               <th>Is passed</th>

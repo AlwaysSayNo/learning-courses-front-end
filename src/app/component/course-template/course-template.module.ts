@@ -9,6 +9,8 @@ import {CourseTemplateUpdateComponent} from "./course-template-update/course-tem
 import {FormsModule} from "@angular/forms";
 import {ChapterTemplateModule} from "../chapter-template/chapter-template.module";
 import {ValidationDirectiveModule} from "../../shared/directive/validation-directive.module";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import {ValidationDirectiveModule} from "../../shared/directive/validation-direc
     FormsModule,
     CourseTemplateRoutingModule,
     ChapterTemplateModule,
-    ValidationDirectiveModule
+    ValidationDirectiveModule,
+    MatIconModule,
+    MatButtonModule
   ]
 })
 export class CourseTemplateModule {
