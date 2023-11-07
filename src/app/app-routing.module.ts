@@ -7,15 +7,15 @@ import {RegistrationComponent} from "./component/registration/registration.compo
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'course',
+    redirectTo: 'courses',
     pathMatch: 'full'
   },
   {
-    path: 'login',
+    path: 'sign-in',
     component: LoginComponent
   },
   {
-    path: 'registration',
+    path: 'sign-up',
     component: RegistrationComponent
   },
   {

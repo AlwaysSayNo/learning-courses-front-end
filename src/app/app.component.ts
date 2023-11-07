@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from "@app/service/authentication/authentication.service";
+import {SecurityService} from "@app/service/security/security.service";
 import {UserInfo} from "@app/shared/model/UserInfo";
 
 @Component({
@@ -9,7 +9,7 @@ import {UserInfo} from "@app/shared/model/UserInfo";
 })
 export class AppComponent {
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: SecurityService) {
   }
 
   logout(): void {

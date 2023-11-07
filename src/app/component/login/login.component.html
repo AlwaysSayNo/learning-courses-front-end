@@ -2,7 +2,7 @@
   <div class="card">
     <h4 class="card-header">Learning courses</h4>
     <div class="card-body">
-      <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <form #form="ngForm" (ngSubmit)="signIn()">
         <div class="form-group">
           <input id="login"
                  name="login"
@@ -13,8 +13,8 @@
                  required
                  [(ngModel)]="credentials.login"
                  #login="ngModel"
-                 [ngClass]="{ 'is-invalid': submitted && login.errors }" />
-          <div *ngIf="submitted && login.errors" class="invalid-feedback">
+                 [ngClass]="{ 'is-invalid': formSubmitted && login.errors }" />
+          <div *ngIf="formSubmitted && login.errors" class="invalid-feedback">
             <div *ngIf="login.errors?.['required']">Login is required</div>
           </div>
         </div>
@@ -27,8 +27,8 @@
                  required
                  [(ngModel)]="credentials.password"
                  #password="ngModel"
-                 [ngClass]="{ 'is-invalid': submitted && password.errors }" />
-          <div *ngIf="submitted && password.errors" class="invalid-feedback">
+                 [ngClass]="{ 'is-invalid': formSubmitted && password.errors }" />
+          <div *ngIf="formSubmitted && password.errors" class="invalid-feedback">
             <div *ngIf="password.errors?.['required']">Password is required</div>
           </div>
         </div>
@@ -39,7 +39,7 @@
               Login
             </button>
             <a class="btn btn-success"
-               [routerLink]="['/registration/']">
+               [routerLink]="['/sign-up']">
               Sign up
             </a>
           </div>

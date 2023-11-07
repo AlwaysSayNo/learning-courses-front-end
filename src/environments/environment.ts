@@ -4,7 +4,7 @@
 
 // all tokens will expire after 365 from 15.05.2023
 export const environment = {
-  production: false,
+  production: true,
   apiUrl: "/api/",
   user1: {
     login: 'user1@gmail.com',

@@ -1,30 +1,30 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Course} from "../../shared/model/Course";
-import {UserToCourse} from "../../shared/model/UserToCourse";
-import {UserToLesson} from "../../shared/model/UserToLesson";
+import {Course} from "@app/shared/model/Course";
+import {UserToCourse} from "@app/shared/model/UserToCourse";
+import {UserToLesson} from "@app/shared/model/UserToLesson";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserToCourseService {
 
-  rootUrl = '/api/user/my-courses';
-  idUrl = '/api/user/my-courses/:courseId/info';
-  userToLessonsUrl = '/api/user/my-courses/:courseId/lessons';
-  userToLessonInfoUrl = '/api/user/my-courses/:courseId/lessons/:lessonId/info';
+  myCoursesUrl = '/api/my/courses';
+  myCourseUrl = '/api/my/courses/course/info';
+  userToLessonsUrl = '/api/my-courses/:courseId/lessons';
+  userToLessonInfoUrl = '/api/my-courses/:courseId/lessons/:lessonId/info';
 
   constructor(private http: HttpClient) {
   }
 
   getAll(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.rootUrl);
+    return this.http.get<Course[]>(this.myCoursesUrl);
   }
 
   getById(courseId: number): Observable<UserToCourse> {
-    let url = this.idUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
-    return this.http.get<UserToCourse>(url);
+    let queryParams = new HttpParams().set('courseId', courseId);
+    return this.http.get<UserToCourse>(this.myCourseUrl, {params: queryParams});
   }
 
   getAllUserToLessonsInCourse(courseId: number): Observable<UserToLesson[]> {

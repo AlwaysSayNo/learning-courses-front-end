@@ -1,38 +1,39 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Course} from "../../shared/model/Course";
-import {Lesson} from "../../shared/model/Lesson";
-import {RoleType} from "../../shared/enum/RoleType";
-import {UserToCourse} from "../../shared/model/UserToCourse";
-import {UserToLesson} from "../../shared/model/UserToLesson";
-import {UserToCourseInfo} from "../../shared/model/UserToCourseInfo";
+import {Course} from "@app/shared/model/Course";
+import {Lesson} from "@app/shared/model/Lesson";
+import {RoleType} from "@app/shared/enum/RoleType";
+import {UserToCourse} from "@app/shared/model/UserToCourse";
+import {UserToLesson} from "@app/shared/model/UserToLesson";
+import {UserToCourseInfo} from "@app/shared/model/UserToCourseInfo";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
 
-  rootUrl = '/api/courses';
-  idUrl = '/api/courses/:courseId';
+  coursesUrl = '/api/courses';
+  courseUrl = '/api/courses/course';
   allLessonsUrl = '/api/courses/:courseId/lessons';
   lessonsUrl = '/api/courses/:courseId/lessons/:lessonId';
   finishUrl = '/api/courses/:courseId/finish';
   enrollUrl = '/api/courses/:courseId/enroll';
-  usersUrl = '/api/courses/:courseId/users';
+  usersUrl = '/api/courses/course/users/info';
   userCourseInfoUrl = '/api/courses/:courseId/users/:userId';
   usersLessonsInfoUrl = '/api/courses/:courseId/lessons/:lessonId/users/:userId';
 
   constructor(private http: HttpClient) {
   }
 
-  getAll(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.rootUrl);
+  getAll(isActive: boolean): Observable<Course[]> {
+    const queryParams = isActive ? {params: new HttpParams().set('isActive', isActive)} : {};
+    return this.http.get<Course[]>(this.coursesUrl, queryParams);
   }
 
   getById(courseId: number): Observable<Course> {
-    let url = this.idUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
-    return this.http.get<Course>(url);
+    const queryParams = courseId ? {params: new HttpParams().set('courseId', courseId)} : {};
+    return this.http.get<Course>(this.courseUrl, queryParams);
   }
 
   //TODO the same as UserToCourseService#getAllLessonsInCourse
@@ -50,12 +51,12 @@ export class CourseService {
   }
 
   delete(courseId: number): Observable<any> {
-    let url = this.idUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
+    let url = this.courseUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.delete(url);
   }
 
   update(courseId: number, courseUpdate: Course): Observable<Course> {
-    let url = this.idUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
+    let url = this.courseUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
     return this.http.put<Course>(url, courseUpdate);
   }
 
@@ -70,11 +71,10 @@ export class CourseService {
   }
 
   getAllUserToCourseInfo(courseId: number, roleType: RoleType | undefined): Observable<UserToCourseInfo[]> {
-    let url = this.usersUrl.replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString());
-    const options = roleType ?
-      {params: new HttpParams().set('roleType', roleType.toString())} : {};
+    let queryParams = new HttpParams().set('courseId', courseId);
+    if (roleType) queryParams.set('roleType', roleType)
 
-    return this.http.get<UserToCourseInfo[]>(url, options);
+    return this.http.get<UserToCourseInfo[]>(this.usersUrl, {params: queryParams});
   }
 
   getUsersCourseInfo(courseId: number, userId: number): Observable<UserToCourse> {

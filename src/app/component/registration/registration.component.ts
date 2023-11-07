@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {SignIn} from "../../shared/model/SignIn";
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthenticationService} from "../../service/authentication/authentication.service";
-import {catchError, first} from "rxjs";
-import {SignUp} from "../../shared/model/SignUp";
+import {SecurityService} from "@app/service/security/security.service";
+import {first} from "rxjs";
+import {SignUp} from "@app/shared/model/SignUp";
 
 @Component({
   selector: 'app-registration',
@@ -12,7 +11,7 @@ import {SignUp} from "../../shared/model/SignUp";
 })
 export class RegistrationComponent implements OnInit {
 
-  submitted = false;
+  formSubmitted = false;
   error = '';
 
   credentials: SignUp = {
@@ -22,10 +21,11 @@ export class RegistrationComponent implements OnInit {
     lastName: ''
   }
 
+  // If user is already authenticated - it brings user to application root page.
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: SecurityService) {
     if (this.authenticationService.userValue) {
       void this.router.navigate(['/']);
     }
@@ -34,8 +34,8 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(): void {
-    this.submitted = true;
+  signUp(): void {
+    this.formSubmitted = true;
 
     this.authenticationService.registration(this.credentials)
       .pipe(first())

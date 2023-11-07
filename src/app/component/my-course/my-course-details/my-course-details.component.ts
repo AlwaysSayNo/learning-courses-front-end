@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from "../../../shared/model/Course";
-import {UserToCourse} from "../../../shared/model/UserToCourse";
-import {RoleType} from "../../../shared/enum/RoleType";
+import {Course} from "@app/shared/model/Course";
+import {UserToCourse} from "@app/shared/model/UserToCourse";
+import {RoleType} from "@app/shared/enum/RoleType";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CourseService} from "../../../service/course/course.service";
-import {UserToCourseService} from "../../../service/user-to-course/user-to-course.service";
-import {AuthenticationService} from "../../../service/authentication/authentication.service";
-import {UserInfo} from "../../../shared/model/UserInfo";
+import {CourseService} from "@app/service/course/course.service";
+import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
+import {SecurityService} from "@app/service/security/security.service";
+import {UserInfo} from "@app/shared/model/UserInfo";
 
 @Component({
   selector: 'app-my-course-details',
@@ -24,7 +24,7 @@ export class MyCourseDetailsComponent implements OnInit {
               private router: Router,
               private courseService: CourseService,
               private userToCourseService: UserToCourseService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: SecurityService) {
   }
 
   ngOnInit(): void {

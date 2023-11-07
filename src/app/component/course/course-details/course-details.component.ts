@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from "../../../shared/model/Course";
+import {Course} from "@app/shared/model/Course";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CourseService} from "../../../service/course/course.service";
-import {User} from "../../../shared/model/User";
-import {RoleType} from "../../../shared/enum/RoleType";
-import {UserToCourseService} from "../../../service/user-to-course/user-to-course.service";
-import {UserToCourse} from "../../../shared/model/UserToCourse";
-import {UserInfo} from "../../../shared/model/UserInfo";
-import {AuthenticationService} from "../../../service/authentication/authentication.service";
+import {CourseService} from "@app/service/course/course.service";
+import {RoleType} from "@app/shared/enum/RoleType";
+import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
+import {UserToCourse} from "@app/shared/model/UserToCourse";
+import {UserInfo} from "@app/shared/model/UserInfo";
+import {SecurityService} from "@app/service/security/security.service";
+import {catchError, concatMap } from "rxjs";
 
 @Component({
   selector: 'app-course-details',
@@ -20,36 +20,35 @@ export class CourseDetailsComponent implements OnInit {
   courseId!: number;
   course!: Course;
   userToCourse?: UserToCourse;
-  instructors!: User[];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
               private userToCourseService: UserToCourseService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: SecurityService) {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.courseId = params['courseId'];
-    });
-
-    this.courseService.getById(this.courseId).subscribe((data) => {
-      this.course = data;
-    });
-
-    //TODO very bad
-    this.courseService.getAllUserToCourseInfo(this.courseId, RoleType.INSTRUCTOR).subscribe((data) => {
-      this.instructors = data.map<User>(info => info.user);
-    });
-
-    this.userToCourseService.getById(this.courseId).subscribe({
-      next: (data) => {
-        this.userToCourse = data;
-      },
-      error: () => {
-      }
-    });
+    this.route.queryParamMap
+      .pipe(concatMap((queryParams) => {
+        this.courseId = +queryParams.get('courseId')!;
+        return this.courseService.getById(this.courseId)
+      }))
+      .pipe(catchError((err) => {
+        this.router.navigate(["/courses"])
+        throw new Error(err)
+      }), concatMap((course) => {
+        this.course = course;
+        return this.userToCourseService.getById(this.courseId)
+      }))
+      .subscribe({
+        next: (usersData) => {
+          this.userToCourse = usersData;
+        },
+        error: () => {
+          console.log("User doesn't take a part in this course yet")
+        }
+      });
   }
 
   enroll(): void {

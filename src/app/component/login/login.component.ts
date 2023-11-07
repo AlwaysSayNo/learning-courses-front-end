@@ -1,17 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs";
-import {SignIn} from "../../shared/model/SignIn";
-import {AuthenticationService} from "../../service/authentication/authentication.service";
+import {SignIn} from "@app/shared/model/SignIn";
+import {SecurityService} from "@app/service/security/security.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
-  submitted = false;
+  formSubmitted = false;
   error = '';
 
   credentials: SignIn = {
@@ -22,7 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: SecurityService
   ) {
     if (this.authenticationService.userValue) {
       void this.router.navigate(['/']);
@@ -32,14 +31,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
-    this.submitted = true;
+  signIn() {
+    this.formSubmitted = true;
 
     this.authenticationService.login(this.credentials.login, this.credentials.password)
       .pipe(first())
       .subscribe({
         next: () => {
-          // get return url from query parameters or default to home page
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           void this.router.navigateByUrl(returnUrl);
         },

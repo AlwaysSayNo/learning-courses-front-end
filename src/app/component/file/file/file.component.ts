@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {finalize, Observable, Subscription} from "rxjs";
 import {HttpEvent, HttpEventType} from "@angular/common/http";
-import {Lesson} from "../../../shared/model/Lesson";
-import {FileUploadService} from "../../../service/file-upload/file-upload.service";
-import {FileInfo} from "../../../shared/model/FileInfo";
-import {User} from "../../../shared/model/User";
-import {UserInfo} from "../../../shared/model/UserInfo";
-import {AuthenticationService} from "../../../service/authentication/authentication.service";
-import {RoleType} from "../../../shared/enum/RoleType";
+import {Lesson} from "@app/shared/model/Lesson";
+import {FileUploadService} from "@app/service/file-upload/file-upload.service";
+import {FileInfo} from "@app/shared/model/FileInfo";
+import {User} from "@app/shared/model/User";
+import {UserInfo} from "@app/shared/model/UserInfo";
+import {SecurityService} from "@app/service/security/security.service";
+import {RoleType} from "@app/shared/enum/RoleType";
 
 @Component({
   selector: 'app-file',
@@ -30,7 +30,7 @@ export class FileComponent implements OnInit {
   downloadSub!: Subscription | null;
 
   constructor(private fileUploadService: FileUploadService,
-              private authenticationService: AuthenticationService,) {
+              private authenticationService: SecurityService,) {
   }
 
   ngOnInit(): void {

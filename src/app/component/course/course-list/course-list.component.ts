@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Course} from "../../../shared/model/Course";
-import {CourseService} from "../../../service/course/course.service";
+import {Course} from "@app/shared/model/Course";
+import {CourseService} from "@app/service/course/course.service";
 
+// List of currently active courses
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
@@ -14,7 +15,7 @@ export class CourseListComponent implements OnInit {
   constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
-    this.courseService.getAll().subscribe((data) => {
+    this.courseService.getAll(true).subscribe((data) => {
       this.courses = data;
     });
   }

@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Lesson} from "../../../shared/model/Lesson";
-import {UserToLesson} from "../../../shared/model/UserToLesson";
+import {Lesson} from "@app/shared/model/Lesson";
+import {UserToLesson} from "@app/shared/model/UserToLesson";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserToCourseService} from "../../../service/user-to-course/user-to-course.service";
-import {CourseService} from "../../../service/course/course.service";
-import {AuthenticationService} from "../../../service/authentication/authentication.service";
-import {UserInfo} from "../../../shared/model/UserInfo";
-import {RoleType} from "../../../shared/enum/RoleType";
-import {User} from "../../../shared/model/User";
-import {LessonService} from "../../../service/lesson/lesson.service";
+import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
+import {CourseService} from "@app/service/course/course.service";
+import {SecurityService} from "@app/service/security/security.service";
+import {UserInfo} from "@app/shared/model/UserInfo";
+import {RoleType} from "@app/shared/enum/RoleType";
+import {User} from "@app/shared/model/User";
+import {LessonService} from "@app/service/lesson/lesson.service";
 
 @Component({
   selector: 'app-my-lesson-list',
@@ -28,7 +28,7 @@ export class MyLessonListComponent implements OnInit {
               private courseService: CourseService,
               private lessonService: LessonService,
               private userToCourseService: UserToCourseService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: SecurityService) {
   }
 
   ngOnInit(): void {

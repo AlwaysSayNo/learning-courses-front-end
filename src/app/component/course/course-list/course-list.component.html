@@ -15,7 +15,8 @@
       <ng-container *ngFor="let course of courses;">
         <tr>
           <td>
-            <a [routerLink]="['/course', course.id]">
+            <a [routerLink]="['/courses/course']"
+                [queryParams]="{courseId: course.id}">
               {{course.id}}
             </a>
           </td>

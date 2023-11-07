@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UserToLesson} from "../../../shared/model/UserToLesson";
-import {Lesson} from "../../../shared/model/Lesson";
+import {Component,  OnInit} from '@angular/core';
+import {UserToLesson} from "@app/shared/model/UserToLesson";
+import {Lesson} from "@app/shared/model/Lesson";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CourseService} from "../../../service/course/course.service";
-import {UserToCourseService} from "../../../service/user-to-course/user-to-course.service";
-import {UserInfo} from "../../../shared/model/UserInfo";
-import {AuthenticationService} from "../../../service/authentication/authentication.service";
-import {RoleType} from "../../../shared/enum/RoleType";
-import {User} from "../../../shared/model/User";
-import {UserService} from "../../../service/user/user.service";
+import {CourseService} from "@app/service/course/course.service";
+import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
+import {UserInfo} from "@app/shared/model/UserInfo";
+import {SecurityService} from "@app/service/security/security.service";
+import {RoleType} from "@app/shared/enum/RoleType";
+import {User} from "@app/shared/model/User";
+import {UserService} from "@app/service/user/user.service";
 import {NgModel} from "@angular/forms";
 
 @Component({
@@ -30,7 +30,7 @@ export class MyLessonDetailsComponent implements OnInit {
               private router: Router,
               private courseService: CourseService,
               private userToCourseService: UserToCourseService,
-              private authenticationService: AuthenticationService,
+              private authenticationService: SecurityService,
               private userService: UserService) {
   }
 
