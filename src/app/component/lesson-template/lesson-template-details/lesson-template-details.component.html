@@ -28,7 +28,8 @@
   <div>
     <a
       class="btn btn-primary"
-      [routerLink]="['/course-templates/', courseTemplateId, 'chapter-templates', chapterTemplateId, 'lesson-templates']"
+      [routerLink]="['/templates/chapters/chapter/lessons']"
+      [queryParams]="{chapterTemplateId: chapterTemplateId}"
     >Go Back</a>
   </div>
 
@@ -40,7 +41,7 @@
   </ng-container>
 
   <div>
-    <button class="btn btn-danger" (click)="delete()">Delete</button>
+    <button class="btn btn-danger" (click)="onLessonTemplateDelete()">Delete</button>
     <input type="button"
            class="btn btn-primary"
            (click)="showUpdateForm = !showUpdateForm"

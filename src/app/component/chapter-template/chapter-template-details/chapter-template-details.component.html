@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="chapterTemplate">
   <h2 class="h2">Chapter template: "{{chapterTemplate.title}}"</h2>
   <div class="table-responsive">
     <table class="table table-striped pretty-table">
@@ -24,11 +24,13 @@
   <div>
     <a
       class="btn btn-primary"
-      [routerLink]="['/course-templates/', courseTemplateId, 'chapter-templates']"
+      [routerLink]="['/templates/courses/course/chapters']"
+      [queryParams]="{courseTemplateId}"
     >Go Back</a>
     <a
       class="btn btn-success"
-      [routerLink]="['/course-templates/', courseTemplateId, 'chapter-templates', chapterTemplateId, 'lesson-templates']"
+      [routerLink]="['/templates/chapters/chapter/lessons']"
+      [queryParams]="{courseTemplateId, chapterTemplateId}"
     >Lessons</a>
   </div>
 
@@ -40,7 +42,7 @@
   </ng-container>
 
   <div>
-    <button class="btn btn-danger" (click)="delete()">Delete</button>
+    <button class="btn btn-danger" (click)="onChapterTemplateDelete()">Delete</button>
     <input type="button"
            class="btn btn-primary"
            (click)="showUpdateForm = !showUpdateForm"

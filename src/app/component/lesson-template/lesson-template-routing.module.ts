@@ -2,18 +2,18 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LessonTemplateListComponent} from "./lesson-template-list/lesson-template-list.component";
 import {LessonTemplateDetailsComponent} from "./lesson-template-details/lesson-template-details.component";
-import {RoleType} from "../../shared/enum/RoleType";
-import {AuthGuard} from "../../guard/auth.guard";
+import {RoleType} from "@app/shared/enum/RoleType";
+import {AuthGuard} from "@app/guard/auth.guard";
 
 const routes: Routes = [
   {
-    path: 'course-templates/:courseTemplateId/chapter-templates/:chapterTemplateId/lesson-templates',
+    path: 'templates/chapters/chapter/lessons',
     component: LessonTemplateListComponent,
     canActivate: [AuthGuard],
     data: { roles: [RoleType.INSTRUCTOR, RoleType.ADMIN] }
   },
   {
-    path: 'course-templates/:courseTemplateId/chapter-templates/:chapterTemplateId/lesson-templates/:lessonTemplateId',
+    path: 'templates/lessons/lesson',
     component: LessonTemplateDetailsComponent,
     canActivate: [AuthGuard],
     data: { roles: [RoleType.INSTRUCTOR, RoleType.ADMIN] }

@@ -1,57 +1,43 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ChapterTemplate} from "../../shared/model/ChapterTemplate";
+import {ChapterTemplate} from "@app/shared/model/ChapterTemplate";
+import {LessonTemplate} from "@app/shared/model/LessonTemplate";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChapterTemplateService {
 
-  rootUrl = '/api/courses-templates/:courseTemplateId/chapters-templates/';
-  idUrl = '/api/courses-templates/:courseTemplateId/chapters-templates/:chapterTemplateId';
-
+  chapterTemplateListUrl = '/api/templates/chapters';
+  chapterTemplateUrl = '/api/templates/chapters/chapter';
+  lessonTemplateListUrl = '/api/templates/chapters/chapter/lessons';
 
   constructor(private http: HttpClient) {
   }
 
-  getAllInCourse(courseTemplateId: number): Observable<ChapterTemplate[]> {
-    let url = this.rootUrl.replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString());
-    return this.http.get<ChapterTemplate[]>(url);
+  getAllLessonsInChapterTemplate(chapterTemplateId: number): Observable<LessonTemplate[]> {
+    const queryParams = new HttpParams().set('chapterTemplateId', chapterTemplateId);
+    return this.http.get<LessonTemplate[]>(this.lessonTemplateListUrl, {params: queryParams});
   }
 
-  getById(courseTemplateId: number, id: number): Observable<ChapterTemplate> {
-    let url = this.idUrl
-      .replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString())
-      .replace(TemplatePathVariable.CHAPTER_TEMPLATE_ID.toString(), id.toString());
-    return this.http.get<ChapterTemplate>(url);
+  getById(chapterTemplateId: number): Observable<ChapterTemplate> {
+    const queryParams = new HttpParams().set('chapterTemplateId', chapterTemplateId);
+    return this.http.get<ChapterTemplate>(this.chapterTemplateUrl, {params: queryParams});
   }
 
   add(courseTemplateId: number, template: ChapterTemplate): Observable<ChapterTemplate> {
-    let url = this.rootUrl.replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString());
-    return this.http.post<ChapterTemplate>(url, template);
+    const queryParams = new HttpParams().set('courseTemplateId', courseTemplateId);
+    return this.http.post<ChapterTemplate>(this.chapterTemplateListUrl, template, {params: queryParams});
   }
 
-  //TODO make the binding between service and paths smaller. the expected result is to allocate pathArgs to some constant equal to path and service
-  delete(courseTemplateId: number, id: number): Observable<any> {
-    let url = this.idUrl
-      .replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString())
-      .replace(TemplatePathVariable.CHAPTER_TEMPLATE_ID.toString(), id.toString());
-    return this.http.delete(url);
+  delete(chapterTemplateId: number): Observable<any> {
+    const queryParams = new HttpParams().set('chapterTemplateId', chapterTemplateId);
+    return this.http.delete(this.chapterTemplateUrl, {params: queryParams});
   }
 
-  update(courseTemplateId: number, id: number, chapterTemplate: ChapterTemplate): Observable<ChapterTemplate> {
-    let url = this.idUrl
-      .replace(TemplatePathVariable.COURSE_TEMPLATE_ID.toString(), courseTemplateId.toString())
-      .replace(TemplatePathVariable.CHAPTER_TEMPLATE_ID.toString(), id.toString());
-    return this.http.put<ChapterTemplate>(url, chapterTemplate);
+  update(chapterTemplateId: number, chapterTemplate: ChapterTemplate): Observable<ChapterTemplate> {
+    return this.http.put<ChapterTemplate>(this.chapterTemplateUrl, chapterTemplate);
   }
-
-}
-
-enum TemplatePathVariable {
-
-  COURSE_TEMPLATE_ID = ":courseTemplateId",
-  CHAPTER_TEMPLATE_ID = ":chapterTemplateId",
 
 }

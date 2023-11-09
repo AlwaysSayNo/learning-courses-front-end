@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {LessonTemplateService} from "../../../service/lesson-template/lesson-template.service";
-import {LessonTemplate} from "../../../shared/model/LessonTemplate";
+import {LessonTemplateService} from "@app/service/lesson-template/lesson-template.service";
+import {LessonTemplate} from "@app/shared/model/LessonTemplate";
+import {concatMap} from "rxjs";
 
 @Component({
   selector: 'app-lesson-template-details',
@@ -16,30 +17,44 @@ export class LessonTemplateDetailsComponent implements OnInit {
   lessonTemplate!: LessonTemplate;
   showUpdateForm = false;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
-              private lessonTemplateService: LessonTemplateService) { }
-
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.courseTemplateId = params['courseTemplateId'];
-      this.chapterTemplateId = params['chapterTemplateId'];
-      this.lessonTemplateId = params['lessonTemplateId'];
-    });
-
-    this.lessonTemplateService.getById(this.courseTemplateId, this.chapterTemplateId, this.lessonTemplateId).subscribe((data) => {
-      this.lessonTemplate = data;
-    });
+              private lessonTemplateService: LessonTemplateService) {
   }
 
-  delete(): void {
-    this.lessonTemplateService.delete(this.courseTemplateId, this.chapterTemplateId, this.lessonTemplateId).subscribe();
-    void this.router.navigateByUrl(`/course-templates/${this.courseTemplateId}/chapter-templates/${this.chapterTemplateId}/lesson-templates`);
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap
+      .pipe(concatMap((queryParams) => {
+        this.courseTemplateId = +queryParams.get('courseTemplateId')!;
+        this.lessonTemplateId = +queryParams.get('lessonTemplateId')!;
+        this.chapterTemplateId = +queryParams.get('chapterTemplateId')!;
+        return this.lessonTemplateService.getById(this.lessonTemplateId);
+      }))
+      .subscribe({
+        next: (lessonTemplate) => {
+          this.lessonTemplate = lessonTemplate;
+        },
+        error: () => {
+          console.log("There is no such lesson template.")
+          void this.router.navigate(["/templates/chapters/chapter/lessons"],
+            {queryParams: {chapterTemplateId: this.chapterTemplateId, courseTemplateId: this.courseTemplateId}});
+        }
+      });
+  }
+
+  onLessonTemplateDelete(): void {
+    this.lessonTemplateService.delete(this.lessonTemplateId)
+      .subscribe(() => {
+        void this.router.navigate(["/templates/chapters/chapter/lessons"],
+          {queryParams: {chapterTemplateId: this.chapterTemplateId, courseTemplateId: this.courseTemplateId}});
+      });
   }
 
   onUpdateLessonTemplate(lessonTemplate: LessonTemplate): void {
-    this.lessonTemplate = {...lessonTemplate};
-    this.lessonTemplateService.update(this.courseTemplateId, this.chapterTemplateId, this.lessonTemplateId, this.lessonTemplate).subscribe();
+    this.lessonTemplateService.update(this.lessonTemplateId, this.lessonTemplate)
+      .subscribe(() => {
+        this.lessonTemplate = {...lessonTemplate};
+      });
     this.showUpdateForm = false;
   }
 

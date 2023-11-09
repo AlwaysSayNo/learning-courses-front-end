@@ -21,7 +21,6 @@ export class CourseTemplateListComponent implements OnInit {
     });
   }
 
-  //TODO is it a good solution to add pushed course template to templates without call to server on get
   onAddCourseTemplate(courseTemplate: CourseTemplate) {
     this.courseTemplateService.add(courseTemplate).subscribe((data) => {
       this.templates.push(data);

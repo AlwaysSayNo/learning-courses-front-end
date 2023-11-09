@@ -13,7 +13,7 @@ import {UserToCourseInfo} from "@app/shared/model/UserToCourseInfo";
 })
 export class CourseService {
 
-  coursesUrl = '/api/courses';
+  courseListUrl = '/api/courses';
   courseUrl = '/api/courses/course';
   allLessonsUrl = '/api/courses/:courseId/lessons';
   lessonsUrl = '/api/courses/:courseId/lessons/:lessonId';
@@ -28,7 +28,7 @@ export class CourseService {
 
   getAll(isActive: boolean): Observable<Course[]> {
     const queryParams = isActive ? {params: new HttpParams().set('isActive', isActive)} : {};
-    return this.http.get<Course[]>(this.coursesUrl, queryParams);
+    return this.http.get<Course[]>(this.courseListUrl, queryParams);
   }
 
   getById(courseId: number): Observable<Course> {

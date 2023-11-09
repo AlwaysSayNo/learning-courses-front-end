@@ -21,7 +21,7 @@ export class CourseDetailsComponent implements OnInit {
   course!: Course;
   userToCourse?: UserToCourse;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
               private userToCourseService: UserToCourseService,
@@ -29,13 +29,13 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParamMap
+    this.activatedRoute.queryParamMap
       .pipe(concatMap((queryParams) => {
         this.courseId = +queryParams.get('courseId')!;
         return this.courseService.getById(this.courseId)
       }))
       .pipe(catchError((err) => {
-        this.router.navigate(["/courses"])
+        void this.router.navigate(["/courses"])
         throw new Error(err)
       }), concatMap((course) => {
         this.course = course;

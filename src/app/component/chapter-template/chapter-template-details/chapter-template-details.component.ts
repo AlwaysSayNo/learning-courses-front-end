@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {ChapterTemplateService} from "../../../service/chapter-template/chapter-template.service";
-import {ChapterTemplate} from "../../../shared/model/ChapterTemplate";
+import {ChapterTemplateService} from "@app/service/chapter-template/chapter-template.service";
+import {ChapterTemplate} from "@app/shared/model/ChapterTemplate";
+import {concatMap} from "rxjs";
 
 @Component({
   selector: 'app-chapter-template-details',
@@ -15,30 +16,48 @@ export class ChapterTemplateDetailsComponent implements OnInit {
   chapterTemplate!: ChapterTemplate;
   showUpdateForm = false;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private chapterTemplateService: ChapterTemplateService) {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.courseTemplateId = params['courseTemplateId'];
-      this.chapterTemplateId = params['chapterTemplateId'];
-    });
-
-    this.chapterTemplateService.getById(this.courseTemplateId, this.chapterTemplateId).subscribe((data) => {
-      this.chapterTemplate = data;
-    });
+    this.activatedRoute.queryParamMap
+      .pipe(concatMap((queryParams) => {
+        this.courseTemplateId = +queryParams.get('courseTemplateId')!;
+        this.chapterTemplateId = +queryParams.get('chapterTemplateId')!;
+        return this.chapterTemplateService.getById(this.chapterTemplateId);
+      }))
+      .subscribe({
+        next: (chapterTemplate) => {
+          this.chapterTemplate = chapterTemplate;
+        },
+        error: () => {
+          console.log("There is no such chapter template.")
+          void this.router.navigate(["/templates/courses/course/chapters"],
+            {queryParams: {courseTemplateId: this.courseTemplateId}})
+        }
+      });
   }
 
-  delete(): void {
-    this.chapterTemplateService.delete(this.courseTemplateId, this.chapterTemplateId).subscribe();
-    void this.router.navigateByUrl(`/course-templates/${this.courseTemplateId}/chapter-templates`);
+  onChapterTemplateDelete(): void {
+    this.chapterTemplateService.delete(this.chapterTemplateId)
+      .subscribe(() => {
+        void this.router.navigate(["/templates/courses/course/chapters"],
+          {queryParams: {courseTemplateId: this.courseTemplateId}});
+      });
   }
 
   onUpdateChapterTemplate(chapterTemplate: ChapterTemplate): void {
-    this.chapterTemplate = {...chapterTemplate};
-    this.chapterTemplateService.update(this.courseTemplateId, this.chapterTemplateId, this.chapterTemplate).subscribe();
+    this.chapterTemplateService.update(this.chapterTemplateId, chapterTemplate)
+      .subscribe({
+        next: (chapterTemplate) => {
+          this.chapterTemplate = chapterTemplate;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
     this.showUpdateForm = false;
   }
 

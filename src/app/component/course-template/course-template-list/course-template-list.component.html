@@ -3,7 +3,6 @@
   <hr>
   <div class="container row justify-content-between align-content-center m-0 p-0">
     <h3 class="h3 text-uppercase mb-1 row align-content-center">Add form</h3>
-      <!--TODO do i need to save data while disabling-->
     <button type="button"
            mat-fab color="primary"
            (click)="showCreateForm = !showCreateForm"
@@ -19,7 +18,7 @@
 
 <hr>
 
-<div class="table-responsive">
+<div class="table-responsive" *ngIf="templates">
   <table class="table table-striped pretty-table">
     <thead>
     <tr>
@@ -32,7 +31,8 @@
     <ng-container *ngFor="let template of templates;">
       <tr>
         <td>
-          <a [routerLink]="['/course-templates', template.id]">
+          <a [routerLink]="['/templates/courses/course']"
+          [queryParams]="{'courseTemplateId': template.id}">
             {{template.id}}
           </a>
         </td>

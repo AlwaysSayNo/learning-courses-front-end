@@ -18,7 +18,7 @@
 
 <hr>
 
-<div class="table-responsive">
+<div class="table-responsive" *ngIf="lessonTemplates">
   <table class="table table-striped pretty-table">
     <thead>
     <tr>
@@ -31,11 +31,12 @@
     </tr>
     </thead>
     <tbody>
-    <ng-container *ngFor="let template of templates;">
+    <ng-container *ngFor="let template of lessonTemplates;">
       <tr>
         <td>
           <a
-            [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', chapterTemplateId, 'lesson-templates', template.id]">
+            [routerLink]="['/templates/lessons/lesson']"
+            [queryParams]="{lessonTemplateId: template.id, chapterTemplateId, courseTemplateId}">
             {{template.id}}
           </a>
         </td>
@@ -53,6 +54,7 @@
 <div>
   <a
     class="btn btn-success"
-    [routerLink]="['/course-templates', courseTemplateId, 'chapter-templates', chapterTemplateId]"
+    [routerLink]="['/templates/chapters/chapter']"
+    [queryParams]="{courseTemplateId, chapterTemplateId}"
   >Go back</a>
 </div>
