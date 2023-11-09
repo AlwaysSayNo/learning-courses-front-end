@@ -11,7 +11,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="table-responsive">
+  <div class="table-responsive" *ngIf="courses">
     <table class="table table-striped pretty-table">
       <thead>
       <tr>
@@ -25,7 +25,8 @@
       <ng-container *ngFor="let course of courses;">
         <tr>
           <td>
-            <a [routerLink]="['/user/my-courses', course.id, 'info']">
+            <a [routerLink]="['/my/courses/course/info']"
+               [queryParams]="{courseId: course.id}">
               {{course.id}}
             </a>
           </td>

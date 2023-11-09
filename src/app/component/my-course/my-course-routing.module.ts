@@ -3,17 +3,20 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "@app/guard/auth.guard";
 import {MyCourseListComponent} from "./my-course-list/my-course-list.component";
 import {MyCourseDetailsComponent} from "./my-course-details/my-course-details.component";
+import {RoleType} from "@app/shared/enum/RoleType";
 
 const routes: Routes = [
   {
-    path: '/my/courses',
+    path: 'my/courses',
     component: MyCourseListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: [RoleType.INSTRUCTOR, RoleType.STUDENT] }
   },
   {
-    path: '/my/courses/course/info',
+    path: 'my/courses/course/info',
     component: MyCourseDetailsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: [RoleType.INSTRUCTOR, RoleType.STUDENT] }
   },
 ];
 

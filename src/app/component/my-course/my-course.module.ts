@@ -9,6 +9,7 @@ import {MyLessonModule} from "../my-lesson/my-lesson.module";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
+import {MyChapterModule} from "@app/component/my-chapter/my-chapter.module";
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import {MatSelectModule} from "@angular/material/select";
     MyCourseRoutingModule,
     UserModule,
     MyLessonModule,
+    MyChapterModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule

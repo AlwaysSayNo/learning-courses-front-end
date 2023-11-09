@@ -51,13 +51,14 @@ export class CourseDetailsComponent implements OnInit {
       });
   }
 
-  enroll(): void {
-    this.courseService.enroll(this.courseId).subscribe((data) => {
+  //TODO we cannot get id yet (need changes on the backend side)
+  enrollWithoutApproval(): void {
+    this.courseService.enrollWithoutApproval(this.courseId, this.user.id).subscribe((data) => {
       this.userToCourse = data;
     });
   }
 
-  user(): UserInfo {
+  get user(): UserInfo {
     return this.authenticationService.userValue;
   }
 

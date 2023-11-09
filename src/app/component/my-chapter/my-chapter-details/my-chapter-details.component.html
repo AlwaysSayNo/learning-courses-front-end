@@ -1,0 +1,35 @@
+<div class="container" *ngIf="chapter">
+  <h2 class="h2">Course</h2>
+  <div class="table-responsive">
+    <table class="table table-striped pretty-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Is finished</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{chapter.id}}</td>
+        <td>{{chapter.title | uppercase}}</td>
+        <td>{{chapter.description}}</td>
+        <td>{{chapter.isFinished}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <a
+      class="btn btn-primary"
+      [routerLink]="['/my/courses/course/chapters']"
+      [queryParams]="{courseId}"
+    >Go Back</a>
+    <a
+      class="btn btn-success"
+      [routerLink]="['/my/chapters/chapter/lessons']"
+      [queryParams]="{courseId, chapterId}"
+    >Lessons</a>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="course">
   <h2 class="h2">Course</h2>
   <div class="table-responsive">
     <table class="table table-striped pretty-table">
@@ -21,7 +21,7 @@
     </table>
   </div>
 
-  <ng-container *ngIf="user().role == ROLE_TYPE.STUDENT">
+  <ng-container *ngIf="user.role == ROLE_TYPE.STUDENT">
     <div class="table-responsive">
       <table class="table table-striped pretty-table">
         <thead>
@@ -50,23 +50,24 @@
 
   <app-courses-users-list [userRole]="ROLE_TYPE.INSTRUCTOR" [courseId]="courseId"></app-courses-users-list>
 
-  <ng-container *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+  <ng-container *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
     <app-courses-users-list [userRole]="ROLE_TYPE.STUDENT" [courseId]="courseId"></app-courses-users-list>
   </ng-container>
 
   <div>
     <a
       class="btn btn-primary"
-      [routerLink]="['/user/my-courses/']"
+      [routerLink]="['/my/courses']"
     >Go Back</a>
     <a
       class="btn btn-success"
-      [routerLink]="['/user/my-courses/', courseId, 'lessons']"
-    >Lessons</a>
+      [routerLink]="['/my/courses/course/chapters']"
+      [queryParams]="{courseId}"
+    >Chapters</a>
     <input type="button"
            class="btn btn-primary"
            value="End course"
-           *ngIf="user().role == ROLE_TYPE.INSTRUCTOR && !course.isFinished"
+           *ngIf="user.role == ROLE_TYPE.INSTRUCTOR && !course.isFinished"
            (click)="onCourseClose()"/>
   </div>
 </div>

@@ -10,6 +10,7 @@ import {RoleType} from "@app/shared/enum/RoleType";
 import {User} from "@app/shared/model/User";
 import {UserService} from "@app/service/user/user.service";
 import {NgModel} from "@angular/forms";
+import {LessonService} from "@app/service/lesson/lesson.service";
 
 @Component({
   selector: 'app-my-lesson-details',
@@ -29,6 +30,7 @@ export class MyLessonDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
+              private lessonService: LessonService,
               private userToCourseService: UserToCourseService,
               private authenticationService: SecurityService,
               private userService: UserService) {
@@ -63,10 +65,10 @@ export class MyLessonDetailsComponent implements OnInit {
       this.route.params.subscribe((params) => {
         studentId = params[PathVariable.STUDENT_ID];
       });
-      this.courseService.getUserLessonInfo(this.courseId, this.lessonId, studentId)
-        .subscribe((userToLesson) => {
-          this.userToLesson = userToLesson;
-        })
+      // this.courseService.lessonSe(this.courseId, this.lessonId, studentId)
+      //   .subscribe((userToLesson) => {
+      //     this.userToLesson = userToLesson;
+      //   })
 
       this.userService.getById(studentId)
         .subscribe((student) => {
@@ -74,10 +76,10 @@ export class MyLessonDetailsComponent implements OnInit {
         })
     }
 
-    this.courseService.getLessonsInCourse(this.courseId, this.lessonId)
+    /*this.courseService.getLessonsInCourse(this.courseId, this.lessonId)
       .subscribe((lesson) => {
         this.lesson = lesson;
-      });
+      });*/
   }
 
   get user(): UserInfo {
@@ -86,13 +88,13 @@ export class MyLessonDetailsComponent implements OnInit {
 
   onAssignMark(newMark: NgModel) {
     let mark: number = newMark.value;
-    if (mark) {
+    /*if (mark) {
       this.userToLesson.mark = mark;
       this.courseService.updateUsersLessonInfo(this.courseId, this.lessonId, this.student.id, this.userToLesson)
         .subscribe((userToLesson) => {
         this.userToLesson = userToLesson;
       })
-    }
+    }*/
   }
 }
 

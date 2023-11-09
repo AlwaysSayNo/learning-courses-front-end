@@ -7,6 +7,7 @@ import {CourseService} from "@app/service/course/course.service";
 import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
 import {SecurityService} from "@app/service/security/security.service";
 import {UserInfo} from "@app/shared/model/UserInfo";
+import {concatMap} from "rxjs";
 
 @Component({
   selector: 'app-my-course-details',
@@ -20,7 +21,7 @@ export class MyCourseDetailsComponent implements OnInit {
   course!: Course;
   userToCourse!: UserToCourse;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
               private userToCourseService: UserToCourseService,
@@ -28,20 +29,27 @@ export class MyCourseDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.courseId = params[PathVariable.COURSE_ID];
-    });
-
-    this.courseService.getById(this.courseId).subscribe((data) => {
-      this.course = data;
-    });
-
-    this.userToCourseService.getById(this.courseId).subscribe((data) => {
-      this.userToCourse = data;
-    });
+    this.activatedRoute.queryParamMap
+      .pipe(concatMap((queryParams) => {
+        this.courseId = +queryParams.get('courseId')!;
+        return this.courseService.getById(this.courseId);
+      }))
+      .pipe(concatMap((course) => {
+        this.course = course;
+        return this.userToCourseService.getById(this.courseId);
+      }))
+      .subscribe({
+        next: (userToCourse) => {
+          this.userToCourse = userToCourse
+        },
+        error: (err) => {
+          console.error(err);
+          void this.router.navigate(["/my/courses"]);
+        }
+      })
   }
 
-  user(): UserInfo {
+  get user(): UserInfo {
     return this.authenticationService.userValue;
   }
 
@@ -51,10 +59,4 @@ export class MyCourseDetailsComponent implements OnInit {
         this.course.isFinished = true;
       })
   }
-}
-
-enum PathVariable {
-
-  COURSE_ID = "courseId",
-
 }

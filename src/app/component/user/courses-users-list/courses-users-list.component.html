@@ -1,4 +1,4 @@
-<div *ngIf="infos">
+<div *ngIf="userToCourseInfos">
   <h2 class="h2"
       *ngIf="userRole"
       [ngSwitch]="userRole"
@@ -6,7 +6,7 @@
     <span *ngSwitchCase="'STUDENT'">Students</span>
     <span *ngSwitchCase="'INSTRUCTOR'">Instructors</span>
     <span *ngSwitchCase="'Admin'">Admins</span>
-    : {{infos.length}}
+    : {{userToCourseInfos.length}}
   </h2>
   <h2 class="h2"
       *ngIf="!userRole"
@@ -27,7 +27,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let info of infos; let i = index">
+      <tr *ngFor="let info of userToCourseInfos; let i = index">
         <td>{{i+1}}</td>
         <td>{{info.user.id}}</td>
         <td>{{info.user.login}}</td>

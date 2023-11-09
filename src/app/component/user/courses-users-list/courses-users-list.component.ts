@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {RoleType} from "../../../shared/enum/RoleType";
-import {CourseService} from "../../../service/course/course.service";
-import {UserToCourseInfo} from "../../../shared/model/UserToCourseInfo";
+import {RoleType} from "@app/shared/enum/RoleType";
+import {CourseService} from "@app/service/course/course.service";
+import {UserToCourseInfo} from "@app/shared/model/UserToCourseInfo";
 
 @Component({
   selector: 'app-courses-users-list',
@@ -13,15 +13,15 @@ export class CoursesUsersListComponent implements OnInit {
   @Input() userRole?: RoleType;
   @Input() courseId!: number;
 
-  infos!: UserToCourseInfo[];
+  userToCourseInfos!: UserToCourseInfo[];
 
   constructor(private courseService: CourseService) {
   }
 
   ngOnInit(): void {
     this.courseService.getAllUserToCourseInfo(this.courseId, this.userRole)
-      .subscribe((infos) => {
-        this.infos = infos;
+      .subscribe((userToCourseInfos) => {
+        this.userToCourseInfos = userToCourseInfos;
       });
   }
 
