@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {concatMap} from "rxjs";
 import {Chapter} from "@app/shared/model/Chapter";
@@ -17,7 +17,8 @@ export class MyChapterDetailsComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
-              private chapterService: ChapterService) { }
+              private chapterService: ChapterService) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap

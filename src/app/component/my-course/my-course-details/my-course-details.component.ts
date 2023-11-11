@@ -4,10 +4,10 @@ import {UserToCourse} from "@app/shared/model/UserToCourse";
 import {RoleType} from "@app/shared/enum/RoleType";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CourseService} from "@app/service/course/course.service";
-import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
 import {SecurityService} from "@app/service/security/security.service";
 import {UserInfo} from "@app/shared/model/UserInfo";
 import {concatMap} from "rxjs";
+import {MyService} from "@app/service/my/my.service";
 
 @Component({
   selector: 'app-my-course-details',
@@ -24,7 +24,7 @@ export class MyCourseDetailsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
-              private userToCourseService: UserToCourseService,
+              private myService: MyService,
               private authenticationService: SecurityService) {
   }
 
@@ -36,7 +36,7 @@ export class MyCourseDetailsComponent implements OnInit {
       }))
       .pipe(concatMap((course) => {
         this.course = course;
-        return this.userToCourseService.getById(this.courseId);
+        return this.myService.getMyCourseByCourseId(this.courseId);
       }))
       .subscribe({
         next: (userToCourse) => {

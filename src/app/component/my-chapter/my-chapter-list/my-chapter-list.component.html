@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="h2">Lessons</h2>
+  <h2 class="h2">Chapters</h2>
   <div class="table-responsive" *ngIf="chapters">
     <table class="table table-striped pretty-table">
       <thead>
@@ -21,6 +21,7 @@
           </td>
           <td>{{chapter.title | uppercase}}</td>
           <td>{{chapter.description}}</td>
+          <td>{{chapter.isFinished}}</td>
         </tr>
       </ng-container>
       </tbody>

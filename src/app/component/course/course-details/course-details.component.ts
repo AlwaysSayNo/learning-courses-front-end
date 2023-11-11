@@ -3,11 +3,11 @@ import {Course} from "@app/shared/model/Course";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CourseService} from "@app/service/course/course.service";
 import {RoleType} from "@app/shared/enum/RoleType";
-import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
 import {UserToCourse} from "@app/shared/model/UserToCourse";
 import {UserInfo} from "@app/shared/model/UserInfo";
 import {SecurityService} from "@app/service/security/security.service";
-import {catchError, concatMap } from "rxjs";
+import {catchError, concatMap} from "rxjs";
+import {MyService} from "@app/service/my/my.service";
 
 @Component({
   selector: 'app-course-details',
@@ -24,7 +24,7 @@ export class CourseDetailsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
-              private userToCourseService: UserToCourseService,
+              private myService: MyService,
               private authenticationService: SecurityService) {
   }
 
@@ -39,7 +39,7 @@ export class CourseDetailsComponent implements OnInit {
         throw new Error(err)
       }), concatMap((course) => {
         this.course = course;
-        return this.userToCourseService.getById(this.courseId)
+        return this.myService.getMyCourseByCourseId(this.courseId)
       }))
       .subscribe({
         next: (usersData) => {
@@ -51,11 +51,16 @@ export class CourseDetailsComponent implements OnInit {
       });
   }
 
-  //TODO we cannot get id yet (need changes on the backend side)
   enrollWithoutApproval(): void {
-    this.courseService.enrollWithoutApproval(this.courseId, this.user.id).subscribe((data) => {
+    this.courseService.enrollWithoutApproval(this.courseId, this.user.id)
+      .subscribe({next: (data) =>{
       this.userToCourse = data;
-    });
+    },
+        error: () => {
+          void this.router.navigate(["/courses"]);
+          console.log("User doesn't contain userId");
+        }
+  });
   }
 
   get user(): UserInfo {

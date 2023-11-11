@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CourseService} from "@app/service/course/course.service";
-import {ChapterService} from "@app/service/chapter/chapter.service";
+import {MyService} from "@app/service/my/my.service";
 import {concatMap} from "rxjs";
 import {Chapter} from "@app/shared/model/Chapter";
 
@@ -16,7 +16,7 @@ export class MyChapterListComponent implements OnInit {
   courseId!: number;
 
   constructor(private courseService: CourseService,
-              private chapterService: ChapterService,
+              private chapterService: MyService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
   }

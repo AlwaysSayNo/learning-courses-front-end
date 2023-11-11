@@ -1,25 +1,20 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from "../../guard/auth.guard";
+import {AuthGuard} from "@app/guard/auth.guard";
 import {MyLessonListComponent} from "./my-lesson-list/my-lesson-list.component";
 import {MyLessonDetailsComponent} from "./my-lesson-details/my-lesson-details.component";
 
 const routes: Routes = [
   {
-    path: 'user/my-courses/:courseId/lessons',
+    path: 'my/chapters/chapter/lessons',
     component: MyLessonListComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'user/my-courses/:courseId/lessons/:lessonId',
+    path: 'my/lessons/lesson/info',
     component: MyLessonDetailsComponent,
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'user/my-courses/:courseId/lessons/:lessonId/students/:studentId',
-    component: MyLessonDetailsComponent,
-    canActivate: [AuthGuard]
-  },
+  }
 ];
 
 @NgModule({

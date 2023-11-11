@@ -1,10 +1,8 @@
-<!--TODO view for instructor-->
-<!--TODO split by chapters-->
-<div class="container">
+<div class="container" *ngIf="lessons && students">
   <h2 class="h2">Lessons</h2>
   <div class="container">
     <div class="row">
-      <div [class]="user().role == ROLE_TYPE.STUDENT ? 'col-md-8' : 'col'">
+      <div [class]="user.role == ROLE_TYPE.STUDENT ? 'col-md-8' : 'col'">
         <div class="table-responsive">
           <table class="table table-striped pretty-table">
             <thead>
@@ -13,7 +11,7 @@
               <th>Title</th>
               <th>Number</th>
               <th>Is finished</th>
-              <th *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+              <th *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
                 Close
               </th>
             </tr>
@@ -22,20 +20,21 @@
             <ng-container *ngFor="let lesson of lessons; let i = index">
               <tr>
                 <td>
-                  <a *ngIf="user().role == ROLE_TYPE.STUDENT"
-                     [routerLink]="['/user/my-courses/', courseId, 'lessons', lesson.id]">
+                  <a *ngIf="user.role == ROLE_TYPE.STUDENT"
+                     [routerLink]="['/my/lessons/lesson']"
+                     [queryParams]="{courseId, chapterId, lessonId: lesson.id}">
                     {{lesson.id}}
                   </a>
-                  <ng-container *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+                  <ng-container *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
                     {{lesson.id}}
                   </ng-container>
                 </td>
                 <td>
-                  <ng-container *ngIf="user().role == ROLE_TYPE.STUDENT">
+                  <ng-container *ngIf="user.role == ROLE_TYPE.STUDENT">
                     {{lesson.title | uppercase}}
                   </ng-container>
 
-                  <ng-container *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+                  <ng-container *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
                     <cdk-accordion-item
                       role="button"
                       #accordionItem="cdkAccordionItem">
@@ -55,7 +54,8 @@
                           <li class="list-group-item"
                             *ngFor="let student of students; let i = index">
                             {{i + 1}}.
-                            <a [routerLink]="['/user/my-courses/', courseId, 'lessons', lesson.id, 'students', student.id]">
+                            <a [routerLink]="['/my/lessons/lesson']"
+                               [queryParams]="{courseId, chapterId, lessonId: lesson.id, studentId: student.id}">
                               {{student.firstName}} {{student.lastName}}
                             </a>
                           </li>
@@ -67,7 +67,7 @@
                 <td>{{lesson.number}}</td>
                 <td>{{lesson.isFinished}}</td>
 
-                <td *ngIf="user().role == ROLE_TYPE.INSTRUCTOR">
+                <td *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
                   <input type="button"
                          class="btn btn-primary"
                          value="Close"
@@ -82,7 +82,7 @@
       </div>
 
       <div class="col-md-4"
-           *ngIf="user().role == ROLE_TYPE.STUDENT">
+           *ngIf="user.role == ROLE_TYPE.STUDENT">
         <div class="table-responsive">
           <table class="table table-striped pretty-table">
             <thead>
@@ -107,7 +107,7 @@
   <div>
     <a
       class="btn btn-primary"
-      [routerLink]="['/user/my-courses/', courseId, 'info']"
+      [routerLink]="['/my/chapters/chapter']" [queryParams]="{courseId, chapterId}"
     >Go Back</a>
   </div>
 </div>

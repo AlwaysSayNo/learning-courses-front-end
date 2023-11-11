@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Course} from "@app/shared/model/Course";
 import {UserToCourse} from "@app/shared/model/UserToCourse";
 import {UserToLesson} from "@app/shared/model/UserToLesson";
 
@@ -10,16 +9,11 @@ import {UserToLesson} from "@app/shared/model/UserToLesson";
 })
 export class UserToCourseService {
 
-  myCoursesUrl = '/api/my/courses';
   myCourseUrl = '/api/my/courses/course/info';
   userToLessonsUrl = '/api/my-courses/:courseId/lessons';
   userToLessonInfoUrl = '/api/my-courses/:courseId/lessons/:lessonId/info';
 
   constructor(private http: HttpClient) {
-  }
-
-  getAll(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.myCoursesUrl);
   }
 
   getById(courseId: number): Observable<UserToCourse> {

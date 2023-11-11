@@ -20,8 +20,8 @@ export class CourseService {
   lessonsUrl = '/api/courses/:courseId/lessons/:lessonId';
   finishCourseUrl = '/api/courses/course/finish';
   enrollWithoutApprovalUrl = '/api/courses/course/users/enrolls';
-  usersUrl = '/api/courses/course/users/info';
-  userCourseInfoUrl = '/api/courses/course/users/user/info';
+  usersUrl = '/api/courses/course/users';
+  userCourseInfoUrl = '/api/courses/course/users/user';
   usersLessonsInfoUrl = '/api/courses/:courseId/lessons/:lessonId/users/:userId';
 
   constructor(private http: HttpClient) {
@@ -79,7 +79,7 @@ export class CourseService {
 
   getAllUserToCourseInfo(courseId: number, roleType: RoleType | undefined): Observable<UserToCourseInfo[]> {
     let queryParams = new HttpParams().set('courseId', courseId);
-    if (roleType) queryParams.set('roleType', roleType)
+    if (roleType) queryParams = queryParams.set('roleType', roleType.toString())
 
     return this.http.get<UserToCourseInfo[]>(this.usersUrl, {params: queryParams});
   }

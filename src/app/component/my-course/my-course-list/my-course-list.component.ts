@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from "@app/shared/model/Course";
-import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
 import {CourseStatus} from "@app/shared/enum/CourseStatus";
+import {MyService} from "@app/service/my/my.service";
 
 @Component({
   selector: 'app-my-course-list',
@@ -15,10 +15,10 @@ export class MyCourseListComponent implements OnInit {
   statuses: CourseStatus[] = [CourseStatus.ALL, CourseStatus.FINISHED, CourseStatus.ACTIVE];
   selectedStatus: CourseStatus = CourseStatus.ALL;
 
-  constructor(private userToCourseService: UserToCourseService) { }
+  constructor(private myService: MyService) { }
 
   ngOnInit(): void {
-    this.userToCourseService.getAll()
+    this.myService.getAllMyCourse()
       .subscribe((data) => {
       this.allCourses = data;
       this.courses = this.filterAllCoursesByStatus(this.selectedStatus);
