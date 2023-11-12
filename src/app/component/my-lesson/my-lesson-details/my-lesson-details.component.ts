@@ -1,9 +1,8 @@
-import {Component,  OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserToLesson} from "@app/shared/model/UserToLesson";
 import {Lesson} from "@app/shared/model/Lesson";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CourseService} from "@app/service/course/course.service";
-import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
 import {UserInfo} from "@app/shared/model/UserInfo";
 import {SecurityService} from "@app/service/security/security.service";
 import {RoleType} from "@app/shared/enum/RoleType";
@@ -11,6 +10,7 @@ import {User} from "@app/shared/model/User";
 import {UserService} from "@app/service/user/user.service";
 import {NgModel} from "@angular/forms";
 import {LessonService} from "@app/service/lesson/lesson.service";
+import {concatMap} from "rxjs";
 
 @Component({
   selector: 'app-my-lesson-details',
@@ -21,65 +21,53 @@ export class MyLessonDetailsComponent implements OnInit {
 
   public ROLE_TYPE = RoleType;
   courseId!: number;
+  chapterId!: number;
   lessonId!: number;
+  studentId!: number;
   lesson!: Lesson;
   userToLesson!: UserToLesson;
 
   student!: User;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private courseService: CourseService,
               private lessonService: LessonService,
-              private userToCourseService: UserToCourseService,
               private authenticationService: SecurityService,
               private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.courseId = params[PathVariable.COURSE_ID];
-      this.lessonId = params[PathVariable.LESSON_ID];
-    });
+    this.activatedRoute.queryParamMap
+      .pipe(concatMap((queryParams) => {
+        this.courseId = +queryParams.get("courseId")!;
+        this.chapterId = +queryParams.get("chapterId")!;
+        this.lessonId = +queryParams.get("lessonId")!;
 
-    //TODO it's bad practise, but we use the same array for one student and array of students for instructor
-    // please split the logic later
-    let role = this.user.role;
-    if (role == RoleType.STUDENT) {
-      this.userToCourseService.geUserToLessonInfo(this.courseId, this.lessonId)
-        .subscribe((userToLesson) => {
-            this.userToLesson = userToLesson;
-          },
-          () => {
-          },
-          () => {
-            this.userService.getById(this.userToLesson.userId)
-              .subscribe((student) => {
-                this.student = student;
-              })
-          });
+        this.studentId = this.user.role == RoleType.STUDENT ?
+          this.user.id : +queryParams.get("studentId")!;
 
-    } else if (role == RoleType.INSTRUCTOR) {
-      //TODO bad decision to split the logic based in url. Split th logic based on component logic.
-      let studentId = -1;
-      this.route.params.subscribe((params) => {
-        studentId = params[PathVariable.STUDENT_ID];
-      });
-      // this.courseService.lessonSe(this.courseId, this.lessonId, studentId)
-      //   .subscribe((userToLesson) => {
-      //     this.userToLesson = userToLesson;
-      //   })
-
-      this.userService.getById(studentId)
-        .subscribe((student) => {
-          this.student = student;
-        })
-    }
-
-    /*this.courseService.getLessonsInCourse(this.courseId, this.lessonId)
-      .subscribe((lesson) => {
+        return this.userService.getById(this.studentId);
+      }))
+      .pipe(concatMap((student) => {
+        this.student = student;
+        return this.lessonService.getById(this.lessonId);
+      }))
+      .pipe(concatMap((lesson) => {
         this.lesson = lesson;
-      });*/
+        return this.lessonService.getUsersLessonInfo(this.lessonId, this.studentId);
+      }))
+      .subscribe({
+        next: (userToLesson) => {
+          this.userToLesson = userToLesson;
+        },
+        error: (err) => {
+          console.error("No lesson with such user");
+          console.error(err)
+          void this.router.navigate(["/my/chapters/chapter/lessons"],
+            {queryParams: {'courseId': this.courseId, 'chapterId': this.chapterId}});
+        }
+      });
   }
 
   get user(): UserInfo {
@@ -96,12 +84,4 @@ export class MyLessonDetailsComponent implements OnInit {
       })
     }*/
   }
-}
-
-enum PathVariable {
-
-  COURSE_ID = "courseId",
-  LESSON_ID = "lessonId",
-  STUDENT_ID = "studentId",
-
 }

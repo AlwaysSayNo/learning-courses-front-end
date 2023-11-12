@@ -69,7 +69,7 @@ export class MyLessonListComponent implements OnInit {
   }
 
   onLessonClose(lesson: Lesson): void {
-    this.lessonService.finishLesson(lesson.courseId, lesson.chapterId, lesson.id)
+    this.lessonService.finishLesson(lesson.id)
       .subscribe(() => {
         lesson.isFinished = true;
       });

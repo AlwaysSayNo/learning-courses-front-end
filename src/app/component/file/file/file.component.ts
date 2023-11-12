@@ -7,7 +7,6 @@ import {FileInfo} from "@app/shared/model/FileInfo";
 import {User} from "@app/shared/model/User";
 import {UserInfo} from "@app/shared/model/UserInfo";
 import {SecurityService} from "@app/service/security/security.service";
-import {RoleType} from "@app/shared/enum/RoleType";
 
 @Component({
   selector: 'app-file',
@@ -34,20 +33,18 @@ export class FileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.user.role == RoleType.STUDENT) {
-      this.fileUploadService.getFileInfo(this.lesson.courseId, this.lesson.chapterId, this.lesson.id)
-        .subscribe((info) => {
+    this.fileUploadService.getStudentFileInfo(this.lesson.id, this.student.id)
+      .subscribe({
+        next: (info) => {
           this.fileInfo = info;
-        });
-    } else if (this.user.role == RoleType.INSTRUCTOR) {
-      this.fileUploadService.getStudentFileInfo(this.lesson.courseId, this.lesson.chapterId, this.lesson.id, this.student.id)
-        .subscribe((info) => {
-          this.fileInfo = info;
-        });
-    }
+        },
+        error: () => {
+          console.error("No file was found");
+        }
+      });
   }
 
-  //TODO when file's size is bigger then we can allow
+//TODO when file's size is bigger then we can allow
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
 
@@ -55,28 +52,19 @@ export class FileComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file);
 
-      const upload$ = this.fileUploadService
-        .uploadFile(this.lesson.courseId, this.lesson.chapterId, this.lesson.id, formData)
-        .pipe(
-          finalize(() => this.resetUpload())
-        );
+      const upload$ = this.fileUploadService.uploadFile(this.lesson.id, formData)
+        .pipe(finalize(() => this.resetUpload()));
 
       this.uploadSub = upload$.subscribe(event => {
         if (event !== undefined) {
           if (event.type == HttpEventType.UploadProgress) {
-            // @ts-ignore
-            this.uploadProgress = Math.round(100 * (event.loaded / event.total));
+            this.uploadProgress = Math.round(100 * (event.loaded / event.total!));
           } else if (event.type == HttpEventType.Response) {
             this.fileInfo = event.body;
           }
         }
       });
     }
-  }
-
-  canShowProgress() {
-    return (this.uploadProgress && this.uploadProgress > 0)
-      || (this.downloadProgress && this.downloadProgress > 0);
   }
 
   onCancelUpload() {
@@ -100,7 +88,7 @@ export class FileComponent implements OnInit {
   }
 
   onDeleteFile() {
-    this.fileUploadService.deleteFile(this.lesson.courseId, this.lesson.chapterId, this.lesson.id)
+    this.fileUploadService.deleteFile(this.lesson.id, this.student.id)
       .subscribe(() => {
         this.fileInfo = null;
       })
@@ -108,32 +96,23 @@ export class FileComponent implements OnInit {
 
   onDownloadFile() {
     let download$!: Observable<HttpEvent<Blob>>;
-
-    if (this.user.role == RoleType.STUDENT) {
-      download$ = this.fileUploadService.downloadFile(this.lesson.courseId, this.lesson.chapterId, this.lesson.id)
-        .pipe(
-          finalize(() => this.resetDownload())
-        );
-    } else if (this.user.role == RoleType.INSTRUCTOR) {
-      download$ = this.fileUploadService.downloadFileById(this.fileInfo!.id)
-        .pipe(
-          finalize(() => this.resetDownload())
-        );
-    }
+    download$ = this.fileUploadService.downloadFile(this.lesson.id, this.student.id)
+      .pipe(
+        finalize(() => this.resetDownload())
+      );
 
     this.downloadSub = download$.subscribe((event) => {
-        if (event) {
-          if (event.type == HttpEventType.DownloadProgress) {
-            // @ts-ignore
-            this.downloadProgress = Math.round(100 * (event.loaded / event.total));
-          } else if (event.type == HttpEventType.Response) {
-            let file = event.body;
-            if (file) {
-              this.fileDownload(file)
-            }
+      if (event) {
+        if (event.type == HttpEventType.DownloadProgress) {
+          this.downloadProgress = Math.round(100 * (event.loaded / event.total!));
+        } else if (event.type == HttpEventType.Response) {
+          let file = event.body;
+          if (file) {
+            this.fileDownload(file)
           }
         }
-      });
+      }
+    });
   }
 
   private fileDownload(file: Blob) {

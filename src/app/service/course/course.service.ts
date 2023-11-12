@@ -17,12 +17,10 @@ export class CourseService {
   courseUrl = '/api/courses/course';
   allLessonsInCourseUrl = '/api/courses/course/lessons';
   allChaptersInCourseUrl = '/api/courses/course/chapters';
-  lessonsUrl = '/api/courses/:courseId/lessons/:lessonId';
   finishCourseUrl = '/api/courses/course/finish';
   enrollWithoutApprovalUrl = '/api/courses/course/users/enrolls';
   usersUrl = '/api/courses/course/users';
   userCourseInfoUrl = '/api/courses/course/users/user';
-  usersLessonsInfoUrl = '/api/courses/:courseId/lessons/:lessonId/users/:userId';
 
   constructor(private http: HttpClient) {
   }
@@ -37,7 +35,6 @@ export class CourseService {
     return this.http.get<Course>(this.courseUrl, queryParams);
   }
 
-  //TODO the same as UserToCourseService#getAllLessonsInCourse
   getAllLessonsInCourse(courseId: number): Observable<Lesson[]> {
     const queryParams = new HttpParams().set('courseId', courseId);
     return this.http.get<Lesson[]>(this.allLessonsInCourseUrl, {params: queryParams});
@@ -47,14 +44,6 @@ export class CourseService {
     const queryParams = new HttpParams().set('courseId', courseId);
     return this.http.get<Chapter[]>(this.allChaptersInCourseUrl, {params: queryParams});
   }
-
-/*  //TODO use id or refactor LessonController
-  getLessonsInCourse(courseId: number, lessonId: number): Observable<Lesson> {
-    let url = this.lessonsUrl
-      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
-      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString());
-    return this.http.get<Lesson>(url);
-  }*/
 
   delete(courseId: number): Observable<any> {
     const queryParams = new HttpParams().set('courseId', courseId);
@@ -93,23 +82,6 @@ export class CourseService {
     const queryParams = new HttpParams().set('courseId', courseId).set('userId', userId);
     return this.http.put<UserToCourse>(this.userCourseInfoUrl, userToCourseUpdate, {params: queryParams});
   }
-
-/*  getUserLessonInfo(courseId: number, lessonId: number, userId: number): Observable<UserToLesson> {
-    let url = this.usersLessonsInfoUrl
-      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
-      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString())
-      .replace(TemplatePathVariable.USER_ID.toString(), userId.toString());
-    return this.http.get<UserToLesson>(url);
-  }*/
-
-/*  updateUsersLessonInfo(courseId: number, lessonId: number, userId: number,
-                        userToLessonUpdate: UserToLesson): Observable<UserToLesson> {
-    let url = this.usersLessonsInfoUrl
-      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
-      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString())
-      .replace(TemplatePathVariable.USER_ID.toString(), userId.toString());
-    return this.http.put<UserToLesson>(url, userToLessonUpdate);
-  }*/
 
   //TODO remove user, request for course logic,
 

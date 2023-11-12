@@ -14,7 +14,7 @@
       <ng-container *ngFor="let chapter of chapters;">
         <tr>
           <td>
-            <a [routerLink]="['/my/chapters/chapter/info']"
+            <a [routerLink]="['/my/chapters/chapter']"
                [queryParams]="{courseId, chapterId: chapter.id}">
               {{chapter.id}}
             </a>
@@ -32,7 +32,7 @@
   <div>
     <a
       class="btn btn-primary"
-      [routerLink]="['/my/courses/course/info']"
+      [routerLink]="['/my/courses/course']"
       [queryParams]="{courseId}"
     >Go Back</a>
   </div>

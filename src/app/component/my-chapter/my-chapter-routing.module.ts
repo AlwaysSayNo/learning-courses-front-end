@@ -13,7 +13,7 @@ const routes: Routes = [
     data: {roles: [RoleType.INSTRUCTOR, RoleType.STUDENT]}
   },
   {
-    path: 'my/chapters/chapter/info',
+    path: 'my/chapters/chapter',
     component: MyChapterDetailsComponent,
     canActivate: [AuthGuard],
     data: {roles: [RoleType.INSTRUCTOR, RoleType.STUDENT]}

@@ -1,51 +1,34 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
-import {Lesson} from "../../shared/model/Lesson";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {Lesson} from "@app/shared/model/Lesson";
+import {UserToLesson} from "@app/shared/model/UserToLesson";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LessonService {
 
-  rootUrl = '/api/courses/:courseId/chapters/:chapterId/lessons';
-  idUrl = '/api/courses/:courseId/chapters/:chapterId/lessons/:lessonId';
-  finishUrl = '/api/courses/:courseId/chapters/:chapterId/lessons/:lessonId/finish';
+  private lessonUrl = '/api/lessons/lesson';
+  private usersLessonUrl = '/api/lessons/lesson/users/user';
+  private finishUrl = '/api/lessons/finish';
 
   constructor(private http: HttpClient) {
   }
 
-
-  getAll(courseId: number, chapterId: number): Observable<Lesson[]> {
-    let url = this.rootUrl
-      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
-      .replace(TemplatePathVariable.CHAPTER_ID.toString(), chapterId.toString());
-
-    return this.http.get<Lesson[]>(url);
+  getById(lessonId: number): Observable<Lesson> {
+    let queryParams = new HttpParams().set('lessonId', lessonId)
+    return this.http.get<Lesson>(this.lessonUrl, {params: queryParams});
   }
 
-  getById(courseId: number, chapterId: number, lessonId: number): Observable<Lesson> {
-    let url = this.idUrl
-      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
-      .replace(TemplatePathVariable.CHAPTER_ID.toString(), chapterId.toString())
-      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString());
-    return this.http.get<Lesson>(url);
+  getUsersLessonInfo(lessonId: number, userId: number): Observable<UserToLesson> {
+    let queryParams = new HttpParams().set('lessonId', lessonId).set('userId', userId);
+    return this.http.get<UserToLesson>(this.usersLessonUrl, {params: queryParams});
   }
 
-  finishLesson(courseId: number, chapterId: number, lessonId: number): Observable<any> {
-    let url = this.finishUrl
-      .replace(TemplatePathVariable.COURSE_ID.toString(), courseId.toString())
-      .replace(TemplatePathVariable.CHAPTER_ID.toString(), chapterId.toString())
-      .replace(TemplatePathVariable.LESSON_ID.toString(), lessonId.toString());
-    return this.http.put<string>(url, {});
+  finishLesson(lessonId: number): Observable<any> {
+    let queryParams = new HttpParams().set('lessonId', lessonId)
+    return this.http.put<string>(this.finishUrl, {}, {params: queryParams});
   }
-
-}
-
-enum TemplatePathVariable {
-
-  COURSE_ID = ":courseId",
-  CHAPTER_ID = ":chapterId",
-  LESSON_ID = ":lessonId",
 
 }

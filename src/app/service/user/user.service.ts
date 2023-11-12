@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "@app/shared/model/User";
 
@@ -8,19 +8,13 @@ import {User} from "@app/shared/model/User";
 })
 export class UserService {
 
-  idUrl = '/api/users/:userId';
+  userUrl = '/api/users/user';
 
   constructor(private http: HttpClient) { }
 
   getById(userId: number): Observable<User> {
-    let url = this.idUrl.replace(TemplatePathVariable.USER_ID.toString(), userId.toString());
-    return this.http.get<User>(url);
+    let queryParams = new HttpParams().set('userId', userId)
+    return this.http.get<User>(this.userUrl, {params: queryParams});
   }
-
-}
-
-enum TemplatePathVariable {
-
-  USER_ID = ":userId",
 
 }
