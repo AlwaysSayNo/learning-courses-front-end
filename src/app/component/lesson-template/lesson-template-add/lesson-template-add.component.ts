@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {LessonTemplate} from "../../../shared/model/LessonTemplate";
+import {LessonTemplate} from "@app/shared/model/LessonTemplate";
 
 @Component({
   selector: 'app-lesson-template-add',

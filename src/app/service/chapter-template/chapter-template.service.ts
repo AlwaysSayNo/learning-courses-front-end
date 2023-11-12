@@ -37,7 +37,8 @@ export class ChapterTemplateService {
   }
 
   update(chapterTemplateId: number, chapterTemplate: ChapterTemplate): Observable<ChapterTemplate> {
-    return this.http.put<ChapterTemplate>(this.chapterTemplateUrl, chapterTemplate);
+    const queryParams = new HttpParams().set('chapterTemplateId', chapterTemplateId);
+    return this.http.put<ChapterTemplate>(this.chapterTemplateUrl, chapterTemplate, {params: queryParams});
   }
 
 }

@@ -8,7 +8,7 @@ import {LessonTemplate} from "@app/shared/model/LessonTemplate";
 })
 export class LessonTemplateService {
 
-  private lessonTemplateListUrl = '/api/templates/chapters/chapter/lessons';
+  private lessonTemplateListUrl = '/api/templates/lessons';
   private lessonTemplateUrl = '/api/templates/lessons/lesson';
 
   constructor(private http: HttpClient) {

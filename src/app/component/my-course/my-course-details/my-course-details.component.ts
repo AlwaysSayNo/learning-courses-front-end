@@ -25,7 +25,7 @@ export class MyCourseDetailsComponent implements OnInit {
               private router: Router,
               private courseService: CourseService,
               private myService: MyService,
-              private authenticationService: SecurityService) {
+              private securityService: SecurityService) {
   }
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class MyCourseDetailsComponent implements OnInit {
   }
 
   get user(): UserInfo {
-    return this.authenticationService.userValue;
+    return this.securityService.userValue;
   }
 
   onCourseClose(): void {

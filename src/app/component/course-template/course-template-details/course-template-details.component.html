@@ -52,11 +52,11 @@
     >
   </div>
 
-  <div>
+  <ng-container *ngIf="user.role == 'INSTRUCTOR'">
     <input type="button"
            class="btn btn-success"
            (click)="onCreateCourseFromTemplate()"
            value="Create"
     >
-  </div>
+  </ng-container>
 </div>

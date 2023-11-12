@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseTemplateService} from "@app/service/course-template/course-template.service";
 import {CourseTemplate} from "@app/shared/model/CourseTemplate";
+import {SecurityService} from "@app/service/security/security.service";
+import {UserInfo} from "@app/shared/model/UserInfo";
 
 @Component({
   selector: 'app-course-template-list',
@@ -12,7 +14,8 @@ export class CourseTemplateListComponent implements OnInit {
   templates!: CourseTemplate[];
   showCreateForm = false;
 
-  constructor(private courseTemplateService: CourseTemplateService) {
+  constructor(private courseTemplateService: CourseTemplateService,
+              private securityService: SecurityService) {
   }
 
   ngOnInit(): void {
@@ -27,4 +30,9 @@ export class CourseTemplateListComponent implements OnInit {
     });
     this.showCreateForm = false;
   }
+
+  get user(): UserInfo {
+    return this.securityService.userValue
+  }
+
 }

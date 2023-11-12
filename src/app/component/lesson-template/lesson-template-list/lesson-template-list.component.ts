@@ -4,6 +4,8 @@ import {LessonTemplateService} from "@app/service/lesson-template/lesson-templat
 import {LessonTemplate} from "@app/shared/model/LessonTemplate";
 import {ChapterTemplateService} from "@app/service/chapter-template/chapter-template.service";
 import {concatMap} from "rxjs";
+import {UserInfo} from "@app/shared/model/UserInfo";
+import {SecurityService} from "@app/service/security/security.service";
 
 @Component({
   selector: 'app-lesson-template-list',
@@ -20,7 +22,8 @@ export class LessonTemplateListComponent implements OnInit {
   constructor(private chapterTemplateService: ChapterTemplateService,
               private lessonTemplateService: LessonTemplateService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private securityService: SecurityService) {
   }
 
   ngOnInit(): void {
@@ -48,6 +51,10 @@ export class LessonTemplateListComponent implements OnInit {
         this.lessonTemplates.push(data);
       });
     this.showCreateForm = false;
+  }
+
+  get user(): UserInfo {
+    return this.securityService.userValue
   }
 
 }

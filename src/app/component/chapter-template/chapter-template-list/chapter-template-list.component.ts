@@ -4,6 +4,8 @@ import {ChapterTemplateService} from "@app/service/chapter-template/chapter-temp
 import {ActivatedRoute, Router} from "@angular/router";
 import {concatMap} from "rxjs";
 import {CourseTemplateService} from "@app/service/course-template/course-template.service";
+import {SecurityService} from "@app/service/security/security.service";
+import {UserInfo} from "@app/shared/model/UserInfo";
 
 @Component({
   selector: 'app-chapter-template-list',
@@ -19,7 +21,8 @@ export class ChapterTemplateListComponent implements OnInit {
   constructor(private courseTemplateService: CourseTemplateService,
               private chapterTemplateService: ChapterTemplateService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private securityService: SecurityService) {
   }
 
   ngOnInit(): void {
@@ -40,9 +43,15 @@ export class ChapterTemplateListComponent implements OnInit {
   }
 
   onAddChapterTemplate(chapterTemplate: ChapterTemplate) {
-    this.chapterTemplateService.add(this.courseTemplateId, chapterTemplate).subscribe((data) => {
+    this.chapterTemplateService.add(this.courseTemplateId, chapterTemplate)
+      .subscribe((data) => {
       this.chapterTemplates.push(data);
     });
     this.showCreateForm = false;
   }
+
+  get user(): UserInfo {
+    return this.securityService.userValue
+  }
+
 }

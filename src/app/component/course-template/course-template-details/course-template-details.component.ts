@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CourseTemplateService} from "@app/service/course-template/course-template.service";
 import {CourseTemplate} from "@app/shared/model/CourseTemplate";
 import {concatMap} from "rxjs";
+import {SecurityService} from "@app/service/security/security.service";
+import {UserInfo} from "@app/shared/model/UserInfo";
 
 @Component({
   selector: 'app-course-template-details',
@@ -16,7 +18,8 @@ export class CourseTemplateDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private courseTemplateService: CourseTemplateService) {
+              private courseTemplateService: CourseTemplateService,
+              private securityService: SecurityService) {
   }
 
   ngOnInit(): void {
@@ -59,6 +62,10 @@ export class CourseTemplateDetailsComponent implements OnInit {
           {queryParams: {'courseId': course.id}}
         );
       });
+  }
+
+  get user(): UserInfo {
+    return this.securityService.userValue
   }
 
 }
