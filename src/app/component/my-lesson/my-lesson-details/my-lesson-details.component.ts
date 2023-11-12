@@ -76,12 +76,12 @@ export class MyLessonDetailsComponent implements OnInit {
 
   onAssignMark(newMark: NgModel) {
     let mark: number = newMark.value;
-    /*if (mark) {
-      this.userToLesson.mark = mark;
-      this.courseService.updateUsersLessonInfo(this.courseId, this.lessonId, this.student.id, this.userToLesson)
+    if (mark) {
+      this.lessonService.updateUsersLessonInfo(this.lessonId, this.student.id, this.userToLesson)
         .subscribe((userToLesson) => {
-        this.userToLesson = userToLesson;
-      })
-    }*/
+          this.userToLesson.mark = mark;
+          this.userToLesson = userToLesson;
+        });
+    }
   }
 }

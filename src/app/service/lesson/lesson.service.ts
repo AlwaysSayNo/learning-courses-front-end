@@ -11,7 +11,7 @@ export class LessonService {
 
   private lessonUrl = '/api/lessons/lesson';
   private usersLessonUrl = '/api/lessons/lesson/users/user';
-  private finishUrl = '/api/lessons/finish';
+  private finishLessonUrl = '/api/lessons/lesson/finish';
 
   constructor(private http: HttpClient) {
   }
@@ -26,9 +26,14 @@ export class LessonService {
     return this.http.get<UserToLesson>(this.usersLessonUrl, {params: queryParams});
   }
 
+  updateUsersLessonInfo(lessonId: number, userId: number, userToLesson: UserToLesson): Observable<UserToLesson> {
+    let queryParams = new HttpParams().set('lessonId', lessonId).set('userId', userId);
+    return this.http.put<UserToLesson>(this.usersLessonUrl, userToLesson, {params: queryParams});
+  }
+
   finishLesson(lessonId: number): Observable<any> {
     let queryParams = new HttpParams().set('lessonId', lessonId)
-    return this.http.put<string>(this.finishUrl, {}, {params: queryParams});
+    return this.http.put<string>(this.finishLessonUrl, {}, {params: queryParams});
   }
 
 }

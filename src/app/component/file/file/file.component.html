@@ -14,27 +14,37 @@
 
 <div>
   <div>
+    <mat-progress-bar class="progress-bar" mode="indeterminate"
+                      [value]="uploadProgress"
+                      *ngIf="canShowProgress()">
+    </mat-progress-bar>
+  </div>
+  <div>
     <div class="container p-0 d-flex justify-content-end">
       <mat-icon class="delete-file border border-dark"
                 (click)="onDeleteFile()"
                 *ngIf="!lesson.isFinished && canDelete && fileInfo"
-      >delete</mat-icon>
+      >delete
+      </mat-icon>
 
       <mat-icon class="download-file border border-dark"
                 (click)="onDownloadFile()"
                 *ngIf="canDownload && fileInfo"
-      >download</mat-icon>
+      >download
+      </mat-icon>
     </div>
     <div class="container p-0 d-flex justify-content-end">
       <mat-icon class="cancel-upload border border-dark"
                 (click)="onCancelUpload()"
                 *ngIf="!lesson.isFinished && uploadProgress && uploadProgress < 99"
-      >cancel</mat-icon>
+      >cancel
+      </mat-icon>
 
       <mat-icon class="cancel-upload border border-dark"
                 (click)="onCancelDownload()"
                 *ngIf="downloadProgress && downloadProgress < 99"
-      >cancel</mat-icon>
+      >cancel
+      </mat-icon>
     </div>
   </div>
 </div>

@@ -67,6 +67,11 @@ export class FileComponent implements OnInit {
     }
   }
 
+  canShowProgress() {
+    return (this.uploadProgress && this.uploadProgress > 0 && this.uploadProgress < 100)
+      || (this.downloadProgress && this.downloadProgress > 0 && this.downloadProgress < 100);
+  }
+
   onCancelUpload() {
     this.uploadSub?.unsubscribe();
     this.resetUpload();

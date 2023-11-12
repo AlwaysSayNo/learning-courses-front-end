@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Lesson} from "@app/shared/model/Lesson";
 import {UserToLesson} from "@app/shared/model/UserToLesson";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserToCourseService} from "@app/service/user-to-course/user-to-course.service";
 import {CourseService} from "@app/service/course/course.service";
 import {SecurityService} from "@app/service/security/security.service";
 import {UserInfo} from "@app/shared/model/UserInfo";
@@ -31,7 +30,6 @@ export class MyLessonListComponent implements OnInit {
               private courseService: CourseService,
               private chapterService: ChapterService,
               private lessonService: LessonService,
-              private userToCourseService: UserToCourseService,
               private authenticationService: SecurityService) {
   }
 

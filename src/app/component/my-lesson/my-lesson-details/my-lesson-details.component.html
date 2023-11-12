@@ -67,7 +67,7 @@
                [disabled]="lesson.isFinished"
                [(ngModel)]="userToLesson.mark"
                #newMark="ngModel"
-               [appNumberSegment]="'0,inf'"
+               [appNumberSegment]="'0,' + lesson.maxMark"
                [ngClass]="{ 'is-invalid': newMark.errors }">
       </div>
       <div class="col-auto">
