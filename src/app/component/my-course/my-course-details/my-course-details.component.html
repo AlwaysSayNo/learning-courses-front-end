@@ -50,7 +50,7 @@
 
   <app-courses-users-list [userRole]="ROLE_TYPE.INSTRUCTOR" [courseId]="courseId"></app-courses-users-list>
 
-  <ng-container *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
+  <ng-container *ngIf="[ROLE_TYPE.INSTRUCTOR.toString(), ROLE_TYPE.ADMIN.toString()].includes(user.role)">
     <app-courses-users-list [userRole]="ROLE_TYPE.STUDENT" [courseId]="courseId"></app-courses-users-list>
   </ng-container>
 

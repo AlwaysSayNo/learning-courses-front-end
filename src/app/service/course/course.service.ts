@@ -25,7 +25,7 @@ export class CourseService {
   constructor(private http: HttpClient) {
   }
 
-  getAll(isActive: boolean): Observable<Course[]> {
+  getAll(isActive: boolean | null): Observable<Course[]> {
     const queryParams = isActive ? {params: new HttpParams().set('isActive', isActive)} : {};
     return this.http.get<Course[]>(this.courseListUrl, queryParams);
   }

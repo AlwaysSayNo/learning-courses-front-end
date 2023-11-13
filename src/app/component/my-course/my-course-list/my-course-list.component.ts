@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Course} from "@app/shared/model/Course";
 import {CourseStatus} from "@app/shared/enum/CourseStatus";
 import {MyService} from "@app/service/my/my.service";
+import {CourseService} from "@app/service/course/course.service";
+import {Observable} from "rxjs";
+import {SecurityService} from "@app/service/security/security.service";
+import {UserInfo} from "@app/shared/model/UserInfo";
 
 @Component({
   selector: 'app-my-course-list',
@@ -15,11 +19,21 @@ export class MyCourseListComponent implements OnInit {
   statuses: CourseStatus[] = [CourseStatus.ALL, CourseStatus.FINISHED, CourseStatus.ACTIVE];
   selectedStatus: CourseStatus = CourseStatus.ALL;
 
-  constructor(private myService: MyService) { }
+  constructor(private myService: MyService,
+              private courseService: CourseService,
+              private securityService: SecurityService) {
+  }
 
   ngOnInit(): void {
-    this.myService.getAllMyCourse()
-      .subscribe((data) => {
+    let sub$: Observable<Course[]>;
+
+    if (this.user.role == 'ADMIN') {
+      sub$ = this.courseService.getAll(null);
+    } else {
+      sub$ = this.myService.getAllMyCourse();
+    }
+
+    sub$.subscribe((data) => {
       this.allCourses = data;
       this.courses = this.filterAllCoursesByStatus(this.selectedStatus);
     });
@@ -39,6 +53,10 @@ export class MyCourseListComponent implements OnInit {
       }
       return true;
     })
+  }
+
+  get user(): UserInfo {
+    return this.securityService.userValue;
   }
 
 }

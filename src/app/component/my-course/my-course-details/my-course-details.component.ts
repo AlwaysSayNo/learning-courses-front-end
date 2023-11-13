@@ -44,7 +44,9 @@ export class MyCourseDetailsComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          void this.router.navigate(["/my/courses"]);
+          if (this.user.role == 'STUDENT') {
+            void this.router.navigate(["/my/courses"]);
+          }
         }
       })
   }

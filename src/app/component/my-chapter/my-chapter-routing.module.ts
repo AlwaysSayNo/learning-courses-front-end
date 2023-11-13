@@ -10,13 +10,13 @@ const routes: Routes = [
     path: 'my/courses/course/chapters',
     component: MyChapterListComponent,
     canActivate: [AuthGuard],
-    data: {roles: [RoleType.INSTRUCTOR, RoleType.STUDENT]}
+    data: {roles: [RoleType.INSTRUCTOR, RoleType.STUDENT, RoleType.ADMIN]}
   },
   {
     path: 'my/chapters/chapter',
     component: MyChapterDetailsComponent,
     canActivate: [AuthGuard],
-    data: {roles: [RoleType.INSTRUCTOR, RoleType.STUDENT]}
+    data: {roles: [RoleType.INSTRUCTOR, RoleType.STUDENT, RoleType.ADMIN]}
   }
 ];
 

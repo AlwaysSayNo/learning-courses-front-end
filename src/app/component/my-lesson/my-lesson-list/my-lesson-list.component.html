@@ -11,7 +11,7 @@
               <th>Title</th>
               <th>Number</th>
               <th>Is finished</th>
-              <th *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
+              <th *ngIf="[ROLE_TYPE.INSTRUCTOR.toString(), ROLE_TYPE.ADMIN.toString()].includes(user.role)">
                 Close
               </th>
             </tr>
@@ -25,7 +25,7 @@
                      [queryParams]="{courseId, chapterId, lessonId: lesson.id}">
                     {{lesson.id}}
                   </a>
-                  <ng-container *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
+                  <ng-container *ngIf="[ROLE_TYPE.INSTRUCTOR.toString(), ROLE_TYPE.ADMIN.toString()].includes(user.role)">
                     {{lesson.id}}
                   </ng-container>
                 </td>
@@ -34,7 +34,7 @@
                     {{lesson.title | uppercase}}
                   </ng-container>
 
-                  <ng-container *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
+                  <ng-container *ngIf="[ROLE_TYPE.INSTRUCTOR.toString(), ROLE_TYPE.ADMIN.toString()].includes(user.role)">
                     <cdk-accordion-item
                       role="button"
                       #accordionItem="cdkAccordionItem">
@@ -67,7 +67,7 @@
                 <td>{{lesson.number}}</td>
                 <td>{{lesson.isFinished}}</td>
 
-                <td *ngIf="user.role == ROLE_TYPE.INSTRUCTOR">
+                <td *ngIf="[ROLE_TYPE.INSTRUCTOR.toString(), ROLE_TYPE.ADMIN.toString()].includes(user.role)">
                   <input type="button"
                          class="btn btn-primary"
                          value="Close"
