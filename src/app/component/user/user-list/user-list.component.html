@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row justify-content-between">
+    <h2 class="h2">Users</h2>
+    <div>
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select [value]="selectedRole">
+          <mat-option [value]="roles"
+                      *ngFor="let roles of roles"
+                      (click)="onRoleSelect(roles)"
+          >{{ roles }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="container row justify-content-between align-content-center m-0 p-0">
+        <h3 class="h3 text-uppercase mb-1 row align-content-center">Add form</h3>
+        <button type="button"
+                mat-fab color="primary"
+                (click)="showCreateForm = !showCreateForm"
+                [value]="showCreateForm ? 'Hide form': 'Show form'"
+        >
+          <mat-icon>create icon</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="showCreateForm">
+    <app-user-add (addUser)="onCreateUser($event)"></app-user-add>
+  </ng-container>
+  <div class="table-responsive" *ngIf="shownUsers">
+    <table class="table table-striped pretty-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Login</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Role</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let user of shownUsers;">
+        <tr>
+          <td>
+            <a
+              [routerLink]="['/users/user']"
+              [queryParams]="{userId: user.id}">
+              {{user.id}}
+            </a>
+          </td>
+          <td>{{user.login}}</td>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.role}}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

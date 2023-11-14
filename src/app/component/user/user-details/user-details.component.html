@@ -1,0 +1,49 @@
+<div class="container" *ngIf="user">
+  <h2 class="h2 text-uppercase">User: {{user.lastName}} {{user.firstName}}</h2>
+  <div class="table-responsive">
+    <table class="table table-striped pretty-table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Login</th>
+        <th>Role</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.login}}</td>
+        <td>{{user.role}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <a
+      class="btn btn-primary"
+      [routerLink]="['/users']"
+    >Go Back</a>
+  </div>
+
+  <ng-container *ngIf="showUpdateForm">
+    <app-user-update
+      [user]="user"
+      (updateUser)="onUserUpdate($event)"
+    ></app-user-update>
+  </ng-container>
+
+  <div *ngIf="user.role != 'ADMIN'">
+    <button class="btn btn-danger" (click)="onUserDelete()">Delete</button>
+    <input type="button"
+           class="btn btn-primary"
+           (click)="showUpdateForm = !showUpdateForm"
+           [value]="showUpdateForm ? 'Hide form' : 'Update form'"
+    >
+  </div>
+</div>
+
